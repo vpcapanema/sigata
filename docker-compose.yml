@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: sigata_postgres
+    environment:
+      POSTGRES_DB: sigata_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docs/database.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - sigata_network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: sigata_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - sigata_network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sigata_backend
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/sigata_db
+      REDIS_URL: redis://redis:6379
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - sigata_network
+
+  # Frontend (quando criado)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sigata_frontend
+    ports:
+      - "3001:3000"
+    environment:
+      REACT_APP_API_URL: http://backend:3000
+    depends_on:
+      - backend
+    networks:
+      - sigata_network
+
+volumes:
+  postgres_data:
+
+networks:
+  sigata_network:
+    driver: bridge
