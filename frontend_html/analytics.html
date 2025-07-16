@@ -9,86 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="../sistema_aplicacao_cores_pli.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <style>
-        .analytics-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        .analytics-card:hover {
-            transform: translateY(-5px);
-        }
-        .metric-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .metric-value {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-        .metric-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        .chart-container {
-            position: relative;
-            height: 300px;
-            margin: 20px 0;
-        }
-        .nlp-insights {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .entity-tag {
-            display: inline-block;
-            background: #e3f2fd;
-            color: #1565c0;
-            padding: 4px 8px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            margin: 2px;
-        }
-        .keyword-cloud {
-            text-align: center;
-            padding: 20px;
-        }
-        .keyword {
-            display: inline-block;
-            margin: 5px;
-            padding: 5px 10px;
-            background: rgba(102, 126, 234, 0.1);
-            border-radius: 20px;
-            font-weight: bold;
-        }
-        .sentiment-indicator {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            margin: 0 auto;
-        }
-        .sentiment-positive { background: #28a745; }
-        .sentiment-neutral { background: #ffc107; }
-        .sentiment-negative { background: #dc3545; }
-    </style>
 </head>
 <body>
     <!-- Navegação -->
-    <nav class="pli-navbar">
+    <nav class="navbar navbar-expand-lg pli-navbar">
         <div class="container">
             <a class="navbar-brand" href="index.html" style="color: var(--pli-azul-escuro);">
                 <i class="fas fa-file-alt"></i> SIGATA
@@ -99,13 +23,18 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link active" href="index.html">
                             <i class="fas fa-home"></i> Início
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="login.html">
                             <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
@@ -124,13 +53,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="analytics.html">
-                            <i class="fas fa-analytics"></i> Analytics
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.html">
-                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        <a class="nav-link" href="analytics.html">
+                            <i class="fas fa-chart-bar"></i> Analytics
                         </a>
                     </li>
                 </ul>
@@ -837,7 +761,7 @@
     <!-- Footer -->
     <footer class="pli-footer py-4 mt-5">
         <div class="container text-center">
-            <p>&copy; 2025 SIGATA - Sistema Integrado de Gestão de Atas. Todos os direitos reservados.</p>
+            <span class="text-white">SIGATA &copy; 2025 - Sistema Integrado de Gestão de Atas</span>
         </div>
     </footer>
 </body>

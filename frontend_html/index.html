@@ -8,81 +8,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../sistema_aplicacao_cores_pli.css">
-    
-    <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-        }
-        .hero-section {
-            background: var(--pli-gradient-main);
-            padding: 80px 0;
-            min-height: 500px;
-            display: flex;
-            align-items: center;
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            color: white;
-            transition: transform 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-        .stat-card:hover { 
-            transform: translateY(-5px); 
-        }
-        .stat-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            opacity: 0.8;
-        }
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        .feature-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            height: 100%;
-        }
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-        .feature-icon {
-            font-size: 3rem;
-            color: var(--pli-azul-escuro);
-            margin-bottom: 20px;
-        }
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 30px;
-            text-align: center;
-            font-family: 'Montserrat', sans-serif;
-        }
-    </style>
 </head>
 <body>
     <!-- Navegação -->
     <nav class="navbar navbar-expand-lg pli-navbar">
         <div class="container">
-            <a class="navbar-brand pli-montserrat-semibold" href="index.html">
-                <i class="fas fa-file-alt"></i> SIGATA - Sistema Integrado de Gestão de Atas
+            <a class="navbar-brand" href="index.html" style="color: var(--pli-azul-escuro);">
+                <i class="fas fa-file-alt"></i> SIGATA
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -97,6 +29,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="login.html">
                             <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
@@ -116,12 +53,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="analytics.html">
-                            <i class="fas fa-analytics"></i> Analytics
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.html">
-                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                            <i class="fas fa-chart-bar"></i> Analytics
                         </a>
                     </li>
                 </ul>
@@ -271,7 +203,7 @@
     <!-- Footer -->
     <footer class="pli-footer py-4 mt-5">
         <div class="container text-center">
-            <p>&copy; 2025 SIGATA - Sistema Integrado de Gestão de Atas. Todos os direitos reservados.</p>
+            <span class="text-white">SIGATA &copy; 2025 - Sistema Integrado de Gestão de Atas</span>
         </div>
     </footer>
 

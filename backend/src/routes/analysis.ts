@@ -1,8 +1,8 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 
 const router = Router();
 
-router.get('/', (req, res) => {
+router.get('/', (req: Request, res: Response) => {
   res.json({
     success: true,
     data: {
@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
   });
 });
 
-router.post('/process', (req, res) => {
+router.post('/process', (req: Request, res: Response) => {
   res.json({
     success: true,
     data: {

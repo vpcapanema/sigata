@@ -1,8 +1,8 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 
 const router = Router();
 
-router.post('/login', (req, res) => {
+router.post('/login', (req: Request, res: Response) => {
   res.json({
     success: true,
     message: 'Autenticação em desenvolvimento',
@@ -13,14 +13,14 @@ router.post('/login', (req, res) => {
   });
 });
 
-router.post('/logout', (req, res) => {
+router.post('/logout', (req: Request, res: Response) => {
   res.json({
     success: true,
     message: 'Logout realizado com sucesso'
   });
 });
 
-router.get('/me', (req, res) => {
+router.get('/me', (req: Request, res: Response) => {
   res.json({
     success: true,
     data: {
