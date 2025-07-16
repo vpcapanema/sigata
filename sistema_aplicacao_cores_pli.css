@@ -1,0 +1,249 @@
+/* ========================================
+   SISTEMA DE APLICAÇÃO - IDENTIDADE VISUAL PLI
+   Definição de onde aplicar cada cor baseado na função
+======================================== */
+
+:root {
+    /* CORES PLI EXTRAÍDAS */
+    --pli-azul-escuro: #0f203e;        /* Azul institucional principal */
+    --pli-azul-medio: #244b72;         /* Azul médio */
+    --pli-verde-principal: #5cb65c;    /* Verde principal */
+    --pli-verde-claro: #bfe5b2;        /* Verde claro */
+    --pli-preto: #171e31;             /* Preto institucional */
+    
+    /* GRADIENTES PLI */
+    --pli-gradient-main: linear-gradient(135deg, 
+        #bfe5b2 0%,      /* Verde claro */
+        #5cb65c 25%,     /* Verde principal */
+        #244b72 50%,     /* Azul médio */
+        #0f203e 75%,     /* Azul escuro */
+        #171e31 100%     /* Preto */
+    );
+    
+    --pli-gradient-secondary: linear-gradient(135deg,
+        #5cb65c 0%,      /* Verde principal */
+        #bfe5b2 33%,     /* Verde claro */
+        #afb4c7 66%,     /* Azul claro */
+        #244b72 100%     /* Azul médio */
+    );
+}
+
+/* ========================================
+   APLICAÇÃO DO GRADIENTE PRINCIPAL
+   Apenas em cabeçalhos e rodapés
+======================================== */
+
+/* CABEÇALHOS (Headers/Navbar) */
+.pli-header,
+.navbar.pli-navbar,
+header.pli-header {
+    background: var(--pli-gradient-main);
+    color: white;
+}
+
+/* RODAPÉS (Footers) */
+.pli-footer,
+footer.pli-footer {
+    background: var(--pli-gradient-main);
+    color: white;
+}
+
+/* ========================================
+   SISTEMA DE CORES POR FUNÇÃO DOS BOTÕES
+======================================== */
+
+/* GRUPO 1: AÇÕES POSITIVAS/CONFIRMAÇÃO */
+/* Cor: Verde Principal (#5cb65c) */
+.btn-pli-confirm,          /* Botões OK, Confirmar, Salvar */
+.btn-pli-save,             /* Salvar documento */
+.btn-pli-submit,           /* Enviar formulário */
+.btn-pli-upload,           /* Upload de arquivo */
+.btn-pli-success {         /* Ações de sucesso */
+    background-color: var(--pli-verde-principal);
+    border-color: var(--pli-verde-principal);
+    color: white;
+}
+
+.btn-pli-confirm:hover,
+.btn-pli-save:hover,
+.btn-pli-submit:hover,
+.btn-pli-upload:hover,
+.btn-pli-success:hover {
+    background-color: #4a9d4a; /* Verde mais escuro */
+    border-color: #4a9d4a;
+    transform: translateY(-2px);
+}
+
+/* GRUPO 2: AÇÕES SECUNDÁRIAS/NAVEGAÇÃO */
+/* Cor: Verde Claro (#bfe5b2) */
+.btn-pli-secondary,        /* Botões secundários */
+.btn-pli-info,             /* Informações */
+.btn-pli-view,             /* Visualizar */
+.btn-pli-details,          /* Ver detalhes */
+.btn-pli-filter {          /* Aplicar filtros */
+    background-color: var(--pli-verde-claro);
+    border-color: var(--pli-verde-claro);
+    color: var(--pli-preto);
+}
+
+.btn-pli-secondary:hover,
+.btn-pli-info:hover,
+.btn-pli-view:hover,
+.btn-pli-details:hover,
+.btn-pli-filter:hover {
+    background-color: #a8d995; /* Verde claro mais escuro */
+    border-color: #a8d995;
+    transform: translateY(-2px);
+}
+
+/* GRUPO 3: AÇÕES IMPORTANTES/ADMINISTRATIVAS */
+/* Cor: Azul Médio (#244b72) */
+.btn-pli-primary,          /* Botões primários */
+.btn-pli-admin,            /* Ações administrativas */
+.btn-pli-generate,         /* Gerar relatório */
+.btn-pli-export,           /* Exportar dados */
+.btn-pli-analyze {         /* Analisar documento */
+    background-color: var(--pli-azul-medio);
+    border-color: var(--pli-azul-medio);
+    color: white;
+}
+
+.btn-pli-primary:hover,
+.btn-pli-admin:hover,
+.btn-pli-generate:hover,
+.btn-pli-export:hover,
+.btn-pli-analyze:hover {
+    background-color: #1e3a5a; /* Azul mais escuro */
+    border-color: #1e3a5a;
+    transform: translateY(-2px);
+}
+
+/* GRUPO 4: AÇÕES CRÍTICAS/INSTITUCIONAIS */
+/* Cor: Azul Escuro (#0f203e) */
+.btn-pli-critical,         /* Ações críticas */
+.btn-pli-institutional,    /* Funcionalidades institucionais */
+.btn-pli-login,            /* Login */
+.btn-pli-auth,             /* Autenticação */
+.btn-pli-security {        /* Segurança */
+    background-color: var(--pli-azul-escuro);
+    border-color: var(--pli-azul-escuro);
+    color: white;
+}
+
+.btn-pli-critical:hover,
+.btn-pli-institutional:hover,
+.btn-pli-login:hover,
+.btn-pli-auth:hover,
+.btn-pli-security:hover {
+    background-color: #0a1628; /* Azul mais escuro */
+    border-color: #0a1628;
+    transform: translateY(-2px);
+}
+
+/* GRUPO 5: AÇÕES DESTRUTIVAS/CANCELAMENTO */
+/* Cor: Preto Institucional (#171e31) */
+.btn-pli-cancel,           /* Cancelar */
+.btn-pli-delete,           /* Deletar */
+.btn-pli-remove,           /* Remover */
+.btn-pli-danger,           /* Ações perigosas */
+.btn-pli-logout {          /* Logout */
+    background-color: var(--pli-preto);
+    border-color: var(--pli-preto);
+    color: white;
+}
+
+.btn-pli-cancel:hover,
+.btn-pli-delete:hover,
+.btn-pli-remove:hover,
+.btn-pli-danger:hover,
+.btn-pli-logout:hover {
+    background-color: #0f1520; /* Preto mais claro */
+    border-color: #0f1520;
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   ESTILOS COMUNS PARA TODOS OS BOTÕES PLI
+======================================== */
+
+[class*="btn-pli"] {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600; /* SemiBold */
+    border-radius: 8px;
+    padding: 12px 24px;
+    border: 2px solid;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+[class*="btn-pli"]:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    text-decoration: none;
+}
+
+/* ========================================
+   APLICAÇÕES ESPECÍFICAS POR PÁGINA
+======================================== */
+
+/* PÁGINA DE LOGIN */
+.login-page .btn-pli-login {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 15px;
+}
+
+/* PÁGINA DE UPLOAD */
+.upload-page .btn-pli-upload {
+    font-size: 1.2rem;
+    padding: 15px 30px;
+}
+
+/* PÁGINA DE DOCUMENTOS */
+.documents-page .btn-pli-view {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+/* PÁGINA DE RELATÓRIOS */
+.reports-page .btn-pli-generate {
+    font-size: 1.1rem;
+    padding: 12px 25px;
+}
+
+/* ========================================
+   GUIA DE UTILIZAÇÃO
+======================================== */
+
+/*
+GUIA DE CORES POR FUNÇÃO:
+
+🟢 VERDE PRINCIPAL (#5cb65c):
+- OK, Confirmar, Salvar, Enviar, Upload
+- Ações que completam/finalizam processo
+
+🟢 VERDE CLARO (#bfe5b2):
+- Ver, Detalhes, Filtrar, Info
+- Ações de consulta/visualização
+
+🔵 AZUL MÉDIO (#244b72):
+- Gerar, Exportar, Analisar, Admin
+- Ações importantes/administrativas
+
+🔵 AZUL ESCURO (#0f203e):
+- Login, Autenticação, Segurança
+- Ações institucionais/críticas
+
+⚫ PRETO (#171e31):
+- Cancelar, Deletar, Logout, Danger
+- Ações destrutivas/cancelamento
+
+APLICAÇÃO:
+<button class="btn-pli-confirm">OK</button>
+<button class="btn-pli-cancel">Cancelar</button>
+<button class="btn-pli-generate">Gerar Relatório</button>
+<button class="btn-pli-view">Ver Detalhes</button>
+<button class="btn-pli-login">Login</button>
+*/

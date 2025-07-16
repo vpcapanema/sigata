@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios - Sistema de Análise de Atas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos principais */
+        .mock-terminal {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+            border: 1px solid #333;
+        }
+        .processing-animation {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .demo-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            color: white;
+        }
+        .chart-placeholder {
+            padding: 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+            border: 2px dashed #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-file-alt me-2"></i>
+                Sistema de Análise de Atas
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i>Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="upload.html">
+                            <i class="fas fa-upload me-1"></i>Upload
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documents.html">
+                            <i class="fas fa-folder me-1"></i>Documentos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="reports.html">
+                            <i class="fas fa-chart-bar me-1"></i>Relatórios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="analytics.html">
+                            <i class="fas fa-analytics me-1"></i>Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-sm demo-btn ms-2" onclick="startDemo()">
+                            <i class="fas fa-play me-1"></i>Demo
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-chart-bar me-2"></i>
+                            Relatórios de Análise
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- Filtros de Período -->
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <label for="startDate" class="form-label">Data Início</label>
+                                <input type="date" class="form-control" id="startDate">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="endDate" class="form-label">Data Fim</label>
+                                <input type="date" class="form-control" id="endDate">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="reportType" class="form-label">Tipo de Relatório</label>
+                                <select class="form-select" id="reportType" aria-label="Selecionar tipo de relatório">
+                                    <option value="resumo-ata">📋 Resumo de Ata + Métricas</option>
+                                    <option value="resumo">Resumo Geral</option>
+                                    <option value="participantes">Participantes</option>
+                                    <option value="topicos">Análise de Tópicos</option>
+                                    <option value="metricas">Métricas de Qualidade</option>
+                                    <option value="comparativo">Comparativo</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">&nbsp;</label>
+                                <button class="btn btn-primary w-100" onclick="generateReport()">
+                                    <i class="fas fa-chart-line me-2"></i>Gerar Relatório
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Relatórios Salvos -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5>Relatórios Salvos</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Nome</th>
+                                                <th>Tipo</th>
+                                                <th>Data Criação</th>
+                                                <th>Período</th>
+                                                <th>Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="reportsTable">
+                                            <!-- Relatórios simulados serão inseridos aqui -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Área de Relatório Gerado -->
+                        <div id="reportContent" class="mt-4" style="display: none;">
+                            <!-- Conteúdo do relatório será inserido aqui -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal de simulação -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="mb-0"><i class="fas fa-terminal me-2"></i>Log da Simulação</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="terminal-output" class="mock-terminal"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar Ação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="confirmMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmAction">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alertContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../mock_flow_simulation.js"></script>
+    <script>
+        // Função para iniciar demonstração
+        function startDemo() {
+            if (window.mockFlow) {
+                window.mockFlow.runCompleteDemo();
+            }
+        }
+
+        // Carrega dados simulados quando a página é carregada
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar datas
+            const today = new Date();
+            const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+            
+            document.getElementById('endDate').value = today.toISOString().split('T')[0];
+            document.getElementById('startDate').value = lastMonth.toISOString().split('T')[0];
+
+            // Popula a tabela com relatórios simulados
+            populateReportsTable();
+        });
+
+        function populateReportsTable() {
+            const reportsTable = document.getElementById('reportsTable');
+            const mockReports = [
+                {
+                    id: 'report_001',
+                    nome: 'Relatório Geral - Janeiro 2025',
+                    tipo: 'resumo',
+                    dataCriacao: '15/01/2025 16:30',
+                    periodo: 'Janeiro 2025'
+                },
+                {
+                    id: 'report_002',
+                    nome: 'Análise de Participantes - Q4 2024',
+                    tipo: 'participantes',
+                    dataCriacao: '20/12/2024 14:15',
+                    periodo: 'Out-Dez 2024'
+                },
+                {
+                    id: 'report_003',
+                    nome: 'Métricas de Eficiência - 2024',
+                    tipo: 'metricas',
+                    dataCriacao: '10/01/2025 10:45',
+                    periodo: 'Ano 2024'
+                }
+            ];
+
+            reportsTable.innerHTML = '';
+            
+            mockReports.forEach(report => {
+                const row = document.createElement('tr');
+                
+                const typeBadge = report.tipo === 'resumo' ? 'bg-primary' : 
+                                 report.tipo === 'participantes' ? 'bg-success' : 
+                                 report.tipo === 'metricas' ? 'bg-info' : 'bg-secondary';
+                
+                row.innerHTML = `
+                    <td>${report.nome}</td>
+                    <td>
+                        <span class="badge ${typeBadge}">${report.tipo.toUpperCase()}</span>
+                    </td>
+                    <td>${report.dataCriacao}</td>
+                    <td>${report.periodo}</td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-outline-primary" onclick="viewReport('${report.id}')" title="Visualizar">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-outline-success" onclick="downloadReport('${report.id}')" title="Download">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="deleteReport('${report.id}')" title="Excluir">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                reportsTable.appendChild(row);
+            });
+        }
+
+        function generateReport() {
+            const reportType = document.getElementById('reportType').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            showNotification('Gerando relatório...', 'info');
+            
+            // Simula geração de relatório
+            setTimeout(() => {
+                displayGeneratedReport(reportType);
+                showNotification('Relatório gerado com sucesso!', 'success');
+            }, 2000);
+        }
+
+        function displayGeneratedReport(type) {
+            const reportContent = document.getElementById('reportContent');
+            
+            let content = '';
+            
+            switch(type) {
+                case 'resumo-ata':
+                    content = generateResumoAtaReport();
+                    break;
+                case 'resumo':
+                    content = generateResumoReport();
+                    break;
+                case 'participantes':
+                    content = generateParticipantesReport();
+                    break;
+                case 'topicos':
+                    content = generateTopicosReport();
+                    break;
+                case 'metricas':
+                    content = generateMetricasReport();
+                    break;
+                case 'comparativo':
+                    content = generateComparativoReport();
+                    break;
+                default:
+                    content = generateResumoAtaReport();
+            }
+            
+            reportContent.innerHTML = content;
+            reportContent.style.display = 'block';
+            
+            // Scroll para o relatório
+            reportContent.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function generateResumoAtaReport() {
+            return `
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5><i class="fas fa-file-alt"></i> Relatório de Resumo da Ata + Métricas de Qualidade</h5>
+                        <small>Documento: ABIFER_Reuniao_Conselho_Janeiro_2025.pdf | Processado em: ${new Date().toLocaleString('pt-BR')}</small>
+                    </div>
+                    <div class="card-body">
+                        
+                        <!-- 1. RESUMO GERAL -->
+                        <div class="mb-5">
+                            <h6><i class="fas fa-align-left text-primary"></i> 1. RESUMO GERAL</h6>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6>1.1. Resumo Curto da Ata</h6>
+                                    <p class="mb-3">
+                                        A reunião do Conselho da ABIFER tratou da aprovação do orçamento anual de 2025 no valor de R$ 2,5 milhões, 
+                                        contratação de auditoria externa e expansão do programa de capacitação para 200 colaboradores adicionais. 
+                                        Foram tomadas 3 decisões principais com alta taxa de consenso entre os 4 participantes presentes.
+                                    </p>
+                                    
+                                    <h6>1.2. Palavras-Chave Gerais</h6>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <span class="badge bg-primary">orçamento</span>
+                                        <span class="badge bg-primary">auditoria</span>
+                                        <span class="badge bg-primary">capacitação</span>
+                                        <span class="badge bg-secondary">aprovação</span>
+                                        <span class="badge bg-secondary">investimento</span>
+                                        <span class="badge bg-secondary">colaboradores</span>
+                                        <span class="badge bg-info">conselho</span>
+                                        <span class="badge bg-info">unanimidade</span>
+                                        <span class="badge bg-info">estratégia</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 1.2. RESUMO POR TÓPICOS -->
+                        <div class="mb-5">
+                            <h6><i class="fas fa-list text-success"></i> 1.2. RESUMO POR TÓPICOS</h6>
+                            
+                            <!-- Tópico 1 -->
+                            <div class="card mb-3">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">Tópico 1: Aprovação do Orçamento 2025</h6>
+                                    <span class="badge bg-success">25 min de discussão</span>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Resumo:</strong> Apresentação e aprovação por unanimidade do orçamento anual de R$ 2,5 milhões para 2025, 
+                                    com destaque para investimentos em tecnologia (30%) e capacitação (25%).</p>
+                                    <div class="mt-2">
+                                        <strong>Palavras-chave:</strong>
+                                        <span class="badge bg-warning ms-2">orçamento</span>
+                                        <span class="badge bg-warning">2025</span>
+                                        <span class="badge bg-warning">unanimidade</span>
+                                        <span class="badge bg-warning">tecnologia</span>
+                                        <span class="badge bg-warning">investimento</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tópico 2 -->
+                            <div class="card mb-3">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">Tópico 2: Contratação de Auditoria Externa</h6>
+                                    <span class="badge bg-info">15 min de discussão</span>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Resumo:</strong> Decisão de contratar empresa de auditoria externa para revisão anual 
+                                    dos processos financeiros e de compliance, com prazo para março de 2025.</p>
+                                    <div class="mt-2">
+                                        <strong>Palavras-chave:</strong>
+                                        <span class="badge bg-info ms-2">auditoria</span>
+                                        <span class="badge bg-info">externa</span>
+                                        <span class="badge bg-info">compliance</span>
+                                        <span class="badge bg-info">processos</span>
+                                        <span class="badge bg-info">março</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tópico 3 -->
+                            <div class="card mb-3">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">Tópico 3: Expansão do Programa de Capacitação</h6>
+                                    <span class="badge bg-warning">20 min de discussão</span>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Resumo:</strong> Aprovação da expansão do programa atual para incluir mais 200 colaboradores, 
+                                    com foco em habilidades digitais e gestão, previsto para abril de 2025.</p>
+                                    <div class="mt-2">
+                                        <strong>Palavras-chave:</strong>
+                                        <span class="badge bg-danger ms-2">capacitação</span>
+                                        <span class="badge bg-danger">expansão</span>
+                                        <span class="badge bg-danger">colaboradores</span>
+                                        <span class="badge bg-danger">habilidades</span>
+                                        <span class="badge bg-danger">digital</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. MÉTRICAS DE ADERÊNCIA/SEMELHANÇA -->
+                        <div class="mb-5">
+                            <h6><i class="fas fa-chart-line text-warning"></i> 2. MÉTRICAS DE QUALIDADE DO RESUMO</h6>
+                            
+                            <!-- 2.1. Métricas Totais -->
+                            <div class="card mb-3">
+                                <div class="card-header bg-warning text-dark">
+                                    <h6 class="mb-0">2.1. Métricas Totais do Resumo</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="text-center p-3 border rounded">
+                                                <h4 class="text-success">87.3%</h4>
+                                                <small>Cobertura de Conteúdo</small>
+                                                <div class="progress mt-2">
+                                                    <div class="progress-bar bg-success" style="width: 87.3%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="text-center p-3 border rounded">
+                                                <h4 class="text-info">92.1%</h4>
+                                                <small>Precisão do Resumo</small>
+                                                <div class="progress mt-2">
+                                                    <div class="progress-bar bg-info" style="width: 92.1%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="text-center p-3 border rounded">
+                                                <h4 class="text-warning">84.7%</h4>
+                                                <small>Coesão Semântica</small>
+                                                <div class="progress mt-2">
+                                                    <div class="progress-bar bg-warning" style="width: 84.7%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="text-center p-3 border rounded">
+                                                <h4 class="text-primary">89.5%</h4>
+                                                <small>Qualidade Geral</small>
+                                                <div class="progress mt-2">
+                                                    <div class="progress-bar bg-primary" style="width: 89.5%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2.2. Métricas Específicas por Tópico -->
+                            <div class="card">
+                                <div class="card-header bg-info text-white">
+                                    <h6 class="mb-0">2.2. Métricas Específicas por Tópico</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tópico</th>
+                                                    <th>Cobertura</th>
+                                                    <th>Precisão</th>
+                                                    <th>Coesão</th>
+                                                    <th>Qualidade</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Orçamento 2025</td>
+                                                    <td><span class="badge bg-success">91.2%</span></td>
+                                                    <td><span class="badge bg-success">94.8%</span></td>
+                                                    <td><span class="badge bg-success">88.3%</span></td>
+                                                    <td><span class="badge bg-success">91.4%</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Auditoria Externa</td>
+                                                    <td><span class="badge bg-info">85.7%</span></td>
+                                                    <td><span class="badge bg-info">89.1%</span></td>
+                                                    <td><span class="badge bg-warning">82.4%</span></td>
+                                                    <td><span class="badge bg-info">85.7%</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Programa Capacitação</td>
+                                                    <td><span class="badge bg-info">88.9%</span></td>
+                                                    <td><span class="badge bg-success">92.3%</span></td>
+                                                    <td><span class="badge bg-info">86.1%</span></td>
+                                                    <td><span class="badge bg-info">89.1%</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. CLASSIFICAÇÃO DA QUALIDADE -->
+                        <div class="mb-4">
+                            <h6><i class="fas fa-star text-warning"></i> 3. CLASSIFICAÇÃO DA QUALIDADE DO RESUMO</h6>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-3 text-center">
+                                            <div class="display-4 text-success">A-</div>
+                                            <h5 class="text-success">EXCELENTE</h5>
+                                            <p class="small text-muted">Qualidade Geral: 89.5%</p>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <h6>Análise da Classificação:</h6>
+                                            <ul class="list-unstyled">
+                                                <li><i class="fas fa-check-circle text-success me-2"></i><strong>Pontos Fortes:</strong> Alta precisão (92.1%) e boa cobertura de conteúdo (87.3%)</li>
+                                                <li><i class="fas fa-check-circle text-success me-2"></i><strong>Estrutura:</strong> Resumo bem organizado com tópicos claramente definidos</li>
+                                                <li><i class="fas fa-check-circle text-success me-2"></i><strong>Palavras-chave:</strong> Extração adequada e relevante para cada seção</li>
+                                                <li><i class="fas fa-exclamation-triangle text-warning me-2"></i><strong>Melhorias:</strong> Coesão semântica pode ser aprimorada (84.7%)</li>
+                                            </ul>
+                                            
+                                            <div class="mt-3">
+                                                <h6>Recomendações:</h6>
+                                                <div class="alert alert-info">
+                                                    <ul class="mb-0">
+                                                        <li>Aumentar conexões semânticas entre os tópicos</li>
+                                                        <li>Incluir mais contexto temporal nas decisões</li>
+                                                        <li>Expandir palavras-chave com sinônimos relevantes</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detalhes Técnicos -->
+                        <div class="mt-4">
+                            <details class="border rounded p-3">
+                                <summary class="fw-bold text-muted" style="cursor: pointer;">
+                                    <i class="fas fa-cog me-2"></i>Detalhes Técnicos do Processamento
+                                </summary>
+                                <div class="mt-3">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Algoritmos Utilizados:</h6>
+                                            <ul class="small">
+                                                <li>TF-IDF para extração de palavras-chave</li>
+                                                <li>BERT para análise semântica</li>
+                                                <li>TextRank para sumarização</li>
+                                                <li>Cosine Similarity para métricas de coesão</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Parâmetros de Qualidade:</h6>
+                                            <ul class="small">
+                                                <li>Taxa de compressão: 15% do texto original</li>
+                                                <li>Threshold de relevância: 0.75</li>
+                                                <li>Máximo de palavras-chave por tópico: 5</li>
+                                                <li>Tempo de processamento: 2.3 segundos</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-success me-2" onclick="exportReport('pdf')">
+                            <i class="fas fa-file-pdf"></i> Exportar PDF
+                        </button>
+                        <button class="btn btn-primary me-2" onclick="exportReport('word')">
+                            <i class="fas fa-file-word"></i> Exportar Word
+                        </button>
+                        <button class="btn btn-info me-2" onclick="exportReport('json')">
+                            <i class="fas fa-code"></i> Exportar JSON
+                        </button>
+                        <button class="btn btn-secondary" onclick="window.location.href='analytics.html'">
+                            <i class="fas fa-chart-line"></i> Ver Analytics Detalhado
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateResumoReport() {
+            return `
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5><i class="fas fa-chart-bar"></i> Relatório Resumo Geral</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary">15</h3>
+                                        <p>Documentos Analisados</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-success">47</h3>
+                                        <p>Participantes Únicos</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-info">128</h3>
+                                        <p>Tópicos Discutidos</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-warning">95 min</h3>
+                                        <p>Duração Média</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Tópicos Mais Discutidos</h6>
+                                <div class="list-group">
+                                    <div class="list-group-item d-flex justify-content-between">
+                                        <span>Questões Financeiras</span>
+                                        <span class="badge bg-primary">89%</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between">
+                                        <span>Planejamento Estratégico</span>
+                                        <span class="badge bg-primary">67%</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between">
+                                        <span>Recursos Humanos</span>
+                                        <span class="badge bg-primary">45%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Participantes Mais Ativos</h6>
+                                <div class="list-group">
+                                    <div class="list-group-item d-flex justify-content-between">
+                                        <span>João Silva</span>
+                                        <span class="badge bg-success">92%</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between">
+                                        <span>Maria Santos</span>
+                                        <span class="badge bg-success">88%</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between">
+                                        <span>Pedro Oliveira</span>
+                                        <span class="badge bg-success">85%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-success me-2" onclick="exportReport('pdf')">
+                            <i class="fas fa-file-pdf"></i> Exportar PDF
+                        </button>
+                        <button class="btn btn-primary me-2" onclick="exportReport('excel')">
+                            <i class="fas fa-file-excel"></i> Exportar Excel
+                        </button>
+                        <button class="btn btn-info" onclick="window.location.href='analytics.html'">
+                            <i class="fas fa-chart-line"></i> Ver Analytics
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateParticipantesReport() {
+            return `
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5><i class="fas fa-users"></i> Relatório de Participantes</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Cargo</th>
+                                        <th>Reuniões</th>
+                                        <th>Participação</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>João Silva</td>
+                                        <td>Presidente</td>
+                                        <td>12/13</td>
+                                        <td>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-success" style="width: 92%">92%</div>
+                                            </div>
+                                        </td>
+                                        <td><span class="badge bg-success">Ativo</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Maria Santos</td>
+                                        <td>Vice-Presidente</td>
+                                        <td>11/13</td>
+                                        <td>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-success" style="width: 88%">88%</div>
+                                            </div>
+                                        </td>
+                                        <td><span class="badge bg-success">Ativo</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Carlos Lima</td>
+                                        <td>Diretor Técnico</td>
+                                        <td>8/13</td>
+                                        <td>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-warning" style="width: 62%">62%</div>
+                                            </div>
+                                        </td>
+                                        <td><span class="badge bg-warning">Moderado</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateTopicosReport() {
+            return `
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5><i class="fas fa-comments"></i> Relatório de Tópicos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Questões Financeiras</h6>
+                                        <p class="text-muted">Discussões sobre orçamento, investimentos e resultados financeiros</p>
+                                        <div class="d-flex justify-content-between">
+                                            <small>12 reuniões</small>
+                                            <span class="badge bg-primary">Alta relevância</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Planejamento Estratégico</h6>
+                                        <p class="text-muted">Definição de metas e objetivos organizacionais</p>
+                                        <div class="d-flex justify-content-between">
+                                            <small>9 reuniões</small>
+                                            <span class="badge bg-success">Média relevância</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateMetricasReport() {
+            return `
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h5><i class="fas fa-chart-line"></i> Relatório de Métricas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="card bg-primary text-white">
+                                    <div class="card-body text-center">
+                                        <h4>95 min</h4>
+                                        <p>Duração Média</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-success text-white">
+                                    <div class="card-body text-center">
+                                        <h4>78%</h4>
+                                        <p>Taxa de Participação</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-info text-white">
+                                    <div class="card-body text-center">
+                                        <h4>85%</h4>
+                                        <p>Eficiência</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-area fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Gráfico de tendências seria exibido aqui</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateComparativoReport() {
+            return `
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h5><i class="fas fa-balance-scale"></i> Relatório Comparativo</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Período Atual</h6>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Reuniões realizadas</span>
+                                        <span class="badge bg-primary">15</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Duração média</span>
+                                        <span class="badge bg-info">95 min</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Taxa de presença</span>
+                                        <span class="badge bg-success">78%</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Período Anterior</h6>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Reuniões realizadas</span>
+                                        <span class="badge bg-primary">12</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Duração média</span>
+                                        <span class="badge bg-info">102 min</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Taxa de presença</span>
+                                        <span class="badge bg-warning">72%</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function viewReport(reportId) {
+            showNotification('Visualizando relatório: ' + reportId, 'info');
+            // Simula visualização do relatório
+            generateReport();
+        }
+
+        function downloadReport(reportId) {
+            showNotification('Download do relatório iniciado: ' + reportId, 'success');
+            // Simula download
+        }
+
+        function deleteReport(reportId) {
+            const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+            document.getElementById('confirmMessage').textContent = 'Tem certeza que deseja excluir este relatório?';
+            
+            document.getElementById('confirmAction').onclick = function() {
+                modal.hide();
+                
+                const row = document.querySelector(`button[onclick="deleteReport('${reportId}')"]`).closest('tr');
+                if (row) {
+                    row.remove();
+                    showNotification('Relatório excluído com sucesso!', 'success');
+                }
+            };
+            
+            modal.show();
+        }
+
+        function exportReport(format) {
+            showNotification(`Exportando relatório em ${format.toUpperCase()}...`, 'info');
+            
+            if (format.toLowerCase() === 'pdf') {
+                // Simula download do PDF real
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.href = '../assets/Exemplo_Relatorio_Resumo_Ata_Metricas.pdf';
+                    link.download = `Relatorio_Resumo_Ata_Metricas_${new Date().toISOString().slice(0,10)}.pdf`;
+                    link.target = '_blank';
+                    
+                    // Tenta fazer download, se falhar abre em nova aba
+                    try {
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        showNotification(`Relatório PDF baixado com sucesso!`, 'success');
+                    } catch (error) {
+                        window.open(link.href, '_blank');
+                        showNotification(`Relatório PDF aberto em nova aba!`, 'success');
+                    }
+                }, 1000);
+            } else {
+                // Para outros formatos, apenas simula
+                setTimeout(() => {
+                    showNotification(`Relatório exportado com sucesso em ${format.toUpperCase()}!`, 'success');
+                }, 1500);
+            }
+        }
+
+        function showNotification(message, type) {
+            const container = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show mb-3`;
+            alert.role = 'alert';
+            alert.innerHTML = message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+            container.appendChild(alert);
+            setTimeout(() => {
+                bootstrap.Alert.getOrCreateInstance(alert).close();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

@@ -283,7 +283,7 @@ export class AnalysisController {
       }
 
       // Verificar se pode ser excluída
-      if (mockAnalysis.status === AnalysisStatus.IN_PROGRESS) {
+      if (mockAnalysis.status === AnalysisStatus.PENDING) {
         return res.status(400).json({ 
           error: 'Não é possível excluir análise em processamento' 
         });
@@ -337,7 +337,7 @@ export class AnalysisController {
       }
 
       // Verificar se pode ser reprocessada
-      if (mockAnalysis.status === AnalysisStatus.IN_PROGRESS) {
+      if (mockAnalysis.status === AnalysisStatus.PENDING) {
         return res.status(400).json({ 
           error: 'Análise já está em processamento' 
         });

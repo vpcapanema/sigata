@@ -2,6 +2,9 @@
   "folders": [
     {
       "path": "."
+    },
+    {
+      "path": "../DEMO_PROCESSADOR_ATA_REUNIAO/simulacao"
     }
   ],
   "settings": {
@@ -22,7 +25,8 @@
         "group": "PLI Databases",
         "timezone": "America/Sao_Paulo"
       }
-    ]
+    ],
+    "powershell.cwd": "SIGATA"
   },
   "extensions": {
     "recommendations": [

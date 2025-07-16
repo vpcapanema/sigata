@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentos - Sistema de Análise de Atas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos principais */
+        .mock-terminal {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+            border: 1px solid #333;
+        }
+        .processing-animation {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .demo-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-file-alt me-2"></i>
+                Sistema de Análise de Atas
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i>Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="upload.html">
+                            <i class="fas fa-upload me-1"></i>Upload
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="documents.html">
+                            <i class="fas fa-folder me-1"></i>Documentos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reports.html">
+                            <i class="fas fa-chart-bar me-1"></i>Relatórios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="analytics.html">
+                            <i class="fas fa-analytics me-1"></i>Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-sm demo-btn ms-2" onclick="startDemo()">
+                            <i class="fas fa-play me-1"></i>Demo
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-folder me-2"></i>
+                            Documentos Processados
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- Filtros -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="searchFilter" placeholder="Buscar documentos...">
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="typeFilter" aria-label="Filtrar por tipo">
+                                    <option value="">Todos os tipos</option>
+                                    <option value="pdf">PDF</option>
+                                    <option value="docx">Word</option>
+                                    <option value="txt">Texto</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="statusFilter" aria-label="Filtrar por status">
+                                    <option value="">Todos os status</option>
+                                    <option value="processado">Processado</option>
+                                    <option value="pendente">Pendente</option>
+                                    <option value="erro">Erro</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-outline-secondary w-100" id="clearFilters">
+                                    <i class="fas fa-times"></i> Limpar
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Estatísticas -->
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-primary" id="totalDocs">15</h5>
+                                        <p class="card-text">Total de Documentos</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-success" id="processedDocs">12</h5>
+                                        <p class="card-text">Processados</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-warning" id="pendingDocs">2</h5>
+                                        <p class="card-text">Pendentes</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-danger" id="errorDocs">1</h5>
+                                        <p class="card-text">Com Erro</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Lista de Documentos -->
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Nome do Arquivo</th>
+                                        <th>Tipo</th>
+                                        <th>Tamanho</th>
+                                        <th>Data Upload</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>                                <tbody id="documentsTable">
+                                    <!-- Documentos simulados serão inseridos aqui pelo JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Paginação removida para simulação -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal de simulação -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="mb-0"><i class="fas fa-terminal me-2"></i>Log da Simulação</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="terminal-output" class="mock-terminal"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar Ação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="confirmMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmAction">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alertContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../mock_flow_simulation.js"></script>
+    <script>
+        // Função para iniciar demonstração
+        function startDemo() {
+            if (window.mockFlow) {
+                window.mockFlow.runCompleteDemo();
+            }
+        }
+
+        // Carrega dados simulados quando a página é carregada
+        document.addEventListener('DOMContentLoaded', function() {
+            // Popula a tabela com documentos simulados
+            populateDocumentsTable();
+            
+            // Event listeners para filtros
+            document.getElementById('searchFilter').addEventListener('input', filterDocuments);
+            document.getElementById('typeFilter').addEventListener('change', filterDocuments);
+            document.getElementById('statusFilter').addEventListener('change', filterDocuments);
+            document.getElementById('clearFilters').addEventListener('click', clearFilters);
+        });
+
+        function populateDocumentsTable() {
+            const documentsTable = document.getElementById('documentsTable');
+            const mockDocuments = [
+                {
+                    id: 'doc_001',
+                    nome: 'ABIFER_Reuniao_Conselho_Janeiro_2025.pdf',
+                    tipo: 'pdf',
+                    tamanho: '2.3 MB',
+                    dataUpload: '15/01/2025 14:30',
+                    status: 'processado'
+                },
+                {
+                    id: 'doc_002',
+                    nome: 'Ata_Assembleia_Geral_Dezembro_2024.pdf',
+                    tipo: 'pdf',
+                    tamanho: '1.8 MB',
+                    dataUpload: '20/12/2024 10:15',
+                    status: 'processado'
+                },
+                {
+                    id: 'doc_003',
+                    nome: 'Reuniao_Diretoria_Novembro_2024.pdf',
+                    tipo: 'pdf',
+                    tamanho: '3.1 MB',
+                    dataUpload: '25/11/2024 16:45',
+                    status: 'processado'
+                },
+                {
+                    id: 'doc_004',
+                    nome: 'Comite_Tecnico_Outubro_2024.pdf',
+                    tipo: 'pdf',
+                    tamanho: '1.5 MB',
+                    dataUpload: '10/10/2024 09:20',
+                    status: 'pendente'
+                },
+                {
+                    id: 'doc_005',
+                    nome: 'Conselho_Fiscal_Setembro_2024.pdf',
+                    tipo: 'pdf',
+                    tamanho: '900 KB',
+                    dataUpload: '15/09/2024 11:30',
+                    status: 'erro'
+                }
+            ];
+
+            documentsTable.innerHTML = '';
+            
+            mockDocuments.forEach(doc => {
+                const row = document.createElement('tr');
+                row.dataset.id = doc.id;
+                row.dataset.type = doc.tipo;
+                row.dataset.status = doc.status;
+                
+                const statusBadge = doc.status === 'processado' ? 'bg-success' : 
+                                   doc.status === 'pendente' ? 'bg-warning' : 'bg-danger';
+                const statusText = doc.status === 'processado' ? 'Processado' : 
+                                  doc.status === 'pendente' ? 'Pendente' : 'Erro';
+                
+                row.innerHTML = `
+                    <td>
+                        <i class="fas fa-file-pdf text-danger me-2"></i>
+                        ${doc.nome}
+                    </td>
+                    <td>
+                        <span class="badge bg-secondary">${doc.tipo.toUpperCase()}</span>
+                    </td>
+                    <td>${doc.tamanho}</td>
+                    <td>${doc.dataUpload}</td>
+                    <td>
+                        <span class="badge ${statusBadge}">${statusText}</span>
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            ${doc.status === 'processado' ? `
+                                <button class="btn btn-outline-primary" onclick="viewDocument('${doc.id}')" title="Visualizar">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-outline-info" onclick="window.location.href='reports.html'" title="Relatório">
+                                    <i class="fas fa-chart-line"></i>
+                                </button>
+                            ` : ''}
+                            ${doc.status === 'pendente' ? `
+                                <button class="btn btn-outline-warning" onclick="processDocument('${doc.id}')" title="Processar">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            ` : ''}
+                            <button class="btn btn-outline-danger" onclick="deleteDocument('${doc.id}')" title="Excluir">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                documentsTable.appendChild(row);
+            });
+        }
+
+        // Função de notificações
+        function showNotification(message, type) {
+            const container = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show mb-3`;
+            alert.role = 'alert';
+            alert.innerHTML = message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+            container.appendChild(alert);
+            setTimeout(() => {
+                bootstrap.Alert.getOrCreateInstance(alert).close();
+            }, 5000);
+        }
+
+        function filterDocuments() {
+            const searchTerm = document.getElementById('searchFilter').value.toLowerCase();
+            const typeFilter = document.getElementById('typeFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const rows = document.querySelectorAll('#documentsTable tr');
+
+            rows.forEach(row => {
+                const fileName = row.cells[0].textContent.toLowerCase();
+                const type = row.dataset.type;
+                const status = row.dataset.status;
+
+                const matchesSearch = fileName.includes(searchTerm);
+                const matchesType = !typeFilter || type === typeFilter;
+                const matchesStatus = !statusFilter || status === statusFilter;
+
+                row.style.display = matchesSearch && matchesType && matchesStatus ? '' : 'none';
+            });
+        }
+
+        function clearFilters() {
+            document.getElementById('searchFilter').value = '';
+            document.getElementById('typeFilter').value = '';
+            document.getElementById('statusFilter').value = '';
+            filterDocuments();
+        }
+
+        function viewDocument(docId) {
+            if (window.mockFlow) {
+                window.mockFlow.viewDocument(docId);
+            } else {
+                showNotification('Visualizando documento simulado: ' + docId, 'info');
+            }
+        }
+
+        function processDocument(docId) {
+            showNotification('Iniciando processamento do documento...', 'info');
+            
+            // Simula processamento
+            setTimeout(() => {
+                const row = document.querySelector(`tr[data-id="${docId}"]`);
+                if (row) {
+                    row.dataset.status = 'processado';
+                    const statusCell = row.cells[4];
+                    statusCell.innerHTML = '<span class="badge bg-success">Processado</span>';
+                    
+                    // Atualiza botões de ação
+                    const actionsCell = row.cells[5];
+                    actionsCell.innerHTML = `
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-outline-primary" onclick="viewDocument('${docId}')" title="Visualizar">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-outline-info" onclick="window.location.href='reports.html'" title="Relatório">
+                                <i class="fas fa-chart-line"></i>
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="deleteDocument('${docId}')" title="Excluir">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                }
+                
+                showNotification('Documento processado com sucesso!', 'success');
+                
+                // Atualiza estatísticas
+                const pendingDocs = document.getElementById('pendingDocs');
+                const processedDocs = document.getElementById('processedDocs');
+                if (pendingDocs && processedDocs) {
+                    pendingDocs.textContent = parseInt(pendingDocs.textContent) - 1;
+                    processedDocs.textContent = parseInt(processedDocs.textContent) + 1;
+                }
+            }, 2000);
+        }
+
+        function deleteDocument(docId) {
+            const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+            document.getElementById('confirmMessage').textContent = 'Tem certeza que deseja excluir este documento? Esta ação não pode ser desfeita.';
+            
+            document.getElementById('confirmAction').onclick = function() {
+                modal.hide();
+                
+                const row = document.querySelector(`tr[data-id="${docId}"]`);
+                if (row) {
+                    row.remove();
+                    showNotification('Documento excluído com sucesso!', 'success');
+                    
+                    // Atualiza estatísticas
+                    const totalDocs = document.getElementById('totalDocs');
+                    if (totalDocs) {
+                        totalDocs.textContent = parseInt(totalDocs.textContent) - 1;
+                    }
+                }
+            };
+            
+            modal.show();
+        }
+    </script>
+</body>
+</html>

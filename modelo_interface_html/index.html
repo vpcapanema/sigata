@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Análise de Atas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 0;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            color: white;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .stat-card:hover { 
+            transform: translateY(-5px); 
+        }
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        .feature-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegação -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-file-alt"></i> Sistema de Análise de Atas
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">
+                            <i class="fas fa-home"></i> Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="upload.html">
+                            <i class="fas fa-upload"></i> Upload
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documents.html">
+                            <i class="fas fa-folder"></i> Documentos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reports.html">
+                            <i class="fas fa-chart-line"></i> Relatórios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="analytics.html">
+                            <i class="fas fa-analytics"></i> Analytics
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Principal -->
+    <div class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold text-white mb-4">
+                        SIGATA - Sistema Integrado de Gestão de Atas
+                    </h1>
+                    <p class="lead text-white-50 mb-4">
+                        Automatize o processamento e análise de atas de reuniões. 
+                        Extraia informações relevantes e gere relatórios estruturados.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="upload.html" class="btn btn-primary btn-lg">
+                            <i class="fas fa-upload"></i> Fazer Upload
+                        </a>
+                        <a href="documents.html" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-folder"></i> Ver Documentos
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-number" id="totalDocs">0</div>
+                            <div class="stat-label">Documentos</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-number" id="processedDocs">0</div>
+                            <div class="stat-label">Processados</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-number" id="totalParticipants">0</div>
+                            <div class="stat-label">Participantes</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-number" id="processingRate">0%</div>
+                            <div class="stat-label">Taxa Processamento</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Funcionalidades -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-upload"></i>
+                    </div>
+                    <h3>Upload de Documentos</h3>
+                    <p>Faça upload de atas em formato PDF, Word ou texto. 
+                       Suporte a múltiplos arquivos simultâneos.</p>
+                    <a href="upload.html" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> Fazer Upload
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Processamento Inteligente</h3>
+                    <p>Extração automática de informações relevantes usando 
+                       técnicas de processamento de linguagem natural.</p>
+                    <a href="analytics.html" class="btn btn-primary">
+                        <i class="fas fa-chart-line"></i> Ver Analytics
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Relatórios Avançados</h3>
+                    <p>Geração de relatórios detalhados com métricas, 
+                       gráficos e insights sobre as reuniões.</p>
+                    <a href="reports.html" class="btn btn-primary">
+                        <i class="fas fa-file-alt"></i> Ver Relatórios
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Documentos Recentes -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="section-title">Documentos Recentes</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nome do Arquivo</th>
+                                <th>Tipo</th>
+                                <th>Status</th>
+                                <th>Data Upload</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentDocuments">
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Carregando...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="documents.html" class="btn btn-outline-primary">
+                        <i class="fas fa-list"></i> Ver Todos os Documentos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Sistema de Análise de Atas</h5>
+                    <p>Automatização inteligente para processamento de atas de reuniões.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Recursos</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check"></i> Processamento de PDF, Word e TXT</li>
+                        <li><i class="fas fa-check"></i> Análise de linguagem natural</li>
+                        <li><i class="fas fa-check"></i> Relatórios em múltiplos formatos</li>
+                        <li><i class="fas fa-check"></i> Interface web e linha de comando</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2025 Sistema de Análise de Atas. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script>
+        // Dados simulados
+        const mockData = {
+            stats: {
+                totalDocuments: 47,
+                processedToday: 8,
+                avgProcessingTime: 95,
+                successRate: 98.2
+            },
+            recentDocs: [
+                {
+                    id: 1,
+                    nome: 'ABIFER_Reuniao_Conselho_Janeiro_2025.pdf',
+                    status: 'processado',
+                    dataUpload: '2025-01-15',
+                    tamanho: '2.3 MB'
+                },
+                {
+                    id: 2,
+                    nome: 'Ata_Diretoria_Dezembro_2024.pdf',
+                    status: 'processado',
+                    dataUpload: '2024-12-20',
+                    tamanho: '1.8 MB'
+                },
+                {
+                    id: 3,
+                    nome: 'Reuniao_Emergencial_Janeiro.docx',
+                    status: 'pendente',
+                    dataUpload: '2025-01-08',
+                    tamanho: '1.2 MB'
+                }
+            ]
+        };
+
+        // Carrega estatísticas simuladas
+        function loadStats() {
+            // Atualiza estatísticas nos cards
+            document.getElementById('totalDocs').textContent = mockData.stats.totalDocuments;
+            document.getElementById('processedDocs').textContent = mockData.stats.processedToday;
+            document.getElementById('totalParticipants').textContent = '95';
+            document.getElementById('processingRate').textContent = `${mockData.stats.successRate}%`;
+        }
+
+        // Carrega documentos recentes simulados
+        function loadRecentDocuments() {
+            const tbody = document.getElementById('recentDocuments');
+            if (tbody) {
+                tbody.innerHTML = '';
+                
+                mockData.recentDocs.forEach(doc => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <i class="fas fa-file-pdf text-danger me-2"></i>
+                            ${doc.nome}
+                        </td>
+                        <td>PDF</td>
+                        <td>${getStatusBadge(doc.status)}</td>
+                        <td>${new Date(doc.dataUpload).toLocaleDateString('pt-BR')}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-outline-primary btn-sm" onclick="viewDocument(${doc.id})" title="Visualizar">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-outline-info btn-sm" onclick="downloadDocument(${doc.id})" title="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                ${doc.status === 'pendente' ? 
+                                    `<button class="btn btn-outline-success btn-sm" onclick="processDocument(${doc.id})" title="Processar">
+                                        <i class="fas fa-cog"></i>
+                                    </button>` : ''}
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+        }
+
+        function getStatusBadge(status) {
+            const badges = {
+                'pendente': '<span class="badge bg-warning">Pendente</span>',
+                'processando': '<span class="badge bg-info">Processando</span>',
+                'processado': '<span class="badge bg-success">Processado</span>',
+                'erro': '<span class="badge bg-danger">Erro</span>'
+            };
+            return badges[status] || '<span class="badge bg-secondary">Desconhecido</span>';
+        }
+
+        function viewDocument(id) {
+            window.location.href = `documents.html#doc-${id}`;
+        }
+
+        function downloadDocument(id) {
+            alert('Download simulado - arquivo seria baixado na implementação real');
+        }
+
+        function processDocument(id) {
+            if (confirm('Deseja processar este documento?')) {
+                const doc = mockData.recentDocs.find(d => d.id === id);
+                if (doc) {
+                    doc.status = 'processando';
+                    loadRecentDocuments();
+                    
+                    setTimeout(() => {
+                        doc.status = 'processado';
+                        loadRecentDocuments();
+                        alert('Documento processado com sucesso!');
+                    }, 3000);
+                }
+            }
+        }
+
+        // Inicialização quando a página carrega
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                loadStats();
+                loadRecentDocuments();
+            }, 500);
+        });
+    </script>
+</body>
+</html>

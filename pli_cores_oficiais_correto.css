@@ -1,0 +1,174 @@
+/* ========================================
+   IDENTIDADE VISUAL PLI - CORES OFICIAIS
+   Extraído de: conteudo_identidade_visual_pli.jpg
+======================================== */
+
+:root {
+    /* CORES PRINCIPAIS PLI */
+    --pli-azul-escuro: #0f203e;        /* Azul institucional escuro */
+    --pli-azul-escuro-rgb: 15, 32, 62;
+    
+    --pli-verde-claro: #bfe5b2;        /* Verde claro */
+    --pli-verde-claro-rgb: 191, 229, 178;
+    
+    --pli-verde-principal: #5cb65c;    /* Verde principal */
+    --pli-verde-principal-rgb: 92, 182, 92;
+    
+    --pli-azul-medio: #244b72;         /* Azul médio */
+    --pli-azul-medio-rgb: 36, 75, 114;
+    
+    --pli-azul-claro: #afb4c7;        /* Azul claro */
+    --pli-azul-claro-rgb: 175, 180, 199;
+    
+    --pli-preto: #171e31;             /* Preto institucional */
+    --pli-preto-rgb: 23, 30, 49;
+
+    /* CORES FUNCIONAIS PLI */
+    --pli-primary: var(--pli-azul-escuro);
+    --pli-secondary: var(--pli-azul-medio);
+    --pli-accent: var(--pli-verde-principal);
+    --pli-text: var(--pli-preto);
+    
+    /* GRADIENTES PLI OFICIAIS */
+    
+    /* Gradiente Principal: Verde claro → Preto (passando pelas intermediárias) */
+    --pli-gradient-main: linear-gradient(135deg, 
+        var(--pli-verde-claro) 0%,      /* Verde claro */
+        var(--pli-verde-principal) 25%, /* Verde médio */
+        var(--pli-azul-medio) 50%,      /* Azul médio */
+        var(--pli-azul-escuro) 75%,     /* Azul escuro */
+        var(--pli-preto) 100%           /* Preto */
+    );
+    
+    /* Gradiente Secundário: Verde principal → Azul (passando pelas secundárias) */
+    --pli-gradient-secondary: linear-gradient(135deg,
+        var(--pli-verde-principal) 0%,  /* Verde principal */
+        var(--pli-verde-claro) 33%,     /* Verde claro */
+        var(--pli-azul-claro) 66%,      /* Azul claro */
+        var(--pli-azul-medio) 100%      /* Azul médio */
+    );
+    
+    /* ELEMENTOS DE APOIO */
+    --pli-background: #ffffff;
+    --pli-surface: #f8f9fa;
+    --pli-border: #e9ecef;
+    --pli-branco-oficial: #f9ffff;
+    --pli-cinza-neutro: #a7b0b7;
+}
+
+/* CLASSES UTILITÁRIAS PLI */
+.pli-primary { 
+    background-color: var(--pli-primary); 
+    color: white; 
+}
+
+.pli-secondary { 
+    background-color: var(--pli-secondary); 
+    color: white; 
+}
+
+.pli-accent { 
+    background-color: var(--pli-accent); 
+    color: white; 
+}
+
+/* CLASSES DE GRADIENTES PLI */
+.pli-gradient-main { 
+    background: var(--pli-gradient-main);
+    color: white;
+}
+
+.pli-gradient-secondary { 
+    background: var(--pli-gradient-secondary);
+    color: white;
+}
+
+/* TIPOGRAFIA PLI OFICIAL - MONTSERRAT */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+.pli-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700; /* Bold */
+    color: var(--pli-primary);
+}
+
+.pli-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400; /* Regular */
+    color: var(--pli-text);
+    line-height: 1.6;
+}
+
+/* VARIAÇÕES MONTSERRAT PLI */
+.pli-montserrat-light {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+.pli-montserrat-regular {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+.pli-montserrat-medium {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.pli-montserrat-semibold {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+
+.pli-montserrat-bold {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.pli-montserrat-extrabold {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+}
+
+/* APLICAÇÕES ESPECÍFICAS */
+.pli-header {
+    background: var(--pli-gradient-main);
+    color: white;
+    padding: 2rem;
+    border-radius: 0 0 20px 20px;
+}
+
+.pli-card {
+    background: var(--pli-gradient-secondary);
+    color: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.pli-button {
+    background: var(--pli-gradient-secondary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.pli-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* NAVBAR PLI */
+.pli-navbar {
+    background: var(--pli-gradient-main);
+    color: white;
+}
+
+/* FOOTER PLI */
+.pli-footer {
+    background: var(--pli-azul-escuro);
+    color: white;
+}

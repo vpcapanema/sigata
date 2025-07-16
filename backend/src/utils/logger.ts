@@ -49,11 +49,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Stream para Morgan
-logger.stream = {
+const stream = {
   write: (message: string) => {
     logger.info(message.trim());
   },
 };
+
+// Adicionar stream ao logger
+(logger as any).stream = stream;
 
 export { logger };
 

@@ -1,4 +1,3 @@
-import { Report } from '../types';
 import logger from '../utils/logger';
 
 // Interface para Request estendido com user

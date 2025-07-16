@@ -1,0 +1,39 @@
+🏛️  ANALISADOR DE IDENTIDADE VISUAL PLI
+==================================================
+📁 Analisando: IDENTIDADE_VISUAL_PLI\conteudo_identidade_visual_pli.jpg
+✅ Imagem carregada: (867, 594) pixels
+📊 Pixels analisados: 514998 total, 57240 filtrados
+
+🎨 CORES DOMINANTES DA IDENTIDADE VISUAL PLI:
+============================================================
+ 1. Azul            | RGB(np.uint8(15), np.uint8(32), np.uint8(62)) | #0f203e |   3.0%
+ 2. Verde           | RGB(np.uint8(191), np.uint8(229), np.uint8(178)) | #bfe5b2 |   2.7%
+ 3. Verde           | RGB(np.uint8(92), np.uint8(182), np.uint8(92)) | #5cb65c |   2.3%
+ 4. Branco          | RGB(np.uint8(249), np.uint8(255), np.uint8(255)) | #f9ffff |   2.1%
+ 5. Azul            | RGB(np.uint8(36), np.uint8(75), np.uint8(114)) | #244b72 |   1.6%
+ 6. Cinza           | RGB(np.uint8(167), np.uint8(176), np.uint8(183)) | #a7b0b7 |   0.9%
+ 7. Azul            | RGB(np.uint8(175), np.uint8(180), np.uint8(199)) | #afb4c7 |   0.9%
+ 8. Preto           | RGB(np.uint8(23), np.uint8(30), np.uint8(49)) | #171e31 |   0.9%
+ 9. Branco          | RGB(np.uint8(251), np.uint8(255), np.uint8(250)) | #fbfffa |   0.9%
+10. Branco          | RGB(np.uint8(248), np.uint8(255), np.uint8(255)) | #f8ffff |   0.7%
+11. Branco          | RGB(np.uint8(255), np.uint8(255), np.uint8(250)) | #fffffa |   0.7%
+12. Azul            | RGB(np.uint8(37), np.uint8(75), np.uint8(114)) | #254b72 |   0.5%
+13. Branco          | RGB(np.uint8(254), np.uint8(255), np.uint8(250)) | #fefffa |   0.5%
+14. Branco          | RGB(np.uint8(241), np.uint8(242), np.uint8(246)) | #f1f2f6 |   0.5%
+15. Verde           | RGB(np.uint8(92), np.uint8(183), np.uint8(90)) | #5cb75a |   0.5%
+
+📋 AS 4 CORES PRINCIPAIS DO PLI:
+==================================================
+🎨 PALETA OFICIAL PLI COMPLETA:
+
+🎯 CORES PRINCIPAIS:
+   1. Azul            #0f203e  RGB(np.uint8(15), np.uint8(32), np.uint8(62)) (3.0%)
+   2. Verde           #bfe5b2  RGB(np.uint8(191), np.uint8(229), np.uint8(178)) (2.7%)
+   3. Verde           #5cb65c  RGB(np.uint8(92), np.uint8(182), np.uint8(92)) (2.3%)
+   4. Azul            #244b72  RGB(np.uint8(36), np.uint8(75), np.uint8(114)) (1.6%)
+   5. Azul            #afb4c7  RGB(np.uint8(175), np.uint8(180), np.uint8(199)) (0.9%)
+
+🔧 ELEMENTOS DE APOIO:
+   • Branco          #f9ffff  RGB(np.uint8(249), np.uint8(255), np.uint8(255)) (2.1%)
+   • Cinza           #a7b0b7  RGB(np.uint8(167), np.uint8(176), np.uint8(183)) (0.9%)
+   • Branco          #fbfffa  RGB(np.uint8(251), np.uint8(255), np.uint8(250)) (0.9%)

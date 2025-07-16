@@ -10,16 +10,17 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 import { errorHandler } from './middleware/errorHandler';
-import { requestLogger } from './middleware/requestLogger';
+// import { requestLogger } from './middleware/requestLogger';
 import { logger } from './utils/logger';
 import { redisClient } from './utils/redis';
 
 // Routes
 import healthRoutes from './routes/health';
 import authRoutes from './routes/auth';
-import documentRoutes from './routes/documents';
+import documentRoutes from './routes/documents'; // Certifique-se de que o arquivo existe e o nome está correto
 import analysisRoutes from './routes/analysis';
-import reportRoutes from './routes/reports';
+import usuarioRoutes from './routes/usuarios';
+// import reportRoutes from './routes/reports';
 
 // Configuração de ambiente
 dotenv.config();
@@ -90,7 +91,7 @@ app.use(cors({
 app.use(compression());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-app.use(requestLogger);
+// app.use(requestLogger);
 
 // Rate limiting apenas em produção
 if (NODE_ENV === 'production') {
@@ -114,9 +115,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 // Rotas da API
 app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/documents', documentRoutes);
 app.use('/api/analysis', analysisRoutes);
-app.use('/api/reports', reportRoutes);
+// app.use('/api/reports', reportRoutes);
 
 // Servir arquivos estáticos
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));

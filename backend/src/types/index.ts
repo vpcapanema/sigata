@@ -1,6 +1,26 @@
 // SIGATA - Sistema Integrado de Gestão de Atas
 // Types and interfaces for the system
 
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+  VIEWER = 'VIEWER'
+}
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  password: string;
+  role: UserRole;
+  isActive: boolean;
+  lastLogin?: Date;
+  preferences?: any;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt?: Date;
+}
+
 export interface Document {
   id: string;
   originalName: string;
@@ -11,6 +31,8 @@ export interface Document {
   uploadedBy: string;
   uploadedAt: Date;
   status: 'uploaded' | 'processing' | 'completed' | 'error';
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Analysis {
@@ -28,7 +50,8 @@ export enum AnalysisStatus {
   PENDING = 'pending',
   PROCESSING = 'processing',
   COMPLETED = 'completed',
-  FAILED = 'failed'
+  FAILED = 'failed',
+  IN_PROGRESS = "IN_PROGRESS"
 }
 
 export interface NLPResult {
@@ -67,8 +90,14 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  role: 'admin' | 'analyst' | 'viewer';
+  password: string;
+  role: UserRole;
+  isActive: boolean;
+  lastLogin?: Date;
+  preferences?: any;
   createdAt: Date;
+  updatedAt: Date;
+  deletedAt?: Date;
 }
 
 export interface SystemMetrics {

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload de Documentos - Sistema de Análise de Atas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        .upload-area { 
+            transition: all 0.3s ease; 
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            background: #f8f9fa;
+        }
+        .upload-area.drag-over { 
+            border-color: #007bff !important; 
+            background-color: #e3f2fd !important; 
+        }
+        .processing-modal { 
+            backdrop-filter: blur(5px); 
+        }
+        .step-highlight { 
+            animation: highlight-pulse 2s infinite; 
+        }
+        @keyframes highlight-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 123, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegação -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-file-alt"></i> Sistema de Análise de Atas
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i> Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="upload.html">
+                            <i class="fas fa-upload"></i> Upload
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documents.html">
+                            <i class="fas fa-folder"></i> Documentos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reports.html">
+                            <i class="fas fa-chart-line"></i> Relatórios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="analytics.html">
+                            <i class="fas fa-analytics"></i> Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link bg-warning text-dark rounded" href="#" onclick="startDemo()">
+                            <i class="fas fa-play"></i> Demo
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="h2">
+                        <i class="fas fa-upload text-primary"></i> Upload de Documentos
+                    </h1>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-primary" onclick="clearAllFiles()">
+                            <i class="fas fa-trash"></i> Limpar Tudo
+                        </button>
+                        <button class="btn btn-primary" onclick="startProcessing()" disabled id="processBtn">
+                            <i class="fas fa-cogs"></i> Processar Documentos
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alertas -->
+        <div id="alerts"></div>
+
+        <!-- Área de Upload -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cloud-upload-alt"></i> Área de Upload</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <h4>Arraste e solte seus arquivos aqui</h4>
+                            <p class="text-muted">ou clique para selecionar arquivos</p>
+                            <div class="supported-formats">
+                                <small class="text-muted">
+                                    <i class="fas fa-info-circle"></i>
+                                    Formatos suportados: PDF, DOC, DOCX, TXT | Tamanho máximo: 16MB
+                                </small>
+                            </div>
+                        </div>
+                        <label for="fileInput" class="visually-hidden">Selecionar arquivos para upload</label>
+                        <input type="file" id="fileInput" class="d-none" multiple 
+                               accept=".pdf,.doc,.docx,.txt">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de Arquivos -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5><i class="fas fa-list"></i> Arquivos Selecionados</h5>
+                        <span class="badge bg-primary" id="fileCount">0 arquivos</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="fileList" class="file-list">
+                            <div class="text-center text-muted py-4">
+                                <i class="fas fa-inbox fa-2x"></i>
+                                <p class="mt-2">Nenhum arquivo selecionado</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estatísticas de Upload -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card metric-card bg-primary text-white">
+                    <div class="metric-value" id="totalFiles">0</div>
+                    <div>Arquivos Total</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card metric-card bg-success text-white">
+                    <div class="metric-value" id="uploadedFiles">0</div>
+                    <div>Enviados</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card metric-card bg-warning text-white">
+                    <div class="metric-value" id="processingFiles">0</div>
+                    <div>Processando</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card metric-card bg-info text-white">
+                    <div class="metric-value" id="totalSize">0 MB</div>
+                    <div>Tamanho Total</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progresso Geral -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-line"></i> Progresso Geral</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Upload dos Arquivos</span>
+                                <span id="uploadProgress">0%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar upload-progress-bar" 
+                                     id="uploadProgressBar" 
+                                     role="progressbar" 
+                                     aria-label="Progresso do upload"
+                                     aria-valuenow="0" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100"
+                                     data-value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Processamento</span>
+                                <span id="processingProgress">0%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning processing-progress-bar" 
+                                     id="processingProgressBar" 
+                                     role="progressbar" 
+                                     aria-label="Progresso do processamento"
+                                     aria-valuenow="0" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100"
+                                     data-value="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configurações Avançadas -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>
+                            <i class="fas fa-cogs"></i> Configurações de Processamento
+                            <button class="btn btn-sm btn-outline-primary ms-2" 
+                                    type="button" 
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#advancedSettings"
+                                    aria-label="Expandir configurações avançadas">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="collapse" id="advancedSettings">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Processamento Automático</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="autoProcess" checked>
+                                            <label class="form-check-label" for="autoProcess">
+                                                Processar automaticamente após upload
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label" for="processingLanguage">Idioma de Processamento</label>
+                                        <select class="form-select" 
+                                                id="processingLanguage"
+                                                aria-label="Selecionar idioma de processamento">
+                                            <option value="pt">Português</option>
+                                            <option value="en">Inglês</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Análise de Sentimento</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="sentimentAnalysis" checked>
+                                            <label class="form-check-label" for="sentimentAnalysis">
+                                                Incluir análise de sentimento
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Extração de Entidades</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="entityExtraction" checked>
+                                            <label class="form-check-label" for="entityExtraction">
+                                                Extrair entidades nomeadas
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Sistema de Análise de Atas</h5>
+                    <p>Automatização inteligente para processamento de atas de reuniões.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Formatos Suportados</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-file-pdf text-danger"></i> PDF</li>
+                        <li><i class="fas fa-file-word text-primary"></i> DOC/DOCX</li>
+                        <li><i class="fas fa-file-alt text-secondary"></i> TXT</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2025 Sistema de Análise de Atas. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script>
+        // Variáveis globais
+        let fileUploader;
+        let uploadedFiles = [];
+        let processingQueue = [];
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeUploadPage();
+        });
+
+        function initializeUploadPage() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const progressBar = document.getElementById('uploadProgressBar');
+
+            fileUploader = new FileUploader(uploadArea, fileInput, progressBar);
+            fileUploader.onUploadComplete = handleUploadComplete;
+            
+            updateStats();
+        }
+
+        function handleUploadComplete() {
+            updateStats();
+            loadRecentUploads();
+            
+            if (document.getElementById('autoProcess').checked) {
+                setTimeout(() => startProcessing(), 1000);
+            }
+        }
+
+        function updateStats() {
+            const fileItems = document.querySelectorAll('.file-item');
+            const totalFiles = fileItems.length;
+            const uploadedCount = document.querySelectorAll('.file-item .badge-success').length;
+            const processingCount = document.querySelectorAll('.file-item .badge-warning').length;
+            
+            let totalSize = 0;
+            fileUploader.files.forEach(file => {
+                totalSize += file.size;
+            });
+
+            document.getElementById('totalFiles').textContent = totalFiles;
+            document.getElementById('uploadedFiles').textContent = uploadedCount;
+            document.getElementById('processingFiles').textContent = processingCount;
+            document.getElementById('totalSize').textContent = utils.formatFileSize(totalSize);
+            document.getElementById('fileCount').textContent = `${totalFiles} arquivos`;
+            
+            // Habilita botão de processamento se há arquivos
+            const processBtn = document.getElementById('processBtn');
+            processBtn.disabled = uploadedCount === 0;
+        }
+
+        function clearAllFiles() {
+            if (confirm('Tem certeza que deseja limpar todos os arquivos?')) {
+                fileUploader.files = [];
+                document.getElementById('fileList').innerHTML = `
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-inbox fa-2x"></i>
+                        <p class="mt-2">Nenhum arquivo selecionado</p>
+                    </div>
+                `;
+                document.getElementById('fileInput').value = '';
+                updateStats();
+            }
+        }
+
+        function removeFile(index) {
+            fileUploader.files.splice(index, 1);
+            fileUploader.displayFiles();
+            updateStats();
+        }
+
+        function startProcessing() {
+            const processBtn = document.getElementById('processBtn');
+            processBtn.disabled = true;
+            processBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
+            
+            // Simula processamento
+            processUploadedFiles();
+        }
+
+        async function processUploadedFiles() {
+            try {
+                const response = await fetch('/api/documents');
+                const documents = await response.json();
+                
+                const pendingDocs = documents.filter(doc => doc.status === 'pendente');
+                
+                if (pendingDocs.length === 0) {
+                    utils.showAlert('Nenhum documento pendente para processamento', 'info');
+                    return;
+                }
+                
+                let processed = 0;
+                const total = pendingDocs.length;
+                
+                for (const doc of pendingDocs) {
+                    try {
+                        await ApiClient.post(`/process/${doc.id}`, {});
+                        processed++;
+                        
+                        const progress = (processed / total) * 100;
+                        updateProcessingProgress(progress);
+                        
+                        utils.showAlert(`Documento "${doc.nome_arquivo}" processado com sucesso!`, 'success');
+                        
+                    } catch (error) {
+                        console.error(`Erro ao processar documento ${doc.id}:`, error);
+                        utils.showAlert(`Erro ao processar "${doc.nome_arquivo}": ${error.message}`, 'danger');
+                    }
+                    
+                    // Pequena pausa entre processamentos
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+                
+                utils.showAlert(`Processamento concluído! ${processed} documentos processados.`, 'success');
+                
+            } catch (error) {
+                console.error('Erro no processamento:', error);
+                utils.showAlert('Erro durante o processamento dos documentos', 'danger');
+            } finally {
+                const processBtn = document.getElementById('processBtn');
+                processBtn.disabled = false;
+                processBtn.innerHTML = '<i class="fas fa-cogs"></i> Processar Documentos';
+            }
+        }
+
+        function updateProcessingProgress(percentage) {
+            const progressBar = document.getElementById('processingProgressBar');
+            const progressText = document.getElementById('processingProgress');
+            
+            // Use CSS custom properties instead of inline styles
+            progressBar.style.setProperty('--width', `${percentage}%`);
+            progressBar.setAttribute('aria-valuenow', Math.round(percentage));
+            progressBar.setAttribute('data-value', percentage);
+            progressText.textContent = `${percentage.toFixed(1)}%`;
+        }
+
+        function loadRecentUploads() {
+            fetch('/api/documents')
+                .then(response => response.json())
+                .then(documents => {
+                    const recentUploads = documents
+                        .sort((a, b) => new Date(b.data_upload) - new Date(a.data_upload))
+                        .slice(0, 10);
+                    
+                    displayRecentUploads(recentUploads);
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar uploads recentes:', error);
+                });
+        }
+
+        function displayRecentUploads(uploads) {
+            // Esta função pode ser expandida para mostrar uploads recentes
+            console.log('Uploads recentes:', uploads);
+        }
+
+        // Callback global para upload completo
+        window.onUploadComplete = function() {
+            updateStats();
+            loadRecentUploads();
+        };
+    </script>
+
+    <!-- Script de Simulação Integrado -->
+    <script>
+        // Estado da simulação
+        let currentFiles = [];
+        let processingStep = 0;
+        
+        // Dados mockados
+        const mockFile = {
+            name: 'ABIFER_Reuniao_Conselho_Janeiro_2025.pdf',
+            size: 2.3 * 1024 * 1024, // 2.3 MB
+            type: 'application/pdf'
+        };
+
+        // Funções de upload e processamento
+        function initUpload() {
+            setupFileHandling();
+        }
+
+        function setupFileHandling() {
+            const uploadArea = document.getElementById('uploadArea');
+            const processBtn = document.getElementById('processBtn');
+            
+            if (uploadArea) {
+                // Substitui eventos existentes
+                uploadArea.onclick = () => simulateFileSelection();
+                
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.add('drag-over');
+                });
+                
+                uploadArea.addEventListener('dragleave', () => {
+                    uploadArea.classList.remove('drag-over');
+                });
+                
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('drag-over');
+                    simulateFileUpload();
+                });
+                
+                uploadArea.classList.add('step-highlight');
+                setTimeout(() => uploadArea.classList.remove('step-highlight'), 3000);
+            }
+            
+            if (processBtn) {
+                processBtn.onclick = () => startProcessing();
+            }
+        }
+
+        function simulateFileSelection() {
+            // Simula seleção de arquivo
+            
+            setTimeout(() => {
+                addFileToList(mockFile);
+                // Arquivo selecionado com sucesso
+            }, 500);
+        }
+
+        function simulateFileUpload() {
+            // Simula upload via drag & drop
+            
+            setTimeout(() => {
+                addFileToList(mockFile);
+                // Arquivo enviado com sucesso
+            }, 800);
+        }
+
+        function addFileToList(file) {
+            clearAllFiles();
+            
+            const fileList = document.getElementById('fileList') || createFileListContainer();
+            currentFiles.push(file);
+            
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item mb-3';
+            fileItem.innerHTML = `
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-file-pdf text-danger me-3 fa-2x"></i>
+                                <div>
+                                    <h6 class="mb-1">${file.name}</h6>
+                                    <small class="text-muted">${(file.size / (1024*1024)).toFixed(1)} MB • PDF</small>
+                                    <div class="mt-1">
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-check me-1"></i>Pronto para processar
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button class="btn btn-outline-danger btn-sm" onclick="removeFile(this)">
+                                    <i class="fas fa-trash"></i> Remover
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            fileList.appendChild(fileItem);
+            
+            const processBtn = document.getElementById('processBtn');
+            if (processBtn) {
+                processBtn.disabled = false;
+                processBtn.classList.add('step-highlight');
+                setTimeout(() => processBtn.classList.remove('step-highlight'), 3000);
+            }
+        }
+
+        function createFileListContainer() {
+            const container = document.createElement('div');
+            container.id = 'fileList';
+            container.className = 'mt-4';
+            
+            const uploadArea = document.getElementById('uploadArea');
+            if (uploadArea && uploadArea.parentNode) {
+                uploadArea.parentNode.insertBefore(container, uploadArea.nextSibling);
+            }
+            
+            return container;
+        }
+
+        function removeFile(button) {
+            const fileItem = button.closest('.file-item');
+            if (fileItem) {
+                fileItem.remove();
+                currentFiles = [];
+                // Arquivo removido da lista
+                
+                const processBtn = document.getElementById('processBtn');
+                if (processBtn) {
+                    processBtn.disabled = true;
+                }
+            }
+        }
+
+        function clearAllFiles() {
+            const fileList = document.getElementById('fileList');
+            if (fileList) {
+                fileList.innerHTML = '';
+            }
+            currentFiles = [];
+            
+            const processBtn = document.getElementById('processBtn');
+            if (processBtn) {
+                processBtn.disabled = true;
+            }
+        }
+
+        function startProcessing() {
+            if (currentFiles.length === 0) {
+                alert('Nenhum arquivo para processar!');
+                return;
+            }
+            
+            // Iniciando processamento do documento
+            showProcessingModal();
+            simulateProcessing();
+        }
+
+        function showProcessingModal() {
+            const modalHtml = `
+                <div class="modal fade" id="processingModal" tabindex="-1" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title">
+                                    <i class="fas fa-cogs me-2"></i>Processando Documento
+                                </h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center mb-4">
+                                    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;">
+                                        <span class="visually-hidden">Processando...</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Progresso</span>
+                                        <span id="progressPercentage">0%</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                             id="processingProgress" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div id="processingSteps" class="small">
+                                    <div class="step-item text-muted">Iniciando processamento...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            const modal = new bootstrap.Modal(document.getElementById('processingModal'));
+            modal.show();
+        }
+
+        function simulateProcessing() {
+            const steps = [
+                { text: 'Validando arquivo PDF...', progress: 15 },
+                { text: 'Extraindo texto do documento...', progress: 30 },
+                { text: 'Identificando participantes...', progress: 45 },
+                { text: 'Analisando decisões e resoluções...', progress: 65 },
+                { text: 'Extraindo tópicos discutidos...', progress: 80 },
+                { text: 'Calculando métricas da reunião...', progress: 95 },
+                { text: 'Finalizando processamento...', progress: 100 }
+            ];
+            
+            let currentStep = 0;
+            
+            const processStep = () => {
+                if (currentStep < steps.length) {
+                    const step = steps[currentStep];
+                    // Executando etapa do processamento
+                    updateProcessingUI(step.text, step.progress);
+                    
+                    currentStep++;
+                    setTimeout(processStep, 1500 + Math.random() * 1000);
+                } else {
+                    completeProcessing();
+                }
+            };
+            
+            setTimeout(processStep, 1000);
+        }
+
+        function updateProcessingUI(stepText, progress) {
+            const progressBar = document.getElementById('processingProgress');
+            const progressPercentage = document.getElementById('progressPercentage');
+            const stepsContainer = document.getElementById('processingSteps');
+            
+            if (progressBar) {
+                progressBar.style.width = `${progress}%`;
+                progressBar.setAttribute('aria-valuenow', progress);
+            }
+            
+            if (progressPercentage) {
+                progressPercentage.textContent = `${progress}%`;
+            }
+            
+            if (stepsContainer) {
+                const stepElement = document.createElement('div');
+                stepElement.className = 'step-item text-success';
+                stepElement.innerHTML = `<i class="fas fa-check me-2"></i>${stepText}`;
+                stepsContainer.appendChild(stepElement);
+                stepsContainer.scrollTop = stepsContainer.scrollHeight;
+            }
+        }
+
+        function completeProcessing() {
+            // Processamento concluído com sucesso
+            
+            setTimeout(() => {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('processingModal'));
+                if (modal) {
+                    modal.hide();
+                }
+                
+                showProcessingResult();
+            }, 2000);
+        }
+
+        function showProcessingResult() {
+            const alertHtml = `
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>Processamento Concluído!</strong>
+                    <br>
+                    <small>Documento processado com sucesso. Informações extraídas:</small>
+                    <ul class="mb-0 mt-2">
+                        <li>5 participantes identificados</li>
+                        <li>3 decisões aprovadas</li>
+                        <li>8 tarefas extraídas</li>
+                        <li>3 tópicos principais</li>
+                    </ul>
+                    <hr>
+                    <a href="documents.html" class="btn btn-success btn-sm">
+                        <i class="fas fa-folder me-1"></i>Ver Documentos
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            
+            const alertsContainer = document.getElementById('alerts') || createAlertsContainer();
+            alertsContainer.innerHTML = alertHtml;
+            
+            setTimeout(() => {
+                // Redirecionando para documentos
+                window.location.href = 'documents.html';
+            }, 5000);
+        }
+
+        function createAlertsContainer() {
+            const container = document.createElement('div');
+            container.id = 'alerts';
+            container.className = 'mb-4';
+            
+            const mainContent = document.querySelector('.container');
+            if (mainContent && mainContent.firstChild) {
+                mainContent.insertBefore(container, mainContent.firstChild);
+            }
+            
+            return container;
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            initUpload();
+        });
+
+        // Funções globais para compatibilidade
+        window.clearAllFiles = clearAllFiles;
+        window.startProcessing = startProcessing;
+        window.removeFile = removeFile;
+    </script>
+</body>
+</html>

@@ -5,7 +5,7 @@ import {
   CheckCircleIcon, 
   ClockIcon,
   ExclamationTriangleIcon,
-  TrendingUpIcon,
+  ArrowTrendingUpIcon,
   UserGroupIcon,
   CalendarDaysIcon
 } from '@heroicons/react/24/outline';
@@ -15,11 +15,11 @@ import { DashboardMetrics, UploadedAta } from '@/types';
 
 // Services
 import { documentService } from '@/services/documentService';
-import { analysisService } from '@/services/analysisService';
 
 // Components
 import MetricCard from '@/components/dashboard/MetricCard';
 import RecentDocuments from '@/components/dashboard/RecentDocuments';
+//import RecentDocuments from '@/components/dashboard/RecentDocuments';
 import ProcessingStatus from '@/components/dashboard/ProcessingStatus';
 import AnalysisChart from '@/components/dashboard/AnalysisChart';
 
@@ -147,7 +147,7 @@ const Dashboard: React.FC = () => {
         <MetricCard
           title="Tempo Médio"
           value={`${Math.round((metrics?.tempo_medio_processamento || 0) / 1000)}s`}
-          icon={TrendingUpIcon}
+          icon={ArrowTrendingUpIcon}
           color="purple"
           subtitle="Processamento por documento"
         />
@@ -242,7 +242,7 @@ const Dashboard: React.FC = () => {
           className="card hover:shadow-lg transition-shadow duration-200 cursor-pointer"
         >
           <div className="flex items-center">
-            <TrendingUpIcon className="h-8 w-8 text-accent-600" />
+            <ArrowTrendingUpIcon className="h-8 w-8 text-accent-600" />
             <div className="ml-4">
               <h4 className="font-medium text-gray-900">Relatórios</h4>
               <p className="text-sm text-gray-500">Métricas e insights</p>

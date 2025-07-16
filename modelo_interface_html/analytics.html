@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - Sistema de Análise de Atas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos principais */
+        .mock-terminal {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+            border: 1px solid #333;
+        }
+        .processing-animation {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .demo-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            color: white;
+        }
+        .chart-placeholder {
+            padding: 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+            border: 2px dashed #dee2e6;
+        }
+        .metric-card {
+            transition: transform 0.2s ease-in-out;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-file-alt me-2"></i>
+                Sistema de Análise de Atas
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i>Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="upload.html">
+                            <i class="fas fa-upload me-1"></i>Upload
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documents.html">
+                            <i class="fas fa-folder me-1"></i>Documentos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reports.html">
+                            <i class="fas fa-chart-bar me-1"></i>Relatórios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="analytics.html">
+                            <i class="fas fa-analytics me-1"></i>Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-sm demo-btn ms-2" onclick="startDemo()">
+                            <i class="fas fa-play me-1"></i>Demo
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Filtros de Período -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-end">
+                            <div class="col-md-3">
+                                <label for="analyticsStartDate" class="form-label">Data Início</label>
+                                <input type="date" class="form-control" id="analyticsStartDate">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="analyticsEndDate" class="form-label">Data Fim</label>
+                                <input type="date" class="form-control" id="analyticsEndDate">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="analyticsType" class="form-label">Tipo de Análise</label>
+                                <select class="form-select" id="analyticsType" aria-label="Selecionar tipo de análise">
+                                    <option value="geral">Visão Geral</option>
+                                    <option value="tendencias">Tendências</option>
+                                    <option value="comparativo">Comparativo</option>
+                                    <option value="desempenho">Desempenho</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary w-100" onclick="loadAnalytics()">
+                                    <i class="fas fa-chart-line me-2"></i>Atualizar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Métricas Principais -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card text-white bg-primary metric-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h4 class="mb-0" id="totalDocuments">47</h4>
+                                <p class="mb-0">Total de Documentos</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-file-alt fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-success metric-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h4 class="mb-0" id="totalParticipants">152</h4>
+                                <p class="mb-0">Participantes</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-users fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-info metric-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h4 class="mb-0" id="totalTopics">387</h4>
+                                <p class="mb-0">Tópicos</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-comments fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-warning metric-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h4 class="mb-0" id="avgDuration">95 min</h4>
+                                <p class="mb-0">Duração Média</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-clock fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráficos e Visualizações -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Distribuição de Tópicos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="topicsChart" class="chart-placeholder">
+                            <i class="fas fa-chart-pie fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Gráfico de pizza dos tópicos mais discutidos</p>
+                            <div class="row mt-3">
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div style="width: 20px; height: 20px; background: #0d6efd; margin-right: 8px;"></div>
+                                        <span class="small">Questões Financeiras (35%)</span>
+                                    </div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div style="width: 20px; height: 20px; background: #198754; margin-right: 8px;"></div>
+                                        <span class="small">Planejamento (28%)</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div style="width: 20px; height: 20px; background: #dc3545; margin-right: 8px;"></div>
+                                        <span class="small">RH (22%)</span>
+                                    </div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div style="width: 20px; height: 20px; background: #ffc107; margin-right: 8px;"></div>
+                                        <span class="small">Outros (15%)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Tendências Mensais</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="trendsChart" class="chart-placeholder">
+                            <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Tendências de participação e eficiência</p>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <small class="text-muted">
+                                        📈 Tendência crescente na taxa de participação<br>
+                                        📊 Duração média das reuniões em otimização<br>
+                                        🎯 Eficiência geral: 85% (↑5% vs. mês anterior)
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insights e Análises -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Insights Principais</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <strong><i class="fas fa-info-circle me-2"></i>Análise Automática:</strong>
+                            <ul class="mb-0 mt-2">
+                                <li>Taxa de participação aumentou 12% nos últimos 3 meses</li>
+                                <li>Tópicos financeiros dominam 35% das discussões</li>
+                                <li>Duração média das reuniões foi reduzida em 8 minutos</li>
+                                <li>João Silva e Maria Santos são os participantes mais ativos</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="alert alert-success">
+                            <strong><i class="fas fa-trophy me-2"></i>Destaques:</strong>
+                            <ul class="mb-0 mt-2">
+                                <li>Mês com maior eficiência: Janeiro 2025 (87%)</li>
+                                <li>Melhor taxa de presença: 92% (Reunião do Conselho)</li>
+                                <li>Tópico mais produtivo: Aprovação do Orçamento 2025</li>
+                            </ul>
+                        </div>
+
+                        <div class="alert alert-warning">
+                            <strong><i class="fas fa-exclamation-triangle me-2"></i>Recomendações:</strong>
+                            <ul class="mb-0 mt-2">
+                                <li>Considerar reuniões mais focadas em tópicos específicos</li>
+                                <li>Incentivar participação de Carlos Lima (62% de presença)</li>
+                                <li>Implementar timeboxing para discussões mais eficientes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-star me-2"></i>Ranking de Participação</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-crown text-warning me-2"></i>
+                                    <strong>João Silva</strong>
+                                </div>
+                                <span class="badge bg-success rounded-pill">92%</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-medal text-secondary me-2"></i>
+                                    Maria Santos
+                                </div>
+                                <span class="badge bg-success rounded-pill">88%</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-medal text-warning me-2"></i>
+                                    Pedro Oliveira
+                                </div>
+                                <span class="badge bg-success rounded-pill">85%</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    Ana Costa
+                                </div>
+                                <span class="badge bg-info rounded-pill">78%</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    Carlos Lima
+                                </div>
+                                <span class="badge bg-warning rounded-pill">62%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal de simulação -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="mb-0"><i class="fas fa-terminal me-2"></i>Log da Simulação</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="terminal-output" class="mock-terminal"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alertContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../mock_flow_simulation.js"></script>
+    <script>
+        // Função para iniciar demonstração
+        function startDemo() {
+            if (window.mockFlow) {
+                window.mockFlow.runCompleteDemo();
+            }
+        }
+
+        // Carrega dados simulados quando a página é carregada
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar datas
+            const today = new Date();
+            const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+            
+            document.getElementById('analyticsEndDate').value = today.toISOString().split('T')[0];
+            document.getElementById('analyticsStartDate').value = lastMonth.toISOString().split('T')[0];
+
+            // Carregar analytics iniciais
+            loadAnalytics();
+        });
+
+        function loadAnalytics() {
+            const analyticsType = document.getElementById('analyticsType').value;
+            const startDate = document.getElementById('analyticsStartDate').value;
+            const endDate = document.getElementById('analyticsEndDate').value;
+            
+            showNotification('Atualizando dados de analytics...', 'info');
+            
+            // Simula carregamento de dados
+            setTimeout(() => {
+                updateAnalyticsData(analyticsType);
+                showNotification('Analytics atualizados com sucesso!', 'success');
+            }, 1500);
+        }
+
+        function updateAnalyticsData(type) {
+            // Simula diferentes tipos de análise
+            switch(type) {
+                case 'tendencias':
+                    updateTrendAnalysis();
+                    break;
+                case 'comparativo':
+                    updateComparativeAnalysis();
+                    break;
+                case 'desempenho':
+                    updatePerformanceAnalysis();
+                    break;
+                default:
+                    updateGeneralAnalysis();
+            }
+        }
+
+        function updateGeneralAnalysis() {
+            document.getElementById('totalDocuments').textContent = '47';
+            document.getElementById('totalParticipants').textContent = '152';
+            document.getElementById('totalTopics').textContent = '387';
+            document.getElementById('avgDuration').textContent = '95 min';
+        }
+
+        function updateTrendAnalysis() {
+            document.getElementById('totalDocuments').textContent = '47';
+            document.getElementById('totalParticipants').textContent = '152';
+            document.getElementById('totalTopics').textContent = '387';
+            document.getElementById('avgDuration').textContent = '↓ 95 min';
+            
+            showNotification('Análise de tendências carregada: Duração média em queda!', 'success');
+        }
+
+        function updateComparativeAnalysis() {
+            document.getElementById('totalDocuments').textContent = '+15';
+            document.getElementById('totalParticipants').textContent = '+8';
+            document.getElementById('totalTopics').textContent = '+23';
+            document.getElementById('avgDuration').textContent = '-7 min';
+            
+            showNotification('Análise comparativa: Crescimento em todos os indicadores!', 'success');
+        }
+
+        function updatePerformanceAnalysis() {
+            document.getElementById('totalDocuments').textContent = '47';
+            document.getElementById('totalParticipants').textContent = '152';
+            document.getElementById('totalTopics').textContent = '387';
+            document.getElementById('avgDuration').textContent = '85% eff.';
+            
+            showNotification('Análise de desempenho: Eficiência de 85%!', 'success');
+        }
+
+        function exportAnalytics() {
+            showNotification('Exportando dados de analytics...', 'info');
+            
+            setTimeout(() => {
+                showNotification('Relatório de analytics exportado com sucesso!', 'success');
+            }, 1500);
+        }
+
+        function showNotification(message, type) {
+            const container = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show mb-3`;
+            alert.role = 'alert';
+            alert.innerHTML = message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+            container.appendChild(alert);
+            setTimeout(() => {
+                bootstrap.Alert.getOrCreateInstance(alert).close();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

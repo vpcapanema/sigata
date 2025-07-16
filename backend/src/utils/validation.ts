@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import { Request, Response, NextFunction } from 'express';
-import { ValidationError } from '../types';
+// import { ValidationError } from '../types';
 
 // Esquemas de validação
 
@@ -157,43 +157,48 @@ export const validate = (schema: Joi.ObjectSchema, property: 'body' | 'query' | 
         value: detail.context?.value,
       }));
 
-      return res.status(400).json({
+      res.status(400).json({
         success: false,
         error: 'Dados inválidos',
         details: errors,
       });
+      return;
     }
 
     // Substituir os dados validados
     req[property] = value;
     next();
+    return;
   };
 };
 
 // Validações personalizadas
-export const validateFileUpload = (req: Request, res: Response, next: NextFunction) => {
+export const validateFileUpload = (req: Request, res: Response, next: NextFunction): void => {
   if (!req.file) {
-    return res.status(400).json({
+    res.status(400).json({
       success: false,
       error: 'Nenhum arquivo foi enviado',
     });
+    return;
   }
 
   const allowedTypes = ['application/pdf'];
   const maxSize = 10 * 1024 * 1024; // 10MB
 
   if (!allowedTypes.includes(req.file.mimetype)) {
-    return res.status(400).json({
+    res.status(400).json({
       success: false,
       error: 'Tipo de arquivo não permitido. Apenas PDF é aceito.',
     });
+    return;
   }
 
   if (req.file.size > maxSize) {
-    return res.status(400).json({
+    res.status(400).json({
       success: false,
       error: 'Arquivo muito grande. Tamanho máximo: 10MB',
     });
+    return;
   }
 
   next();
@@ -236,19 +241,19 @@ export const validateDateFilters = (dateFrom?: string, dateTo?: string) => {
   if (dateFrom) {
     validDateFrom = new Date(dateFrom);
     if (isNaN(validDateFrom.getTime())) {
-      throw new ValidationError('Data inicial inválida');
+      throw new Error('Data inicial inválida');
     }
   }
 
   if (dateTo) {
     validDateTo = new Date(dateTo);
     if (isNaN(validDateTo.getTime())) {
-      throw new ValidationError('Data final inválida');
+      throw new Error('Data final inválida');
     }
   }
 
   if (validDateFrom && validDateTo && validDateFrom > validDateTo) {
-    throw new ValidationError('Data inicial deve ser anterior à data final');
+    throw new Error('Data inicial deve ser anterior à data final');
   }
 
   return { dateFrom: validDateFrom, dateTo: validDateTo };

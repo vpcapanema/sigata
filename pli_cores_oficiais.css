@@ -1,0 +1,28 @@
+/* ========================================
+   IDENTIDADE VISUAL PLI - CORES OFICIAIS
+   Extraído de: conteudo_identidade_visual_pli.jpg
+======================================== */
+
+:root {
+    /* Cores Principais PLI */
+    --pli-azul-1: #0f203e;
+    --pli-azul-1-rgb: 15, 32, 62;
+    --pli-verde-2: #bfe5b2;
+    --pli-verde-2-rgb: 191, 229, 178;
+    --pli-verde-3: #5cb65c;
+    --pli-verde-3-rgb: 92, 182, 92;
+    --pli-branco-4: #f9ffff;
+    --pli-branco-4-rgb: 249, 255, 255;
+    --pli-azul-5: #244b72;
+    --pli-azul-5-rgb: 36, 75, 114;
+    --pli-cinza-6: #a7b0b7;
+    --pli-cinza-6-rgb: 167, 176, 183;
+
+    /* Cores Funcionais baseadas na paleta PLI */
+    --pli-primary: var(--pli-azul-1, #0066cc);
+    --pli-secondary: var(--pli-cinza-1, #6c757d);
+    --pli-accent: var(--pli-verde-1, #28a745);
+    
+    /* Gradientes PLI */
+    --pli-gradient-main: linear-gradient(135deg, var(--pli-primary) 0%, var(--pli-secondary) 100%);
+}

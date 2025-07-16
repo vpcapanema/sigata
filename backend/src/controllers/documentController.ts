@@ -1,4 +1,9 @@
-import { DocumentStatus, Document, Analysis, User } from '../types';
+// Ajuste o import conforme a localização correta de DocumentStatus.
+// Se 'DocumentStatus' está em outro arquivo, altere o caminho abaixo.
+// Caso não exista, crie e exporte 'DocumentStatus' em '../types'.
+// Exemplo: import { DocumentStatus } from '../enums/documentStatus';
+import { Document, Analysis, User } from '../types';
+import { DocumentStatus } from '../enums/documentStatus';
 import logger from '../utils/logger';
 import nlpService from '../services/nlpService';
 
@@ -52,7 +57,7 @@ export class DocumentController {
           size: 1024000,
           path: '/uploads/ata_reuniao_01.pdf',
           uploadedBy: req.user?.id || 'user1',
-          status: DocumentStatus.COMPLETED,
+          status: "completed",
           extractedText: 'Texto extraído da reunião...',
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -113,7 +118,7 @@ export class DocumentController {
         size: 1024000,
         path: '/uploads/ata_reuniao_01.pdf',
         uploadedBy: req.user?.id || 'user1',
-        status: DocumentStatus.COMPLETED,
+        status: "completed",
         extractedText: 'Texto extraído da reunião...',
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -304,7 +309,7 @@ export class DocumentController {
 
       logger.info(`Reprocessamento do documento ${id} solicitado pelo usuário ${userId}`);
 
-      // Mock de documento
+      // Mock de documento para demonstração
       const mockDocument: Document = {
         id,
         filename: 'documento.pdf',
@@ -313,8 +318,8 @@ export class DocumentController {
         size: 1024000,
         path: '/uploads/documento.pdf',
         uploadedBy: userId!,
-        status: DocumentStatus.COMPLETED,
-        createdAt: new Date(),
+        status: 'completed',
+        uploadedAt: new Date(),
         updatedAt: new Date()
       };
 
@@ -340,7 +345,7 @@ export class DocumentController {
         const updatedDocument = {
           ...mockDocument,
           extractedText,
-          status: DocumentStatus.COMPLETED,
+          status: 'completed',
           updatedAt: new Date()
         };
 
