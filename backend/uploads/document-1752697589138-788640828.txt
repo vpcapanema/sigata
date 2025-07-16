@@ -1,0 +1,26 @@
+
+ATA DE REUNIÃO - PROJETO SIGATA
+Data: 15 de Janeiro de 2024
+Participantes: João Silva, Maria Santos, Pedro Oliveira, Ana Costa
+
+1. ABERTURA
+A reunião foi aberta às 14h00 pelo coordenador João Silva.
+
+2. PAUTA PRINCIPAL
+- Implementação do sistema SIGATA
+- Análise de requisitos de NLP avançado
+- Definição de cronograma de desenvolvimento
+
+3. DECISÕES TOMADAS
+- Aprovar orçamento de R$ 50.000 para licenças
+- Contratar 2 desenvolvedores especializados em IA
+- Implementar tecnologias: BERTopic, KeyBERT, BERTScore
+
+4. AÇÕES DEFINIDAS
+- João Silva: Preparar documentação técnica até 20/01
+- Maria Santos: Contactar fornecedores até 18/01
+- Pedro Oliveira: Configurar ambiente de desenvolvimento
+
+5. ENCERRAMENTO
+Reunião encerrada às 16h30. Próxima reunião: 25/01/2024.
+  

@@ -1,0 +1,52 @@
+ATA DE REUNIÃO - PROJETO SIGATA
+
+Data: 16 de julho de 2025
+Horário: 14:00 às 16:00
+Local: Sala de Reuniões Virtual
+
+PARTICIPANTES:
+- João Silva (Gerente de Projeto)
+- Maria Santos (Desenvolvedora Senior)
+- Pedro Costa (Analista de Sistemas)
+- Ana Oliveira (Designer UX)
+
+PAUTA:
+1. Apresentação do progresso do desenvolvimento
+2. Discussão sobre funcionalidades de NLP
+3. Definição de prazos para entrega
+4. Planejamento de testes
+
+DISCUSSÕES:
+
+João Silva iniciou a reunião apresentando o status atual do projeto SIGATA. O sistema está funcionando corretamente, com o backend operacional e o processamento de documentos implementado.
+
+Maria Santos relatou que o motor de NLP está processando adequadamente os documentos PDF, extraindo entidades, palavras-chave e realizando análise de sentimentos. A taxa de precisão está em aproximadamente 85%.
+
+Pedro Costa mencionou que a integração com o banco de dados PostgreSQL está estável e todas as tabelas estão funcionando perfeitamente. O sistema de upload está processando arquivos de até 10MB sem problemas.
+
+Ana Oliveira apresentou o progresso da interface do usuário, destacando que as páginas de dashboard, upload e analytics estão concluídas e seguindo a identidade visual do PLI.
+
+DECISÕES TOMADAS:
+
+1. Foi aprovado o cronograma de entrega para o final de julho de 2025
+2. Decidiu-se implementar melhorias no algoritmo de extração de participantes
+3. Aprovou-se a estrutura atual de cores e design da interface
+4. Definiu-se que os testes de carga serão realizados na próxima semana
+
+AÇÕES E RESPONSABILIDADES:
+
+- João Silva deve finalizar a documentação técnica até 20/07/2025
+- Maria Santos deverá otimizar o processamento NLP para melhorar a performance
+- Pedro Costa ficou responsável por configurar o ambiente de produção
+- Ana Oliveira deve criar os manuais do usuário final
+
+PRÓXIMA REUNIÃO:
+Data: 23 de julho de 2025
+Horário: 14:00
+Local: Mesmo local virtual
+
+A reunião foi encerrada às 16:00 com todos os participantes satisfeitos com o progresso do projeto.
+
+---
+Ata redigida por: João Silva
+Revisada por: Maria Santos
