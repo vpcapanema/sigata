@@ -8,45 +8,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="../sistema_aplicacao_cores_pli.css" rel="stylesheet">
-    
-    <style>
-        .document-card {
-            transition: transform 0.2s, box-shadow 0.2s;
-            border-radius: 10px;
-        }
-        .document-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .status-badge {
-            font-size: 0.75rem;
-        }
-        .filter-section {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .search-box {
-            border-radius: 25px;
-            padding: 10px 20px;
-            border: 2px solid var(--pli-verde-claro);
-            font-family: 'Montserrat', sans-serif;
-        }
-        .search-box:focus {
-            border-color: var(--pli-verde-principal);
-            box-shadow: 0 0 0 0.2rem rgba(92, 182, 92, 0.25);
-        }
-        .action-btn {
-            border-radius: 20px;
-            padding: 5px 12px;
-            font-size: 0.875rem;
-        }
-    </style>
+    <!-- Removido bloco <style> duplicado, todos os estilos agora estão centralizados no CSS institucional -->
 </head>
 <body>
     <!-- Navegação -->
-    <nav class="pli-navbar">
+    <nav class="navbar navbar-expand-lg pli-navbar">
         <div class="container">
             <a class="navbar-brand" href="index.html" style="color: var(--pli-azul-escuro);">
                 <i class="fas fa-file-alt"></i> SIGATA
@@ -57,7 +23,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link active" href="index.html">
                             <i class="fas fa-home"></i> Início
                         </a>
                     </li>
@@ -67,12 +33,17 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="upload.html">
                             <i class="fas fa-upload"></i> Upload
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="documents.html">
+                        <a class="nav-link" href="documents.html">
                             <i class="fas fa-folder"></i> Documentos
                         </a>
                     </li>
@@ -83,12 +54,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="analytics.html">
-                            <i class="fas fa-analytics"></i> Analytics
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.html">
-                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                            <i class="fas fa-chart-bar"></i> Analytics
                         </a>
                     </li>
                 </ul>

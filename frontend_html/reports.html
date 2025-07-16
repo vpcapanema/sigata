@@ -9,59 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="../sistema_aplicacao_cores_pli.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <style>
-        .chart-container {
-            position: relative;
-            height: 400px;
-            margin: 20px 0;
-        }
-        .metric-card {
-            background: var(--pli-gradient-main);
-            color: white;
-            border-radius: 15px;
-            font-family: 'Montserrat', sans-serif;
-            padding: 25px;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        .metric-card:hover {
-            transform: translateY(-5px);
-        }
-        .metric-value {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .metric-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        .report-section {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .chart-placeholder {
-            padding: 60px;
-            text-align: center;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 8px;
-            border: 2px dashed #dee2e6;
-        }
-        .filter-panel {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
     <!-- Navegação -->
-    <nav class="pli-navbar">
+    <nav class="navbar navbar-expand-lg pli-navbar">
         <div class="container">
             <a class="navbar-brand" href="index.html" style="color: var(--pli-azul-escuro);">
                 <i class="fas fa-file-alt"></i> SIGATA
@@ -72,13 +23,18 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link active" href="index.html">
                             <i class="fas fa-home"></i> Início
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="login.html">
                             <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
@@ -92,18 +48,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="reports.html">
+                        <a class="nav-link" href="reports.html">
                             <i class="fas fa-chart-line"></i> Relatórios
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="analytics.html">
-                            <i class="fas fa-analytics"></i> Analytics
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.html">
-                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                            <i class="fas fa-chart-bar"></i> Analytics
                         </a>
                     </li>
                 </ul>
@@ -732,7 +683,7 @@
     <!-- Footer -->
     <footer class="pli-footer py-4 mt-5">
         <div class="container text-center">
-            <p>&copy; 2025 SIGATA - Sistema Integrado de Gestão de Atas. Todos os direitos reservados.</p>
+            <span class="text-white">SIGATA &copy; 2025 - Sistema Integrado de Gestão de Atas</span>
         </div>
     </footer>
 </body>

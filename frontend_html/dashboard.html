@@ -9,96 +9,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="../sistema_aplicacao_cores_pli.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <style>
-        .dashboard-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-        }
-        .metric-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            transition: transform 0.3s ease;
-            height: 100%;
-        }
-        .metric-card:hover {
-            transform: translateY(-5px);
-        }
-        .metric-value {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .metric-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        .quick-action {
-            background: #f8f9fa;
-            border: 2px dashed #dee2e6;
-            border-radius: 10px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .quick-action:hover {
-            background: #e3f2fd;
-            border-color: #2196f3;
-        }
-        .user-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--pli-gradient-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            margin: 0 auto 15px;
-        }
-        .recent-activity {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .activity-item {
-            border-left: 3px solid #667eea;
-            padding-left: 15px;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-        }
-        .chart-container {
-            position: relative;
-            height: 250px;
-            margin: 20px 0;
-        }
-    </style>
 </head>
 <body>
     <!-- Navegação -->
-    <nav class="pli-navbar">
+    <nav class="navbar navbar-expand-lg pli-navbar">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="index.html" style="color: var(--pli-azul-escuro);">
                 <i class="fas fa-file-alt"></i> SIGATA
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="dashboard.html">
+                        <a class="nav-link active" href="index.html">
+                            <i class="fas fa-home"></i> Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
                             <i class="fas fa-tachometer-alt"></i> Dashboard
                         </a>
                     </li>
@@ -119,21 +54,8 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="analytics.html">
-                            <i class="fas fa-analytics"></i> Analytics
+                            <i class="fas fa-chart-bar"></i> Analytics
                         </a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle"></i> <span id="userName">Usuário</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" onclick="viewProfile()"><i class="fas fa-user"></i> Perfil</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="viewSettings()"><i class="fas fa-cog"></i> Configurações</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
-                        </ul>
                     </li>
                 </ul>
             </div>
@@ -672,7 +594,7 @@
     <!-- Footer -->
     <footer class="pli-footer py-4 mt-5">
         <div class="container text-center">
-            <p>&copy; 2025 SIGATA - Sistema Integrado de Gestão de Atas. Todos os direitos reservados.</p>
+            <span class="text-white">SIGATA &copy; 2025 - Sistema Integrado de Gestão de Atas</span>
         </div>
     </footer>
 </body>
