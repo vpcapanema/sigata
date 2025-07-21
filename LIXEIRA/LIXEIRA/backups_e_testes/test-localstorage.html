@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste localStorage - SIGATA</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background: #d4edda; border-color: #28a745; }
+        .error { background: #f8d7da; border-color: #dc3545; }
+        button { padding: 10px 15px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Teste de localStorage</h1>
+    
+    <div class="test">
+        <h3>Teste 1: Persistência Básica</h3>
+        <button onclick="testBasic()">Testar</button>
+        <div id="test1"></div>
+    </div>
+    
+    <div class="test">
+        <h3>Teste 2: Dados do SIGATA</h3>
+        <button onclick="testSigataData()">Salvar Dados SIGATA</button>
+        <button onclick="checkSigataData()">Verificar Dados</button>
+        <button onclick="clearSigataData()">Limpar</button>
+        <div id="test2"></div>
+    </div>
+    
+    <div class="test">
+        <h3>Teste 3: Simulação Login Completo</h3>
+        <button onclick="simulateLogin()">Simular Login</button>
+        <button onclick="goToDashboardTest()">Ir para Dashboard</button>
+        <div id="test3"></div>
+    </div>
+
+    <script>
+        function testBasic() {
+            try {
+                // Teste básico de localStorage
+                localStorage.setItem('test', 'valor_teste');
+                const value = localStorage.getItem('test');
+                localStorage.removeItem('test');
+                
+                if (value === 'valor_teste') {
+                    document.getElementById('test1').innerHTML = '<div class="success">✅ localStorage funcionando normalmente</div>';
+                } else {
+                    document.getElementById('test1').innerHTML = '<div class="error">❌ localStorage não está funcionando</div>';
+                }
+            } catch (e) {
+                document.getElementById('test1').innerHTML = '<div class="error">❌ Erro no localStorage: ' + e.message + '</div>';
+            }
+        }
+        
+        function testSigataData() {
+            try {
+                const token = 'test-token-' + Date.now();
+                const userData = {
+                    id: 1,
+                    name: 'Usuário Teste',
+                    email: 'teste@teste.com',
+                    role: 'admin'
+                };
+                
+                localStorage.setItem('authToken', token);
+                localStorage.setItem('userData', JSON.stringify(userData));
+                
+                document.getElementById('test2').innerHTML = '<div class="success">✅ Dados SIGATA salvos com sucesso</div>';
+            } catch (e) {
+                document.getElementById('test2').innerHTML = '<div class="error">❌ Erro ao salvar: ' + e.message + '</div>';
+            }
+        }
+        
+        function checkSigataData() {
+            const token = localStorage.getItem('authToken');
+            const userDataStr = localStorage.getItem('userData');
+            
+            let html = '<div>Estado atual:</div>';
+            html += '<div>Token: ' + (token ? token.substring(0, 20) + '...' : 'VAZIO') + '</div>';
+            html += '<div>UserData: ' + (userDataStr ? 'PRESENTE' : 'VAZIO') + '</div>';
+            
+            if (userDataStr) {
+                try {
+                    const userData = JSON.parse(userDataStr);
+                    html += '<div class="success">✅ UserData válido: ' + JSON.stringify(userData) + '</div>';
+                } catch (e) {
+                    html += '<div class="error">❌ UserData inválido: ' + e.message + '</div>';
+                }
+            }
+            
+            document.getElementById('test2').innerHTML = html;
+        }
+        
+        function clearSigataData() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userData');
+            document.getElementById('test2').innerHTML = '<div>Dados limpos</div>';
+        }
+        
+        function simulateLogin() {
+            // Simular exatamente o que o login.html faz
+            console.log('Simulando login...');
+            
+            const token = 'test-token-' + Date.now() + '-abc123';
+            const userData = {
+                id: 1,
+                name: 'Usuário Teste',
+                email: 'teste@teste.com',
+                role: 'admin'
+            };
+            
+            localStorage.setItem('authToken', token);
+            localStorage.setItem('userData', JSON.stringify(userData));
+            
+            // Verificar imediatamente
+            const savedToken = localStorage.getItem('authToken');
+            const savedUserData = localStorage.getItem('userData');
+            
+            let html = '<div>Login simulado:</div>';
+            html += '<div>Token salvo: ' + (savedToken ? 'SIM' : 'NÃO') + '</div>';
+            html += '<div>UserData salvo: ' + (savedUserData ? 'SIM' : 'NÃO') + '</div>';
+            
+            if (savedToken && savedUserData) {
+                html += '<div class="success">✅ Login simulado com sucesso!</div>';
+            } else {
+                html += '<div class="error">❌ Falha na simulação</div>';
+            }
+            
+            document.getElementById('test3').innerHTML = html;
+        }
+        
+        function goToDashboardTest() {
+            window.location.href = 'dashboard.html';
+        }
+        
+        // Executar teste básico ao carregar
+        window.onload = function() {
+            testBasic();
+        };
+    </script>
+</body>
+</html>

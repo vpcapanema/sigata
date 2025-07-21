@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Corrigido - SIGATA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sistema_aplicacao_cores_pli.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <!-- Navegação -->
+    <nav class="navbar navbar-expand-lg pli-navbar">
+        <div class="container">
+            <a class="navbar-brand pli-navbar-brand" href="index.html">
+                <i class="fas fa-file-alt"></i> SIGATA
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i> Início
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Área de Login -->
+    <div class="flex-grow-1 d-flex align-items-center justify-content-center py-5 login-background">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-5 col-xl-4">
+                    <div class="pli-card-login">
+                        <div class="text-center mb-3">
+                            <div class="login-logo mb-2">
+                                <i class="fas fa-file-alt" style="font-size: 2rem; color: var(--pli-azul-escuro);"></i>
+                            </div>
+                            <h4 style="color: var(--pli-azul-escuro); font-weight: 700;">SIGATA</h4>
+                            <p class="text-muted small mb-0">Sistema Integrado de Gestão de Atas</p>
+                        </div>
+
+                        <div id="alert-container"></div>
+
+                        <form id="loginForm">
+                            <div class="mb-2">
+                                <label for="username" class="form-label small fw-semibold" style="color: var(--pli-azul-escuro);">
+                                    <i class="fas fa-user me-1"></i>
+                                    Usuário ou Email
+                                </label>
+                                <input type="text" class="form-control pli-input" id="username" name="username" required
+                                       placeholder="Digite seu usuário ou email" style="font-size: 0.9rem; padding: 10px 14px;">
+                            </div>
+
+                            <div class="mb-2">
+                                <label for="password" class="form-label small fw-semibold" style="color: var(--pli-azul-escuro);">
+                                    <i class="fas fa-lock me-1"></i>
+                                    Senha
+                                </label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control pli-input" id="password" name="password" required
+                                           placeholder="Digite sua senha" style="font-size: 0.9rem; padding: 10px 14px;">
+                                    <button class="btn btn-outline-secondary" type="button" title="Mostrar/ocultar senha" onclick="togglePassword()" style="padding: 10px 14px;">
+                                        <i class="fas fa-eye" id="toggleIcon" style="font-size: 0.9rem;"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="mb-2 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label small" for="rememberMe" style="color: var(--pli-azul-medio);">
+                                    Lembrar de mim
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 mb-2" id="loginBtn" style="padding: 12px; font-size: 1rem;">
+                                <i class="fas fa-sign-in-alt me-2"></i>
+                                <span id="loginBtnText">Entrar</span>
+                            </button>
+                        </form>
+
+                        <div class="text-center mb-2">
+                            <a href="index.html" class="text-decoration-none small" style="color: var(--pli-verde-principal);">
+                                <i class="fas fa-arrow-left me-1"></i>
+                                Voltar ao início
+                            </a>
+                        </div>
+                        
+                        <hr class="my-2" style="opacity: 0.3;">
+                        
+                        <div class="text-center">
+                            <p class="small mb-2" style="color: var(--pli-azul-medio);">Sistema em modo teste</p>
+                        </div>
+
+                        <div class="text-center mt-2">
+                            <small class="text-success" style="font-size: 0.75rem;">
+                                <i class="fas fa-info-circle"></i> <strong>MODO TESTE:</strong> Qualquer email + senha válidos
+                            </small>
+                        </div>
+
+                        <!-- Debug Info -->
+                        <div class="mt-3" id="debugInfo" style="display: none;">
+                            <div class="alert alert-info">
+                                <small id="debugText"></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer PLI -->
+    <footer class="pli-footer py-3 mt-auto">
+        <div class="container text-center">
+            <div class="small">SIGATA &copy; 2025 - Sistema Integrado de Gestão de Atas</div>
+            <div class="small">Desenvolvido e implementado por VPC-GEOSER</div>
+            <div class="small">18/07/2025</div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        function showAlert(message, type = 'danger') {
+            const alertContainer = document.getElementById('alert-container');
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+        }
+
+        function showDebug(message) {
+            document.getElementById('debugInfo').style.display = 'block';
+            document.getElementById('debugText').textContent = message;
+        }
+
+        function setLoading(isLoading) {
+            const btn = document.getElementById('loginBtn');
+            const btnText = document.getElementById('loginBtnText');
+            
+            if (isLoading) {
+                btn.disabled = true;
+                btnText.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Entrando...';
+            } else {
+                btn.disabled = false;
+                btnText.innerHTML = 'Entrar';
+            }
+        }
+
+        // Verificar se já está logado
+        function checkExistingAuth() {
+            const token = localStorage.getItem('authToken');
+            const userData = localStorage.getItem('userData');
+            
+            if (token && userData) {
+                console.log('🔍 Usuário já logado, redirecionando...');
+                window.location.href = 'dashboard.html';
+                return true;
+            }
+            return false;
+        }
+
+        // Login com verificações robustas
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if (!email || !password) {
+                showAlert('Por favor, preencha email e senha.');
+                return;
+            }
+
+            setLoading(true);
+            showDebug('Iniciando processo de login...');
+            
+            try {
+                console.log('🔐 Iniciando login para:', email);
+                
+                const response = await fetch('http://localhost:3001/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                console.log('📡 Status da resposta:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('📋 Dados recebidos:', data);
+                
+                if (data.success && data.data && data.data.token && data.data.user) {
+                    console.log('✅ Login bem-sucedido!');
+                    showDebug('Login bem-sucedido! Salvando dados...');
+                    
+                    // Limpar dados antigos primeiro
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('userData');
+                    
+                    // Aguardar um pouco e salvar novos dados
+                    setTimeout(() => {
+                        try {
+                            localStorage.setItem('authToken', data.data.token);
+                            localStorage.setItem('userData', JSON.stringify(data.data.user));
+                            
+                            console.log('💾 Dados salvos no localStorage');
+                            
+                            // Verificar se foi salvo corretamente
+                            const savedToken = localStorage.getItem('authToken');
+                            const savedUserData = localStorage.getItem('userData');
+                            
+                            if (savedToken && savedUserData) {
+                                console.log('✔️ Verificação: dados persistidos corretamente');
+                                showDebug('Dados salvos com sucesso! Redirecionando...');
+                                
+                                setTimeout(() => {
+                                    window.location.href = 'dashboard.html';
+                                }, 1000);
+                            } else {
+                                throw new Error('Falha ao persistir dados no localStorage');
+                            }
+                        } catch (storageError) {
+                            console.error('❌ Erro ao salvar no localStorage:', storageError);
+                            showAlert('Erro ao salvar dados de autenticação. Tente novamente.');
+                            setLoading(false);
+                        }
+                    }, 100);
+                    
+                } else {
+                    console.error('❌ Resposta de login inválida:', data);
+                    showAlert('Erro no login: ' + (data.message || 'Resposta inválida do servidor'));
+                    setLoading(false);
+                }
+                
+            } catch (error) {
+                console.error('❌ Erro na requisição:', error);
+                showAlert('Erro de conexão: ' + error.message);
+                showDebug('Erro: ' + error.message);
+                setLoading(false);
+            }
+        });
+
+        // Verificar ao carregar a página
+        window.onload = function() {
+            console.log('📄 Página de login carregada');
+            
+            // Verificar se já está logado
+            if (!checkExistingAuth()) {
+                console.log('👤 Usuário não logado, aguardando login...');
+            }
+        };
+    </script>
+</body>
+</html>

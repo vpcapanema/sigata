@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Login - SIGATA</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .debug { background: #f5f5f5; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        button { padding: 10px 20px; margin: 5px; }
+        input { padding: 8px; margin: 5px; width: 300px; }
+    </style>
+</head>
+<body>
+    <h1>Debug Login SIGATA</h1>
+    
+    <div class="debug">
+        <h3>Teste de Conectividade Backend</h3>
+        <button onclick="testHealth()">Testar Health</button>
+        <button onclick="testLogin()">Testar Login</button>
+        <div id="health-result"></div>
+    </div>
+    
+    <div class="debug">
+        <h3>Login Manual</h3>
+        <input type="email" id="email" placeholder="Email" value="teste@teste.com"><br>
+        <input type="password" id="password" placeholder="Senha" value="123456"><br>
+        <button onclick="doLogin()">Fazer Login</button>
+        <div id="login-result"></div>
+    </div>
+    
+    <div class="debug">
+        <h3>Console Logs</h3>
+        <div id="console-logs"></div>
+    </div>
+
+    <script>
+        // Interceptar console.log para mostrar na página
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const logsDiv = document.getElementById('console-logs');
+            logsDiv.innerHTML += '<p>' + args.join(' ') + '</p>';
+        };
+        
+        async function testHealth() {
+            try {
+                console.log('Testando health do backend...');
+                const response = await fetch('http://localhost:3001/health');
+                const data = await response.text();
+                document.getElementById('health-result').innerHTML = '<pre>' + data + '</pre>';
+                console.log('Health OK:', data);
+            } catch (error) {
+                console.error('Erro no health:', error);
+                document.getElementById('health-result').innerHTML = 'Erro: ' + error.message;
+            }
+        }
+        
+        async function testLogin() {
+            try {
+                console.log('Testando login básico...');
+                const response = await fetch('http://localhost:3001/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: 'teste@teste.com', password: '123456' })
+                });
+                const data = await response.json();
+                console.log('Login response:', data);
+                document.getElementById('login-result').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                console.error('Erro no login:', error);
+                document.getElementById('login-result').innerHTML = 'Erro: ' + error.message;
+            }
+        }
+        
+        async function doLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                console.log('Fazendo login com:', { email, password });
+                const response = await fetch('http://localhost:3001/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                console.log('Resposta do login:', data);
+                document.getElementById('login-result').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                
+                if (data.success) {
+                    console.log('Login bem-sucedido! Token:', data.data.token);
+                }
+            } catch (error) {
+                console.error('Erro no login:', error);
+                document.getElementById('login-result').innerHTML = 'Erro: ' + error.message;
+            }
+        }
+        
+        // Testar automaticamente ao carregar a página
+        window.onload = function() {
+            console.log('Página carregada, iniciando testes...');
+            testHealth();
+        };
+    </script>
+</body>
+</html>

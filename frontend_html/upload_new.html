@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload de Documentos - SIGATA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sistema_aplicacao_cores_pli.css">
+</head>
+<body>
+    <!-- Navegação -->
+    <nav class="navbar navbar-expand-lg pli-navbar">
+        <div class="container">
+            <a class="navbar-brand pli-navbar-brand" href="index.html">
+                <i class="fas fa-file-alt"></i> SIGATA
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i> Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="upload.html">
+                            <i class="fas fa-upload"></i> Upload
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documents.html">
+                            <i class="fas fa-folder"></i> Documentos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reports.html">
+                            <i class="fas fa-chart-line"></i> Relatórios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="analytics.html">
+                            <i class="fas fa-chart-bar"></i> Analytics
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="container-fluid py-4">
+        <div class="row justify-content-center">
+            <div class="col-xxl-10 col-xl-11">
+                <!-- Header da Página -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2 class="fw-bold mb-1" style="color: var(--pli-azul-escuro);">
+                            <i class="fas fa-cloud-upload-alt me-2"></i>
+                            Upload de Documentos
+                        </h2>
+                        <p class="text-muted mb-0">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Faça upload de atas em PDF ou DOCX para processamento automático
+                        </p>
+                    </div>
+                    <a href="documents.html" class="btn pli-button">
+                        <i class="fas fa-folder-open me-2"></i>
+                        Ver Documentos
+                    </a>
+                </div>
+
+                <!-- Seção 1: Configuração do Processamento -->
+                <div class="pli-card-primary mb-4">
+                    <div class="card-header" style="background: var(--pli-azul-escuro); color: white;">
+                        <h5 class="mb-0">
+                            <i class="fas fa-cog me-2"></i>
+                            1. Configuração do Processamento
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="modelSelect" class="form-label fw-semibold" style="color: var(--pli-azul-escuro);">
+                                    <i class="fas fa-brain me-1"></i>
+                                    Modelo de IA
+                                </label>
+                                <select class="form-select mb-3" id="modelSelect" title="Selecione o Modelo de IA">
+                                    <option value="gpt-4">GPT-4 (Recomendado)</option>
+                                    <option value="gpt-3.5-turbo">GPT-3.5 Turbo (Rápido)</option>
+                                    <option value="local">Modelo Local</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold" style="color: var(--pli-azul-escuro);">
+                                    <i class="fas fa-layer-group me-1"></i>
+                                    Nível de Detalhamento
+                                </label>
+                                <select class="form-select mb-3" id="detailLevel" title="Selecione o nível de detalhamento">
+                                    <option value="complete">Análise Completa</option>
+                                    <option value="summary">Resumo Executivo</option>
+                                    <option value="basic">Extração Básica</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="form-label fw-semibold" style="color: var(--pli-azul-escuro);">
+                                    <i class="fas fa-tags me-1"></i>
+                                    Categorias de Interesse (opcional)
+                                </label>
+                                <input type="text" class="form-control" id="categories" 
+                                       placeholder="Ex: decisões, ações, cronogramas, responsáveis...">
+                                <small class="form-text text-muted">Separe por vírgulas as categorias que deseja destacar</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2: Upload de Arquivos -->
+                <div class="pli-card-primary mb-4">
+                    <div class="card-header" style="background: var(--pli-azul-escuro); color: white;">
+                        <h5 class="mb-0">
+                            <i class="fas fa-file-upload me-2"></i>
+                            2. Seleção de Arquivos
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="pli-upload-area text-center p-4 mb-3" onclick="document.getElementById('fileInput').click();">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--pli-azul-medio); margin-bottom: 1rem;"></i>
+                            <h5 style="color: var(--pli-azul-escuro);">Clique aqui para selecionar arquivos</h5>
+                            <p class="text-muted mb-0">ou arraste e solte seus documentos</p>
+                            <small class="text-muted">Formatos aceitos: PDF, DOCX (máx. 10MB por arquivo)</small>
+                        </div>
+                        <input type="file" id="fileInput" class="d-none" multiple accept=".pdf,.docx" title="Selecione arquivos para upload" placeholder="Selecione arquivos para upload" onchange="handleFileSelect(event)">
+                        
+                        <!-- Lista de Arquivos Selecionados -->
+                        <div id="fileList" class="mt-3" style="display: none;">
+                            <h6 class="fw-semibold mb-3" style="color: var(--pli-azul-escuro);">
+                                <i class="fas fa-list me-2"></i>
+                                Arquivos Selecionados
+                            </h6>
+                            <div id="selectedFiles"></div>
+                            
+                            <!-- Botão Enviar -->
+                            <div class="text-end mt-3">
+                                <button class="btn pli-button" id="uploadButton" onclick="uploadFiles()" disabled>
+                                    <i class="fas fa-upload me-2"></i>
+                                    Enviar Arquivos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3: Progresso e Status -->
+                <div class="pli-card-primary mb-4" id="progressSection" style="display: none;">
+                    <div class="card-header" style="background: var(--pli-verde-principal); color: white;">
+                        <h5 class="mb-0">
+                            <i class="fas fa-chart-line me-2"></i>
+                            3. Progresso do Processamento
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="fw-semibold" style="color: var(--pli-azul-escuro);">Progresso Geral</span>
+                                <span id="progressPercentage">0%</span>
+                            </div>
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar bg-success" id="progressBar" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <div id="statusLog" class="border rounded p-3" style="background-color: #f8f9fa; max-height: 200px; overflow-y: auto;">
+                            <small class="text-muted">Aguardando início do processamento...</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 4: Documentos Enviados -->
+                <div class="pli-card-primary">
+                    <div class="card-header" style="background: var(--pli-azul-escuro); color: white;">
+                        <h5 class="mb-0">
+                            <i class="fas fa-file-alt me-2"></i>
+                            4. Documentos Enviados
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-documents">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Arquivo</th>
+                                        <th>Tipo</th>
+                                        <th>Descrição</th>
+                                        <th>Data Upload</th>
+                                        <th>Status</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="uploadedDocumentsTable">
+                                    <!-- Documentos serão inseridos aqui pelo JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-end mt-3">
+                            <button class="btn btn-outline-secondary" onclick="refreshUploadedDocuments()">
+                                <i class="fas fa-sync-alt me-1"></i>Atualizar Lista
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer PLI -->
+    <footer class="pli-footer py-4 mt-5">
+        <div class="container text-center">
+            <div>SIGATA &copy; 2025 - Sistema Integrado de Gestão de Atas</div>
+            <div>Desenvolvido e implementado por VPC-GEOSER</div>
+            <div>18/07/2025</div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api-config.js"></script>
+    <script src="js/data-manager.js"></script>
+    <script>
+        // ==========================================
+        // UPLOAD DE DOCUMENTOS - SIGATA
+        // ==========================================
+
+        let selectedFiles = [];
+        let isProcessing = false;
+        let uploadProgress = {};
+
+        // Configurar eventos quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            setupEventListeners();
+            loadUploadedDocuments();
+        });
+
+        function initializePage() {
+            // Autenticação desativada: acesso liberado sem login
+
+            // Carregar configurações salvas do usuário
+            loadUserPreferences();
+        }
+
+        function setupEventListeners() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.querySelector('.pli-upload-area');
+            
+            // Eventos de clique e drag & drop
+            uploadArea.addEventListener('click', () => fileInput.click());
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('dragleave', handleDragLeave);
+            uploadArea.addEventListener('drop', handleDrop);
+            
+            // Verificar mudanças nas configurações
+            document.getElementById('modelSelect').addEventListener('change', updateProcessButton);
+            document.getElementById('detailLevel').addEventListener('change', updateProcessButton);
+        }
+
+        function loadUserPreferences() {
+            // Carregar preferências salvas do localStorage
+            const savedModel = localStorage.getItem('sigata_preferred_model');
+            const savedDetail = localStorage.getItem('sigata_preferred_detail');
+            
+            if (savedModel) {
+                document.getElementById('modelSelect').value = savedModel;
+            }
+            if (savedDetail) {
+                document.getElementById('detailLevel').value = savedDetail;
+            }
+        }
+
+        function saveUserPreferences() {
+            // Salvar preferências do usuário
+            localStorage.setItem('sigata_preferred_model', document.getElementById('modelSelect').value);
+            localStorage.setItem('sigata_preferred_detail', document.getElementById('detailLevel').value);
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.currentTarget.style.background = 'var(--pli-verde-claro)';
+            e.currentTarget.style.borderColor = 'var(--pli-verde-principal)';
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.currentTarget.style.background = '';
+            e.currentTarget.style.borderColor = '';
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.currentTarget.style.background = '';
+            e.currentTarget.style.borderColor = '';
+            
+            const files = Array.from(e.dataTransfer.files);
+            addFiles(files);
+        }
+
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            addFiles(files);
+        }
+
+        function addFiles(files) {
+            const validFiles = files.filter(file => validateFile(file));
+            selectedFiles = [...selectedFiles, ...validFiles];
+            
+            updateFileDisplay();
+            updateProcessButton();
+            
+            if (validFiles.length > 0) {
+                showFileList();
+            }
+        }
+
+        function validateFile(file) {
+            const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            const maxSize = 10 * 1024 * 1024; // 10MB
+
+            if (!validTypes.includes(file.type)) {
+                dataManager.showNotification('danger', `Arquivo ${file.name} tem formato não suportado. Use apenas PDF ou DOCX.`);
+                return false;
+            }
+
+            if (file.size > maxSize) {
+                dataManager.showNotification('danger', `Arquivo ${file.name} excede o tamanho máximo de 10MB.`);
+                return false;
+            }
+
+            // Verificar se já foi adicionado
+            if (selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
+                dataManager.showNotification('warning', `Arquivo ${file.name} já foi adicionado.`);
+                return false;
+            }
+
+            return true;
+        }
+
+        function showFileList() {
+            const fileListContainer = document.getElementById('fileList');
+            fileListContainer.style.display = 'block';
+        }
+
+        function updateFileDisplay() {
+            const selectedFilesContainer = document.getElementById('selectedFiles');
+            
+            if (selectedFiles.length === 0) {
+                selectedFilesContainer.innerHTML = '<p class="text-muted text-center py-3">Nenhum arquivo selecionado</p>';
+                document.getElementById('fileList').style.display = 'none';
+                return;
+            }
+
+            selectedFilesContainer.innerHTML = selectedFiles.map((file, index) => `
+                <div class="d-flex justify-content-between align-items-center p-3 mb-2 border rounded">
+                    <div class="d-flex align-items-center">
+                        <i class="fas ${dataManager.getFileIcon(file.type)} me-3 ${dataManager.getFileColor(file.type)}" style="font-size: 1.2rem;"></i>
+                        <div>
+                            <div class="fw-semibold" style="color: var(--pli-azul-escuro);">${file.name}</div>
+                            <small class="text-muted">${dataManager.formatFileSize(file.size)} • ${getFileTypeDisplay(file.type)}</small>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-danger btn-sm" onclick="removeFile(${index})" title="Remover arquivo">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function getFileTypeDisplay(type) {
+            return type.includes('pdf') ? 'PDF' : 'DOCX';
+        }
+
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            updateFileDisplay();
+            updateProcessButton();
+        }
+
+        function updateProcessButton() {
+            const uploadBtn = document.getElementById('uploadButton');
+            const hasFiles = selectedFiles.length > 0;
+            
+            uploadBtn.disabled = !hasFiles || isProcessing;
+            
+            if (isProcessing) {
+                uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Enviando...';
+                uploadBtn.classList.add('disabled');
+            } else if (hasFiles) {
+                uploadBtn.innerHTML = '<i class="fas fa-upload me-2"></i>Enviar Arquivos';
+                uploadBtn.classList.remove('disabled');
+            } else {
+                uploadBtn.innerHTML = '<i class="fas fa-upload me-2"></i>Enviar Arquivos';
+                uploadBtn.classList.remove('disabled');
+            }
+        }
+
+        async function uploadFiles() {
+            if (selectedFiles.length === 0 || isProcessing) return;
+            
+            try {
+                isProcessing = true;
+                updateProcessButton();
+                
+                // Mostrar seção de progresso
+                document.getElementById('progressSection').style.display = 'block';
+                
+                // Upload de cada arquivo
+                const progressBar = document.getElementById('progressBar');
+                const progressPercentage = document.getElementById('progressPercentage');
+                const statusLog = document.getElementById('statusLog');
+                
+                statusLog.innerHTML = '';
+                updateProgress(5, 'Iniciando upload dos documentos...', statusLog, progressBar, progressPercentage);
+                
+                const uploadedDocuments = [];
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    const file = selectedFiles[i];
+                    const fileProgress = 10 + (i * 80 / selectedFiles.length);
+                    
+                    updateProgress(fileProgress, `Fazendo upload de ${file.name}...`, statusLog, progressBar, progressPercentage);
+                    
+                    try {
+                        const uploadResult = await sigataAPI.uploadDocument(file);
+                        
+                        uploadedDocuments.push(uploadResult);
+                        updateProgress(fileProgress + (80 / selectedFiles.length), `✓ Upload de ${file.name} concluído`, statusLog, progressBar, progressPercentage);
+                        
+                    } catch (error) {
+                        updateProgress(fileProgress + (80 / selectedFiles.length), `✗ Erro no upload de ${file.name}: ${error.message}`, statusLog, progressBar, progressPercentage);
+                        throw error;
+                    }
+                }
+                
+                updateProgress(95, 'Finalizando upload...', statusLog, progressBar, progressPercentage);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                updateProgress(100, '✓ Upload concluído com sucesso!', statusLog, progressBar, progressPercentage);
+                
+                dataManager.showNotification('success', `${uploadedDocuments.length} documento(s) enviado(s) com sucesso!`);
+                
+                // Limpar arquivos selecionados
+                selectedFiles = [];
+                updateFileDisplay();
+                updateProcessButton();
+                
+                // Recarregar a lista de documentos
+                await loadUploadedDocuments();
+                
+            } catch (error) {
+                console.error('Erro no upload:', error);
+                dataManager.showNotification('danger', 'Erro ao enviar documentos: ' + error.message);
+            } finally {
+                isProcessing = false;
+                updateProcessButton();
+            }
+        }
+
+        async function loadUploadedDocuments() {
+            try {
+                const response = await sigataAPI.request('/documents');
+                const documents = response.documents || [];
+                
+                const tableBody = document.getElementById('uploadedDocumentsTable');
+                tableBody.innerHTML = '';
+                
+                if (documents.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="text-center text-muted py-4">
+                                <i class="fas fa-inbox fa-2x mb-2"></i>
+                                <p>Nenhum documento enviado</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                documents.forEach(doc => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${doc.id || '-'}</td>
+                        <td>${doc.filename || '-'}</td>
+                        <td>${doc.type || '-'}</td>
+                        <td>${doc.description || '-'}</td>
+                        <td>${doc.uploadDate ? dataManager.formatDate(doc.uploadDate) : '-'}</td>
+                        <td>${dataManager.getStatusBadge(doc.processingStatus)}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="processDocument('${doc.id}')" title="Processar">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Erro ao carregar documentos:', error);
+                dataManager.showNotification('danger', 'Erro ao carregar lista de documentos');
+            }
+        }
+        
+        function refreshUploadedDocuments() {
+            loadUploadedDocuments();
+            dataManager.showNotification('info', 'Lista de documentos atualizada');
+        }
+        
+        async function processDocument(documentId) {
+            try {
+                const response = await fetch(sigataAPI.baseURL + '/documents/' + documentId + '/process', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    },
+                    body: JSON.stringify({
+                        model: document.getElementById('modelSelect').value,
+                        detailLevel: document.getElementById('detailLevel').value,
+                        categories: document.getElementById('categories').value.split(',').map(c => c.trim()).filter(c => c)
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Erro ao iniciar processamento');
+                }
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    dataManager.showNotification('success', 'Processamento iniciado com sucesso!');
+                    await loadUploadedDocuments(); // Recarregar a lista para atualizar o status
+                } else {
+                    throw new Error(result.error || 'Erro desconhecido ao iniciar processamento');
+                }
+            } catch (error) {
+                console.error('Erro ao processar documento:', error);
+                dataManager.showNotification('danger', `Erro ao iniciar processamento: ${error.message}`);
+            }
+        }
+
+        function updateProgress(percent, message, statusLog, progressBar, progressPercentage) {
+            if (percent !== null) {
+                progressBar.style.width = percent + '%';
+                progressPercentage.textContent = Math.round(percent) + '%';
+            }
+            
+            if (message) {
+                const logEntry = document.createElement('div');
+                logEntry.className = 'mb-1';
+                logEntry.innerHTML = `<span class="text-muted">[${new Date().toLocaleTimeString()}]</span> ${message}`;
+                statusLog.appendChild(logEntry);
+                statusLog.scrollTop = statusLog.scrollHeight;
+            }
+        }
+    </script>
+</body>
+</html>

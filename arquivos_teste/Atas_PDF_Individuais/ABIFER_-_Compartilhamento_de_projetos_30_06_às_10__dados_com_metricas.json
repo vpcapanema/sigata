@@ -1,0 +1,116 @@
+{
+  "metricas_veracidade": {
+    "score_geral": 0.7466908213919881,
+    "similaridade_media": 0.9791538318573393,
+    "cobertura_conteudo": 0.0516,
+    "total_topicos": 7,
+    "distribuicao": {
+      "alta_veracidade": 0,
+      "media_veracidade": 7,
+      "baixa_veracidade": 0
+    },
+    "detalhes_categoria": {
+      "discussoes": {
+        "score_medio": 0.7472239521485526,
+        "total_topicos": 4,
+        "alta_veracidade": 0
+      },
+      "informacoes": {
+        "score_medio": 0.7561954936954937,
+        "total_topicos": 2,
+        "alta_veracidade": 0
+      },
+      "decisoes": {
+        "score_medio": 0.7255489537587188,
+        "total_topicos": 1,
+        "alta_veracidade": 0
+      }
+    }
+  },
+  "topicos": [
+    {
+      "titulo": "• Aprofundamento das propostas levantadas pelo consórcio, Silvio",
+      "resumo": "• Aprofundamento das propostas levantadas pelo consórcio, Silvio explicou caráter.",
+      "detalhes": "• Aprofundamento das propostas levantadas pelo consórcio, Silvio explicou caráter",
+      "categoria": "discussoes",
+      "prioridade": "Baixa",
+      "pagina": 1,
+      "linha_inicio": 9,
+      "score_veracidade": 0.7474193548387097,
+      "indice_similaridade": 0.9935483870967742,
+      "classificacao_veracidade": "Média"
+    },
+    {
+      "titulo": "Estado de São Paulo, a secretaria informou que",
+      "resumo": "Estado de São Paulo, a secretaria informou que CPTM está desenvolvendo e.",
+      "detalhes": "Estado de São Paulo, a secretaria informou que CPTM está desenvolvendo e",
+      "categoria": "informacoes",
+      "prioridade": "Baixa",
+      "pagina": 1,
+      "linha_inicio": 16,
+      "score_veracidade": 0.7597402597402597,
+      "indice_similaridade": 0.9857142857142858,
+      "classificacao_veracidade": "Média"
+    },
+    {
+      "titulo": "• Foi apresentada pelo consórcio a proposta de",
+      "resumo": "• Foi apresentada pelo consórcio a proposta de incentivo ao processamento de.",
+      "detalhes": "• Foi apresentada pelo consórcio a proposta de incentivo ao processamento de",
+      "categoria": "discussoes",
+      "prioridade": "Baixa",
+      "pagina": 1,
+      "linha_inicio": 19,
+      "score_veracidade": 0.731949806949807,
+      "indice_similaridade": 0.9459459459459459,
+      "classificacao_veracidade": "Média"
+    },
+    {
+      "titulo": "paulistas, sendo comunicado o agendamento de reunião para",
+      "resumo": "paulistas, sendo comunicado o agendamento de reunião para tal na secretaria;.",
+      "detalhes": "paulistas, sendo comunicado o agendamento de reunião para tal na secretaria;",
+      "categoria": "informacoes",
+      "prioridade": "Baixa",
+      "pagina": 2,
+      "linha_inicio": 33,
+      "score_veracidade": 0.7526507276507276,
+      "indice_similaridade": 0.972972972972973,
+      "classificacao_veracidade": "Média"
+    },
+    {
+      "titulo": "está aprovado seguindo normas americanas",
+      "resumo": "está aprovado seguindo normas americanas;.",
+      "detalhes": "está aprovado seguindo normas americanas;",
+      "categoria": "decisoes",
+      "prioridade": "Baixa",
+      "pagina": 2,
+      "linha_inicio": 57,
+      "score_veracidade": 0.7255489537587188,
+      "indice_similaridade": 0.9873417721518988,
+      "classificacao_veracidade": "Média"
+    },
+    {
+      "titulo": "• A produção do setor ferroviário também participou",
+      "resumo": "• A produção do setor ferroviário também participou do debate sobre a regulação de.",
+      "detalhes": "• A produção do setor ferroviário também participou do debate sobre a regulação de",
+      "categoria": "discussoes",
+      "prioridade": "Baixa",
+      "pagina": 2,
+      "linha_inicio": 58,
+      "score_veracidade": 0.7674213836477989,
+      "indice_similaridade": 0.9685534591194969,
+      "classificacao_veracidade": "Média"
+    },
+    {
+      "titulo": "• Encaminhamentos: troca de informações e propostas entre",
+      "resumo": "• Encaminhamentos: troca de informações e propostas entre associação, secretaria e.",
+      "detalhes": "• Encaminhamentos: troca de informações e propostas entre associação, secretaria e",
+      "categoria": "discussoes",
+      "prioridade": "Baixa",
+      "pagina": 1,
+      "linha_inicio": 71,
+      "score_veracidade": 0.7421052631578948,
+      "indice_similaridade": 1.0,
+      "classificacao_veracidade": "Média"
+    }
+  ]
+}

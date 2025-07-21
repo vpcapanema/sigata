@@ -1,0 +1,542 @@
+{
+  "success": true,
+  "document_info": {
+    "filename": "ABIFER_-_Compartilhamento_de_projetos_30_06_às_10_.pdf",
+    "path": "D:\\SEMIL\\PLI\\SIGATA\\arquivos_teste\\Atas_PDF_Individuais\\ABIFER_-_Compartilhamento_de_projetos_30_06_às_10_.pdf",
+    "text_length": 5209,
+    "chunks_count": 18
+  },
+  "analysis_results": {
+    "document_id": "abifer_ata_ABIFER_-_Compartilhamento_de_projetos_30_06_às_10_",
+    "timestamp": "2025-07-20T18:17:15.549576",
+    "topics": [
+      {
+        "id": 0,
+        "words": [
+          "00",
+          "00 presentes",
+          "06",
+          "06 10",
+          "10",
+          "10 00",
+          "30",
+          "30 06",
+          "abifer compartilhamento",
+          "carol sandra"
+        ],
+        "scores": [
+          0.17512520161969763,
+          0.17512520161969763,
+          0.17512520161969763,
+          0.17512520161969763,
+          0.17512520161969763,
+          0.17512520161969763,
+          0.17512520161969763,
+          0.17512520161969763,
+          0.17512520161969763,
+          0.17512520161969763
+        ],
+        "count": 10,
+        "name": "0_00_00 presentes_06_06 10"
+      },
+      {
+        "id": 1,
+        "words": [
+          "estado",
+          "dado",
+          "mas",
+          "produção",
+          "abifer",
+          "ferroviário",
+          "carga",
+          "demanda",
+          "anos",
+          "consórcio"
+        ],
+        "scores": [
+          0.02912673753249228,
+          0.02912673753249228,
+          0.02527146555027744,
+          0.02527146555027744,
+          0.02404886198196843,
+          0.021197554267182825,
+          0.021197554267182825,
+          0.021197554267182825,
+          0.021197554267182825,
+          0.021197554267182825
+        ],
+        "count": 8,
+        "name": "1_estado_dado_mas_produção"
+      }
+    ],
+    "keywords": [
+      {
+        "word": "marítimos considerando recuperação",
+        "relevance": 0.7089,
+        "frequency": 0
+      },
+      {
+        "word": "abpf associação brasileira",
+        "relevance": 0.6122,
+        "frequency": 0
+      },
+      {
+        "word": "está desenvolvendo compartilhando",
+        "relevance": 0.5887,
+        "frequency": 0
+      },
+      {
+        "word": "empresas multinacionais",
+        "relevance": 0.5646,
+        "frequency": 1
+      },
+      {
+        "word": "voltadas produção proteína",
+        "relevance": 0.5355,
+        "frequency": 0
+      },
+      {
+        "word": "mover necessitam readequamento",
+        "relevance": 0.5326,
+        "frequency": 0
+      },
+      {
+        "word": "hidrogênio previstas os",
+        "relevance": 0.5321,
+        "frequency": 0
+      },
+      {
+        "word": "secretaria dinâmica produtiva",
+        "relevance": 0.5075,
+        "frequency": 0
+      },
+      {
+        "word": "confirmou demanda",
+        "relevance": 0.4962,
+        "frequency": 0
+      },
+      {
+        "word": "baterias trens",
+        "relevance": 0.4889,
+        "frequency": 0
+      },
+      {
+        "word": "sistema rodoviário",
+        "relevance": 0.4803,
+        "frequency": 0
+      },
+      {
+        "word": "fase diagnóstico plano",
+        "relevance": 0.4615,
+        "frequency": 0
+      },
+      {
+        "word": "arte localizadas estado",
+        "relevance": 0.4607,
+        "frequency": 0
+      },
+      {
+        "word": "tecnológica energética",
+        "relevance": 0.431,
+        "frequency": 0
+      },
+      {
+        "word": "carol sandra silvio",
+        "relevance": 0.3997,
+        "frequency": 0
+      }
+    ],
+    "entities": [
+      {
+        "text": "ABIFER - Compartilhamento",
+        "label": "LOC",
+        "start": 0,
+        "end": 25,
+        "confidence": 0.9
+      },
+      {
+        "text": "Presentes: Denis",
+        "label": "MISC",
+        "start": 55,
+        "end": 71,
+        "confidence": 0.9
+      },
+      {
+        "text": "Carol",
+        "label": "PER",
+        "start": 73,
+        "end": 78,
+        "confidence": 0.9
+      },
+      {
+        "text": "Sandra",
+        "label": "PER",
+        "start": 80,
+        "end": 86,
+        "confidence": 0.9
+      },
+      {
+        "text": "Silvio",
+        "label": "PER",
+        "start": 88,
+        "end": 94,
+        "confidence": 0.9
+      },
+      {
+        "text": "Vitor",
+        "label": "PER",
+        "start": 96,
+        "end": 101,
+        "confidence": 0.9
+      },
+      {
+        "text": "Joseane",
+        "label": "PER",
+        "start": 103,
+        "end": 110,
+        "confidence": 0.9
+      },
+      {
+        "text": "Luciana",
+        "label": "PER",
+        "start": 112,
+        "end": 119,
+        "confidence": 0.9
+      },
+      {
+        "text": "Edvaldo",
+        "label": "PER",
+        "start": 121,
+        "end": 128,
+        "confidence": 0.9
+      },
+      {
+        "text": "Vicente",
+        "label": "PER",
+        "start": 131,
+        "end": 138,
+        "confidence": 0.9
+      },
+      {
+        "text": "PLI",
+        "label": "ORG",
+        "start": 158,
+        "end": 161,
+        "confidence": 0.9
+      },
+      {
+        "text": "Denis",
+        "label": "PER",
+        "start": 205,
+        "end": 210,
+        "confidence": 0.9
+      },
+      {
+        "text": "Carol",
+        "label": "PER",
+        "start": 213,
+        "end": 218,
+        "confidence": 0.9
+      },
+      {
+        "text": "Webinar",
+        "label": "MISC",
+        "start": 238,
+        "end": 245,
+        "confidence": 0.9
+      },
+      {
+        "text": "Silvio",
+        "label": "PER",
+        "start": 273,
+        "end": 279,
+        "confidence": 0.9
+      },
+      {
+        "text": "PLI",
+        "label": "ORG",
+        "start": 307,
+        "end": 310,
+        "confidence": 0.9
+      },
+      {
+        "text": "Silvio",
+        "label": "PER",
+        "start": 556,
+        "end": 562,
+        "confidence": 0.9
+      },
+      {
+        "text": "Malha Oeste",
+        "label": "LOC",
+        "start": 838,
+        "end": 849,
+        "confidence": 0.9
+      },
+      {
+        "text": "RUMO",
+        "label": "ORG",
+        "start": 869,
+        "end": 873,
+        "confidence": 0.9
+      },
+      {
+        "text": "Plano Estratégico Ferroviário do \nEstado de São Paulo",
+        "label": "ORG",
+        "start": 1014,
+        "end": 1067,
+        "confidence": 0.9
+      },
+      {
+        "text": "CPTM",
+        "label": "LOC",
+        "start": 1095,
+        "end": 1099,
+        "confidence": 0.9
+      },
+      {
+        "text": "Tietê",
+        "label": "LOC",
+        "start": 1483,
+        "end": 1488,
+        "confidence": 0.9
+      },
+      {
+        "text": "Malha Paulista",
+        "label": "LOC",
+        "start": 1490,
+        "end": 1504,
+        "confidence": 0.9
+      },
+      {
+        "text": "Malha Sul",
+        "label": "LOC",
+        "start": 1507,
+        "end": 1516,
+        "confidence": 0.9
+      },
+      {
+        "text": "Interoperabilidade",
+        "label": "MISC",
+        "start": 1717,
+        "end": 1735,
+        "confidence": 0.9
+      },
+      {
+        "text": "RMSP",
+        "label": "LOC",
+        "start": 1760,
+        "end": 1764,
+        "confidence": 0.9
+      },
+      {
+        "text": "CPTM",
+        "label": "LOC",
+        "start": 1766,
+        "end": 1770,
+        "confidence": 0.9
+      },
+      {
+        "text": "Vale",
+        "label": "ORG",
+        "start": 1790,
+        "end": 1794,
+        "confidence": 0.9
+      },
+      {
+        "text": "ABIFER",
+        "label": "LOC",
+        "start": 1933,
+        "end": 1939,
+        "confidence": 0.9
+      },
+      {
+        "text": "MS",
+        "label": "LOC",
+        "start": 2203,
+        "end": 2205,
+        "confidence": 0.9
+      },
+      {
+        "text": "MS",
+        "label": "LOC",
+        "start": 2447,
+        "end": 2449,
+        "confidence": 0.9
+      },
+      {
+        "text": "MATOPIBA",
+        "label": "MISC",
+        "start": 2451,
+        "end": 2459,
+        "confidence": 0.9
+      },
+      {
+        "text": "estado de",
+        "label": "LOC",
+        "start": 2529,
+        "end": 2538,
+        "confidence": 0.9
+      },
+      {
+        "text": "porto de Santos",
+        "label": "LOC",
+        "start": 2616,
+        "end": 2631,
+        "confidence": 0.9
+      },
+      {
+        "text": "ferrovia Norte",
+        "label": "LOC",
+        "start": 2738,
+        "end": 2752,
+        "confidence": 0.9
+      },
+      {
+        "text": "Porto de Santos",
+        "label": "LOC",
+        "start": 2930,
+        "end": 2945,
+        "confidence": 0.9
+      },
+      {
+        "text": "Serra do Mar",
+        "label": "LOC",
+        "start": 2959,
+        "end": 2971,
+        "confidence": 0.9
+      },
+      {
+        "text": "ABIFER",
+        "label": "LOC",
+        "start": 3270,
+        "end": 3276,
+        "confidence": 0.9
+      },
+      {
+        "text": "Serra",
+        "label": "LOC",
+        "start": 3321,
+        "end": 3326,
+        "confidence": 0.9
+      },
+      {
+        "text": "Santos",
+        "label": "LOC",
+        "start": 3351,
+        "end": 3357,
+        "confidence": 0.9
+      },
+      {
+        "text": "CPTM",
+        "label": "LOC",
+        "start": 3481,
+        "end": 3485,
+        "confidence": 0.9
+      },
+      {
+        "text": "Paraná",
+        "label": "LOC",
+        "start": 3624,
+        "end": 3630,
+        "confidence": 0.9
+      },
+      {
+        "text": "ABIFER",
+        "label": "ORG",
+        "start": 3715,
+        "end": 3721,
+        "confidence": 0.9
+      },
+      {
+        "text": "ANTT",
+        "label": "ORG",
+        "start": 4357,
+        "end": 4361,
+        "confidence": 0.9
+      },
+      {
+        "text": "Varginha",
+        "label": "LOC",
+        "start": 4591,
+        "end": 4599,
+        "confidence": 0.9
+      },
+      {
+        "text": "RMS",
+        "label": "MISC",
+        "start": 4649,
+        "end": 4652,
+        "confidence": 0.9
+      },
+      {
+        "text": "ABPF",
+        "label": "ORG",
+        "start": 4667,
+        "end": 4671,
+        "confidence": 0.9
+      },
+      {
+        "text": "Associação Brasileira de Preservação \nFerroviária",
+        "label": "ORG",
+        "start": 4673,
+        "end": 4722,
+        "confidence": 0.9
+      },
+      {
+        "text": "Fundo Clima",
+        "label": "ORG",
+        "start": 4961,
+        "end": 4972,
+        "confidence": 0.9
+      },
+      {
+        "text": "Projeto Mover",
+        "label": "MISC",
+        "start": 4975,
+        "end": 4988,
+        "confidence": 0.9
+      },
+      {
+        "text": "Encaminhamentos",
+        "label": "MISC",
+        "start": 5117,
+        "end": 5132,
+        "confidence": 0.9
+      }
+    ],
+    "participants": [
+      "Vicente",
+      "Carol",
+      "Luciana",
+      "Sandra",
+      "Denis",
+      "Vitor",
+      "Edvaldo",
+      "Joseane",
+      "Silvio"
+    ],
+    "decisions": [
+      {
+        "text": "A perspectiva de desenvolvimento produtivo do setor foi apresentada pela ABIFER \ncomo positiva, dado a presença de empresas multinacionais com tecnologias no \nestado da arte localizadas no estado de São Paulo, com capacidade de incorporar \ncélulas a hidrogênio e baterias aos trens produzidos no país, em confluência com as \nplantas de produção de hidrogênio previstas para os grandes portos brasileiros, \nmaior dificuldade na melhoria da autonomia e marcos regulatórios, para hidrogênio \nestá aprovado seguindo normas americanas;  \n•",
+        "confidence": 0.8,
+        "keyword": "aprovado"
+      }
+    ],
+    "actions": [],
+    "summary": "Documento processado com 20 palavras-chave, 2 tópicos e 12 participantes identificados.",
+    "performance_score": 3.102583580935815,
+    "confidence_interval": [
+      2.906583580935815,
+      1.0
+    ],
+    "metrics": {
+      "coherence_c_v": 9.71501078367969,
+      "word_pairs": 90,
+      "bert_precision": 0.6488638520240784,
+      "bert_recall": 0.6057910919189453,
+      "bert_f1": 0.6265881657600403,
+      "mmr_score": -0.24687700534759363
+    }
+  }
+}

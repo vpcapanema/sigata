@@ -1,40 +1,7 @@
 {
-  "folders": [
-    {
-      "path": "."
-    },
-    {
-      "path": "../DEMO_PROCESSADOR_ATA_REUNIAO/simulacao"
-    },
-    {
-      "path": "../DOCUMENTOS/RELATÓRIO MENSAL"
-    }
-  ],
-  "settings": {
-    "database-client.connections": [
-      {
-        "name": "PLI-DB Production",
-        "host": "pli-db.c6j00cu4izbw.us-east-1.rds.amazonaws.com",
-        "port": 5432,
-        "user": "postgres", 
-        "password": "semil2025*",
-        "database": "postgres",
-        "dbType": "PostgreSQL",
-        "ssl": true,
-        "connectionTimeout": 30000,
-        "requestTimeout": 30000,
-        "global": false,
-        "includeDatabases": "postgres,pli_db",
-        "group": "PLI Databases",
-        "timezone": "America/Sao_Paulo"
-      }
-    ],
-    "powershell.cwd": "SIGATA"
-  },
-  "extensions": {
-    "recommendations": [
-      "cweijan.vscode-postgresql-client2",
-      "ckolkman.vscode-postgres"
+    "folders": [
+        {
+            "path": "."
+        }
     ]
-  }
 }

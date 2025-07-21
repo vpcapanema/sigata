@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualização Completa - SIGATA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sistema_aplicacao_cores_pli.css">
+    <style>
+        .view-container {
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        .view-header {
+            background: white;
+            color: var(--pli-azul-escuro);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--pli-azul-escuro);
+        }
+
+        .view-header h2 {
+            color: var(--pli-azul-escuro);
+            font-weight: bold;
+        }
+
+        .view-header p {
+            color: var(--pli-azul-escuro);
+            opacity: 0.8;
+        }
+
+        .view-header .fas {
+            color: var(--pli-azul-escuro);
+        }
+
+        /* Botões do header com animação */
+        .view-header .btn {
+            transition: all 0.3s ease;
+            border: 2px solid var(--pli-azul-escuro);
+            background: transparent;
+            color: var(--pli-azul-escuro);
+            font-weight: 500;
+        }
+        
+        .view-header .btn:hover {
+            background: var(--pli-azul-escuro);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(26, 35, 126, 0.3);
+        }
+        
+        .view-header .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Classe de animação para botões */
+        .btn-animated {
+            transition: all 0.3s ease;
+            border: 2px solid var(--pli-azul-escuro);
+            background: transparent;
+            color: var(--pli-azul-escuro);
+            font-weight: 500;
+        }
+        
+        .btn-animated:hover {
+            background: var(--pli-azul-escuro);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(26, 35, 126, 0.3);
+        }
+        
+        .btn-animated:active {
+            transform: translateY(0);
+        }
+
+        .control-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .data-table-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 2px solid var(--pli-azul-escuro);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .data-table thead th {
+            background: var(--pli-azul-escuro);
+            color: white;
+            padding: 12px 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-bottom: 2px solid var(--pli-azul-escuro);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .data-table tbody td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 0.85rem;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .data-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .data-table tbody tr.highlighted {
+            background: #fff3cd !important;
+            border-left: 4px solid #ffc107;
+        }
+
+        .section-header {
+            background: var(--pli-verde-claro);
+            color: var(--pli-azul-escuro);
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-header::before {
+            content: attr(data-section);
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7rem;
+            background: var(--pli-azul-escuro);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-completo { background: #d1edff; color: #0066cc; }
+        .status-parcial { background: #fff3cd; color: #856404; }
+        .status-processamento { background: #cce5ff; color: #004085; }
+        .status-erro { background: #f8d7da; color: #721c24; }
+        .status-pendente { background: #e2e3e5; color: #383d41; }
+
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            border-left: 4px solid var(--pli-azul-escuro);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--pli-azul-escuro);
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .column-toggle {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .expandable-cell {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .expandable-cell:hover {
+            background: #e9ecef;
+        }
+
+        .expand-icon {
+            margin-left: 5px;
+            font-size: 0.7rem;
+            color: #666;
+        }
+
+        .modal-content {
+            max-width: 90vw;
+        }
+
+        .detail-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .detail-section h6 {
+            color: var(--pli-azul-escuro);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .search-highlight {
+            background: yellow;
+            padding: 1px 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegação -->
+    <nav class="navbar navbar-expand-lg pli-navbar">
+        <div class="container">
+            <a class="navbar-brand pli-navbar-brand" href="index.html">
+                <i class="fas fa-file-alt"></i> SIGATA
+            </a>
+            <button class="navbar-toggler" type="button" title="Toggle navigation" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i> Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documents.html">
+                            <i class="fas fa-folder"></i> Documentos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="view-complete.html">
+                            <i class="fas fa-eye"></i> Visualização Completa
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header da Visualização -->
+    <div class="view-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2><i class="fas fa-database"></i> Visualização Completa de Documentos</h2>
+                    <p class="mb-0">Interface de interação com a view documentos_processamento_full</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn btn-animated" onclick="refreshData()">
+                        <i class="fas fa-sync-alt"></i> Atualizar
+                    </button>
+                    <button class="btn btn-animated" onclick="exportData()">
+                        <i class="fas fa-download"></i> Exportar
+                    </button>
+                    <button class="btn btn-animated" onclick="showDatabaseConfig()" title="Configurações do Banco">
+                        <i class="fas fa-database"></i> Banco
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="view-container">
+        <div class="container-fluid">
+            <!-- Estatísticas Rápidas -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalDocuments">0</div>
+                    <div class="stat-label">Total de Documentos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="processedComplete">0</div>
+                    <div class="stat-label">Processamento Completo</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="withNLP">0</div>
+                    <div class="stat-label">Com Análise NLP</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="avgQuality">0%</div>
+                    <div class="stat-label">Qualidade Média</div>
+                </div>
+            </div>
+
+            <!-- Painel de Controles -->
+            <div class="control-panel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-filter"></i> Filtros e Controles</h5>
+                        <div class="filter-group">
+                            <div>
+                                <label class="form-label">Status:</label>
+                                <select class="form-select form-select-sm" id="statusFilter" title="Filtro de status">
+                                    <option value="">Todos</option>
+                                    <option value="Completo">Completo</option>
+                                    <option value="Parcial">Parcial</option>
+                                    <option value="Em Processamento">Em Processamento</option>
+                                    <option value="Erro">Erro</option>
+                                    <option value="Pendente">Pendente</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label">Tipo:</label>
+                                <select class="form-select form-select-sm" id="typeFilter" title="Filtrar por tipo de documento">
+                                    <option value="">Todos</option>
+                                    <option value="ATA">ATA</option>
+                                    <option value="RELATORIO">Relatório</option>
+                                    <option value="CONTRATO">Contrato</option>
+                                    <option value="OFICIO">Ofício</option>
+                                    <option value="MEMORANDO">Memorando</option>
+                                    <option value="OUTROS">Outros</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label">Buscar:</label>
+                                <input type="text" class="form-control form-control-sm" id="searchInput" placeholder="Nome do arquivo...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-columns"></i> Colunas Visíveis</h5>
+                        <div class="column-toggle" id="columnToggle">
+                            <!-- Checkboxes das colunas serão inseridos aqui -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela de Dados -->
+            <div class="data-table-container">
+                <div class="table-responsive">
+                    <table class="data-table" id="dataTable">
+                        <thead id="tableHeader">
+                            <!-- Headers serão inseridos dinamicamente -->
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Dados serão inseridos dinamicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Paginação -->
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div>
+                    <select class="form-select form-select-sm" id="pageSize" title="Selecionar quantidade por página">
+                        <option value="10">10 por página</option>
+                        <option value="25" selected>25 por página</option>
+                        <option value="50">50 por página</option>
+                        <option value="100">100 por página</option>
+                    </select>
+                </div>
+                <nav>
+                    <ul class="pagination mb-0" id="pagination">
+                        <!-- Paginação será inserida aqui -->
+                    </ul>
+                </nav>
+                <div>
+                    <span id="recordInfo">Mostrando 0 de 0 registros</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes -->
+    <div class="modal fade" id="detailModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title">
+                        <i class="fas fa-info-circle"></i> Detalhes Completos do Documento
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" title="Fechar"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Conteúdo será inserido dinamicamente -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn pli-button" onclick="printDetails()">
+                        <i class="fas fa-print"></i> Imprimir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Configuração do Banco -->
+    <div class="modal fade" id="databaseConfigModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title">
+                        <i class="fas fa-database"></i> Configuração do Banco de Dados
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" title="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-server"></i> Informações de Conexão</h6>
+                            <table class="table table-sm">
+                                <tr>
+                                    <td><strong>Host:</strong></td>
+                                    <td id="dbHost">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Porta:</strong></td>
+                                    <td id="dbPort">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Database:</strong></td>
+                                    <td id="dbName">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Schema:</strong></td>
+                                    <td id="dbSchema">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Status:</strong></td>
+                                    <td><span id="dbStatus" class="badge bg-secondary">Verificando...</span></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-table"></i> Estrutura do Banco</h6>
+                            <table class="table table-sm">
+                                <tr>
+                                    <td><strong>Tabelas:</strong></td>
+                                    <td id="dbTables">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Views:</strong></td>
+                                    <td id="dbViews">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cache:</strong></td>
+                                    <td id="dbCache">-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Última Consulta:</strong></td>
+                                    <td id="dbLastQuery">-</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <h6><i class="fas fa-eye"></i> View Principal</h6>
+                        <div class="alert alert-info">
+                            <strong>documentos_processamento_full</strong><br>
+                            Esta view une as 6 tabelas principais do sistema SIGATA:
+                            <ol class="mb-0 mt-2">
+                                <li><code>documento_base</code> - Informações principais</li>
+                                <li><code>documento_arquivo</code> - Arquivos físicos</li>
+                                <li><code>documento_ata_dados</code> - Dados das atas</li>
+                                <li><code>documento_qualidade</code> - Métricas de qualidade</li>
+                                <li><code>documento_nlp_dados</code> - Processamento NLP</li>
+                                <li><code>documento_nlp_metricas</code> - Métricas NLP</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <button class="btn btn-primary" onclick="testDatabaseConnection()">
+                            <i class="fas fa-plug"></i> Testar Conexão
+                        </button>
+                        <button class="btn btn-warning" onclick="clearDatabaseCache()">
+                            <i class="fas fa-trash"></i> Limpar Cache
+                        </button>
+                        <button class="btn btn-info" onclick="refreshDatabaseInfo()">
+                            <i class="fas fa-sync"></i> Atualizar Info
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer PLI -->
+    <footer class="pli-footer py-4 mt-5">
+        <div class="container text-center">
+            <div>SIGATA &copy; 2025 - Sistema Integrado de Gestão de Atas</div>
+            <div>Desenvolvido e implementado por VPC-GEOSER</div>
+            <div>18/07/2025</div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/database-config.js"></script>
+    <script src="js/api-config.js"></script>
+    <script src="js/data-manager.js"></script>
+    <script>
+        // Configuração global
+        const VIEW_CONFIG = {
+            columns: [
+                // Seção 1: Documento Base
+                { key: 'documento_id', label: 'ID', section: '1-BASE', visible: false, width: '120px' },
+                { key: 'codigo_documento', label: 'Código', section: '1-BASE', visible: true, width: '120px' },
+                { key: 'nome_arquivo', label: 'Nome do Arquivo', section: '1-BASE', visible: true, width: '200px' },
+                { key: 'tipo_documento', label: 'Tipo', section: '1-BASE', visible: true, width: '100px' },
+                { key: 'subtipo_documento', label: 'Subtipo', section: '1-BASE', visible: false, width: '120px' },
+                { key: 'categoria', label: 'Categoria', section: '1-BASE', visible: true, width: '150px' },
+                { key: 'tamanho_arquivo', label: 'Tamanho', section: '1-BASE', visible: true, width: '100px' },
+                { key: 'data_upload', label: 'Data Upload', section: '1-BASE', visible: true, width: '120px' },
+                
+                // Seção 2: Arquivo Físico
+                { key: 'arquivo_id', label: 'Arquivo ID', section: '2-ARQ', visible: false, width: '120px' },
+                { key: 'caminho_arquivo', label: 'Caminho', section: '2-ARQ', visible: false, width: '150px' },
+                { key: 'hash_arquivo', label: 'Hash', section: '2-ARQ', visible: false, width: '120px' },
+                { key: 'mimetype', label: 'MIME Type', section: '2-ARQ', visible: false, width: '120px' },
+                
+                // Seção 3: Dados da Ata
+                { key: 'titulo_reuniao', label: 'Título Reunião', section: '3-ATA', visible: true, width: '200px' },
+                { key: 'data_reuniao', label: 'Data Reunião', section: '3-ATA', visible: true, width: '120px' },
+                { key: 'local_reuniao', label: 'Local', section: '3-ATA', visible: false, width: '150px' },
+                { key: 'organizacao_responsavel', label: 'Organização', section: '3-ATA', visible: true, width: '150px' },
+                { key: 'numero_participantes', label: '# Participantes', section: '3-ATA', visible: true, width: '100px' },
+                
+                // Seção 4: Qualidade
+                { key: 'pontuacao_geral', label: 'Qualidade Geral', section: '4-QUAL', visible: true, width: '120px' },
+                { key: 'pontuacao_legibilidade', label: 'Legibilidade', section: '4-QUAL', visible: false, width: '100px' },
+                { key: 'pontuacao_estrutura', label: 'Estrutura', section: '4-QUAL', visible: false, width: '100px' },
+                { key: 'nivel_confianca', label: 'Confiança', section: '4-QUAL', visible: true, width: '100px' },
+                
+                // Seção 5: NLP Dados
+                { key: 'idioma_detectado', label: 'Idioma', section: '5-NLP', visible: true, width: '80px' },
+                { key: 'palavras_chave_nlp', label: 'Palavras-Chave', section: '5-NLP', visible: true, width: '200px' },
+                { key: 'sentimento_geral', label: 'Sentimento', section: '5-NLP', visible: true, width: '100px' },
+                { key: 'pontuacao_sentimento', label: 'Score Sentimento', section: '5-NLP', visible: false, width: '100px' },
+                { key: 'resumo_automatico', label: 'Resumo', section: '5-NLP', visible: false, width: '250px' },
+                
+                // Seção 6: NLP Métricas
+                { key: 'densidade_palavras_chave', label: 'Densidade PC', section: '6-MET', visible: false, width: '100px' },
+                { key: 'diversidade_lexical', label: 'Diversidade', section: '6-MET', visible: false, width: '100px' },
+                { key: 'indice_legibilidade', label: 'Índice Legib.', section: '6-MET', visible: true, width: '100px' },
+                { key: 'pontuacao_objetividade', label: 'Objetividade', section: '6-MET', visible: false, width: '100px' },
+                
+                // Indicadores
+                { key: 'tem_arquivo', label: 'Tem Arquivo', section: 'IND', visible: false, width: '80px' },
+                { key: 'tem_dados_ata', label: 'Tem Ata', section: 'IND', visible: false, width: '80px' },
+                { key: 'tem_avaliacao_qualidade', label: 'Tem Qualidade', section: 'IND', visible: false, width: '80px' },
+                { key: 'tem_processamento_nlp', label: 'Tem NLP', section: 'IND', visible: false, width: '80px' },
+                { key: 'tem_metricas_nlp', label: 'Tem Métricas', section: 'IND', visible: false, width: '80px' },
+                
+                // Status agregado
+                { key: 'status_processamento_completo', label: 'Status Completo', section: 'STATUS', visible: true, width: '120px' },
+                { key: 'ultima_atualizacao', label: 'Última Atualização', section: 'STATUS', visible: true, width: '150px' }
+            ],
+            currentPage: 1,
+            pageSize: 25,
+            totalRecords: 0,
+            filteredData: [],
+            allData: []
+        };
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeView();
+            loadData();
+            setupEventListeners();
+            loadDatabaseInfo();
+        });
+
+        function initializeView() {
+            createColumnToggles();
+            createTableHeaders();
+            updateColumnVisibility();
+        }
+
+        function createColumnToggles() {
+            const container = document.getElementById('columnToggle');
+            const sections = [...new Set(VIEW_CONFIG.columns.map(col => col.section))];
+            
+            sections.forEach(section => {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'mb-2';
+                sectionDiv.innerHTML = `<strong>${section}</strong>`;
+                container.appendChild(sectionDiv);
+                
+                VIEW_CONFIG.columns.filter(col => col.section === section).forEach(col => {
+                    const checkDiv = document.createElement('div');
+                    checkDiv.className = 'form-check form-check-sm';
+                    checkDiv.innerHTML = `
+                        <input class="form-check-input" type="checkbox" id="col_${col.key}" 
+                               ${col.visible ? 'checked' : ''} onchange="toggleColumn('${col.key}')">
+                        <label class="form-check-label" for="col_${col.key}">${col.label}</label>
+                    `;
+                    container.appendChild(checkDiv);
+                });
+            });
+        }
+
+        function createTableHeaders() {
+            const header = document.getElementById('tableHeader');
+            const row = document.createElement('tr');
+            
+            VIEW_CONFIG.columns.forEach(col => {
+                const th = document.createElement('th');
+                th.id = `header_${col.key}`;
+                th.innerHTML = `
+                    <div data-section="${col.section}" class="section-header">
+                        ${col.label}
+                        <i class="fas fa-sort sort-icon" onclick="sortTable('${col.key}')" style="cursor: pointer; margin-left: 5px;"></i>
+                    </div>
+                `;
+                th.style.width = col.width;
+                th.style.display = col.visible ? '' : 'none';
+                row.appendChild(th);
+            });
+            
+            // Coluna de ações
+            const actionTh = document.createElement('th');
+            actionTh.innerHTML = '<div class="section-header" data-section="AÇÕES">Ações</div>';
+            actionTh.style.width = '100px';
+            row.appendChild(actionTh);
+            
+            header.appendChild(row);
+        }
+
+        function toggleColumn(columnKey) {
+            const column = VIEW_CONFIG.columns.find(col => col.key === columnKey);
+            if (column) {
+                column.visible = !column.visible;
+                updateColumnVisibility();
+            }
+        }
+
+        function updateColumnVisibility() {
+            VIEW_CONFIG.columns.forEach(col => {
+                const header = document.getElementById(`header_${col.key}`);
+                const cells = document.querySelectorAll(`.cell_${col.key}`);
+                
+                const display = col.visible ? '' : 'none';
+                if (header) header.style.display = display;
+                cells.forEach(cell => cell.style.display = display);
+            });
+        }
+
+        async function loadData() {
+            try {
+                showLoading(true);
+                
+                // Chamar a API para buscar dados da view
+                const response = await sigataAPI.getCompleteDocumentsView();
+                
+                if (response.success) {
+                    VIEW_CONFIG.allData = response.data;
+                    applyFilters();
+                    updateStats();
+                } else {
+                    console.error('Erro ao carregar dados:', response.error);
+                    // Fallback para dados mock
+                    loadMockData();
+                }
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                loadMockData();
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function loadMockData() {
+            // Dados mock baseados na estrutura real das tabelas PLI
+            VIEW_CONFIG.allData = [
+                {
+                    documento_id: '123e4567-e89b-12d3-a456-426614174001',
+                    codigo_documento: 'ATA-2025-001',
+                    nome_arquivo: 'Ata_Reuniao_Conselho_Janeiro_2025.pdf',
+                    tipo_documento: 'ATA',
+                    subtipo_documento: 'REUNIAO_ORDINARIA',
+                    categoria: 'CONSELHO_ADMINISTRATIVO',
+                    tamanho_arquivo: '2.3 MB',
+                    data_upload: '2025-01-15',
+                    status_documento: 'CONCLUIDO',
+                    titulo_reuniao: 'Reunião Ordinária do Conselho Administrativo',
+                    data_reuniao: '2025-01-10',
+                    numero_participantes: 12,
+                    pontuacao_geral: 8.5,
+                    nivel_confianca: 92,
+                    idioma_detectado: 'pt-BR',
+                    palavras_chave_nlp: 'conselho, deliberação, aprovação, orçamento, gestão',
+                    sentimento_geral: 'NEUTRO',
+                    indice_legibilidade: 7.8,
+                    status_processamento_completo: 'Completo',
+                    ultima_atualizacao: '2025-01-15 14:30:00',
+                    tem_arquivo: 'Sim',
+                    tem_dados_ata: 'Sim',
+                    tem_avaliacao_qualidade: 'Sim',
+                    tem_processamento_nlp: 'Sim',
+                    tem_metricas_nlp: 'Sim',
+                    organizacao_responsavel: 'PLI - Consórcio',
+                    local_reuniao: 'Sala de Reuniões - Brasília',
+                    densidade_palavras_chave: 15.6,
+                    diversidade_lexical: 78.3,
+                    pontuacao_objetividade: 85.2
+                },
+                {
+                    documento_id: '123e4567-e89b-12d3-a456-426614174002',
+                    codigo_documento: 'ATA-2024-045',
+                    nome_arquivo: 'Ata_Emergencial_Dezembro_2024.docx',
+                    tipo_documento: 'ATA',
+                    subtipo_documento: 'REUNIAO_EXTRAORDINARIA',
+                    categoria: 'DIRETORIA_EXECUTIVA',
+                    tamanho_arquivo: '1.8 MB',
+                    data_upload: '2024-12-20',
+                    status_documento: 'CONCLUIDO',
+                    titulo_reuniao: 'Reunião Emergencial - Análise de Riscos',
+                    data_reuniao: '2024-12-18',
+                    numero_participantes: 8,
+                    pontuacao_geral: 7.2,
+                    nivel_confianca: 85,
+                    idioma_detectado: 'pt-BR',
+                    palavras_chave_nlp: 'urgência, decisão, emergencial, cronograma, riscos',
+                    sentimento_geral: 'NEGATIVO',
+                    indice_legibilidade: 6.5,
+                    status_processamento_completo: 'Parcial',
+                    ultima_atualizacao: '2024-12-20 16:45:00',
+                    tem_arquivo: 'Sim',
+                    tem_dados_ata: 'Sim',
+                    tem_avaliacao_qualidade: 'Sim',
+                    tem_processamento_nlp: 'Sim',
+                    tem_metricas_nlp: 'Não',
+                    organizacao_responsavel: 'PLI - Diretoria',
+                    local_reuniao: 'Videoconferência',
+                    densidade_palavras_chave: 12.3,
+                    diversidade_lexical: 65.7,
+                    pontuacao_objetividade: 71.8
+                },
+                {
+                    documento_id: '123e4567-e89b-12d3-a456-426614174003',
+                    codigo_documento: 'ATA-2025-002',
+                    nome_arquivo: 'Ata_Comite_Tecnico_Janeiro_2025.pdf',
+                    tipo_documento: 'ATA',
+                    subtipo_documento: 'REUNIAO_TECNICA',
+                    categoria: 'COMITE_TECNICO',
+                    tamanho_arquivo: '3.1 MB',
+                    data_upload: '2025-01-18',
+                    status_documento: 'PROCESSANDO',
+                    titulo_reuniao: 'Reunião do Comitê Técnico - Desenvolvimento de Sistemas',
+                    data_reuniao: '2025-01-16',
+                    numero_participantes: 15,
+                    pontuacao_geral: null,
+                    nivel_confianca: null,
+                    idioma_detectado: 'pt-BR',
+                    palavras_chave_nlp: 'desenvolvimento, sistemas, tecnologia, implementação',
+                    sentimento_geral: 'POSITIVO',
+                    indice_legibilidade: null,
+                    status_processamento_completo: 'Em Processamento',
+                    ultima_atualizacao: '2025-01-18 09:15:00',
+                    tem_arquivo: 'Sim',
+                    tem_dados_ata: 'Sim',
+                    tem_avaliacao_qualidade: 'Não',
+                    tem_processamento_nlp: 'Sim',
+                    tem_metricas_nlp: 'Não',
+                    organizacao_responsavel: 'PLI - Comitê Técnico',
+                    local_reuniao: 'Auditório Principal',
+                    densidade_palavras_chave: null,
+                    diversidade_lexical: null,
+                    pontuacao_objetividade: null
+                },
+                {
+                    documento_id: '123e4567-e89b-12d3-a456-426614174004',
+                    codigo_documento: 'REL-2025-001',
+                    nome_arquivo: 'Relatorio_Mensal_Janeiro_2025.pdf',
+                    tipo_documento: 'RELATORIO',
+                    subtipo_documento: 'MENSAL',
+                    categoria: 'GESTAO_ADMINISTRATIVA',
+                    tamanho_arquivo: '4.7 MB',
+                    data_upload: '2025-01-20',
+                    status_documento: 'PENDENTE',
+                    titulo_reuniao: null,
+                    data_reuniao: null,
+                    numero_participantes: null,
+                    pontuacao_geral: null,
+                    nivel_confianca: null,
+                    idioma_detectado: null,
+                    palavras_chave_nlp: null,
+                    sentimento_geral: null,
+                    indice_legibilidade: null,
+                    status_processamento_completo: 'Pendente',
+                    ultima_atualizacao: '2025-01-20 08:30:00',
+                    tem_arquivo: 'Sim',
+                    tem_dados_ata: 'Não',
+                    tem_avaliacao_qualidade: 'Não',
+                    tem_processamento_nlp: 'Não',
+                    tem_metricas_nlp: 'Não',
+                    organizacao_responsavel: null,
+                    local_reuniao: null,
+                    densidade_palavras_chave: null,
+                    diversidade_lexical: null,
+                    pontuacao_objetividade: null
+                },
+                {
+                    documento_id: '123e4567-e89b-12d3-a456-426614174005',
+                    codigo_documento: 'ATA-2025-003',
+                    nome_arquivo: 'Ata_Assembleia_Geral_Fevereiro_2025.docx',
+                    tipo_documento: 'ATA',
+                    subtipo_documento: 'ASSEMBLEIA_GERAL',
+                    categoria: 'ASSEMBLEIA',
+                    tamanho_arquivo: '5.2 MB',
+                    data_upload: '2025-02-05',
+                    status_documento: 'ERRO',
+                    titulo_reuniao: 'Assembleia Geral Ordinária - Aprovação de Contas',
+                    data_reuniao: '2025-02-01',
+                    numero_participantes: 25,
+                    pontuacao_geral: null,
+                    nivel_confianca: null,
+                    idioma_detectado: null,
+                    palavras_chave_nlp: null,
+                    sentimento_geral: null,
+                    indice_legibilidade: null,
+                    status_processamento_completo: 'Erro',
+                    ultima_atualizacao: '2025-02-05 11:20:00',
+                    tem_arquivo: 'Sim',
+                    tem_dados_ata: 'Não',
+                    tem_avaliacao_qualidade: 'Não',
+                    tem_processamento_nlp: 'Não',
+                    tem_metricas_nlp: 'Não',
+                    organizacao_responsavel: 'PLI - Assembleia',
+                    local_reuniao: 'Centro de Convenções - Brasília',
+                    densidade_palavras_chave: null,
+                    diversidade_lexical: null,
+                    pontuacao_objetividade: null
+                }
+            ];
+            
+            applyFilters();
+            updateStats();
+        }
+
+        function applyFilters() {
+            let filtered = [...VIEW_CONFIG.allData];
+            
+            // Filtro por status
+            const statusFilter = document.getElementById('statusFilter').value;
+            if (statusFilter) {
+                filtered = filtered.filter(item => item.status_processamento_completo === statusFilter);
+            }
+            
+            // Filtro por tipo
+            const typeFilter = document.getElementById('typeFilter').value;
+            if (typeFilter) {
+                filtered = filtered.filter(item => item.tipo_documento === typeFilter);
+            }
+            
+            // Filtro por busca
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm) {
+                filtered = filtered.filter(item => 
+                    item.nome_arquivo.toLowerCase().includes(searchTerm) ||
+                    (item.titulo_reuniao && item.titulo_reuniao.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            VIEW_CONFIG.filteredData = filtered;
+            VIEW_CONFIG.totalRecords = filtered.length;
+            VIEW_CONFIG.currentPage = 1;
+            
+            renderTable();
+            renderPagination();
+            updateRecordInfo();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            
+            const startIndex = (VIEW_CONFIG.currentPage - 1) * VIEW_CONFIG.pageSize;
+            const endIndex = startIndex + VIEW_CONFIG.pageSize;
+            const pageData = VIEW_CONFIG.filteredData.slice(startIndex, endIndex);
+            
+            pageData.forEach((row, index) => {
+                const tr = document.createElement('tr');
+                tr.id = `row_${row.documento_id}`;
+                
+                // Verificar se é a linha destacada (baseado em parâmetro da URL)
+                const urlParams = new URLSearchParams(window.location.search);
+                const highlightId = urlParams.get('highlight');
+                if (highlightId && row.documento_id === highlightId) {
+                    tr.className = 'highlighted';
+                    // Scroll para a linha destacada
+                    setTimeout(() => {
+                        tr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                }
+                
+                VIEW_CONFIG.columns.forEach(col => {
+                    const td = document.createElement('td');
+                    td.className = `cell_${col.key}`;
+                    td.style.display = col.visible ? '' : 'none';
+                    
+                    let content = row[col.key] || '-';
+                    
+                    // Formatação especial para alguns campos
+                    if (col.key === 'status_processamento_completo') {
+                        content = `<span class="status-badge status-${content.toLowerCase().replace(/\s+/g, '-')}">${content}</span>`;
+                    } else if (col.key.includes('data_') || col.key === 'ultima_atualizacao') {
+                        content = content && content !== '-' ? new Date(content).toLocaleString('pt-BR') : '-';
+                    } else if (col.key.includes('pontuacao_') || col.key === 'nivel_confianca' || col.key === 'indice_legibilidade' || col.key === 'densidade_palavras_chave' || col.key === 'diversidade_lexical' || col.key === 'pontuacao_objetividade') {
+                        content = content && content !== '-' && content !== null ? `${content}%` : 'N/A';
+                    } else if (col.key === 'palavras_chave_nlp' && content && content !== '-') {
+                        content = `<span class="text-muted">${content}</span>`;
+                    } else if (col.key === 'tipo_documento') {
+                        const typeColors = {
+                            'ATA': 'success',
+                            'RELATORIO': 'info',
+                            'CONTRATO': 'warning',
+                            'OFICIO': 'secondary',
+                            'MEMORANDO': 'primary'
+                        };
+                        const colorClass = typeColors[content] || 'secondary';
+                        content = `<span class="badge bg-${colorClass}">${content}</span>`;
+                    } else if (col.key === 'sentimento_geral' && content && content !== '-') {
+                        const sentimentColors = {
+                            'POSITIVO': 'success',
+                            'NEUTRO': 'secondary',
+                            'NEGATIVO': 'danger'
+                        };
+                        const colorClass = sentimentColors[content] || 'secondary';
+                        content = `<span class="badge bg-${colorClass}">${content}</span>`;
+                    } else if (typeof content === 'string' && content.length > 50) {
+                        content = `<span class="expandable-cell" onclick="showDetails('${row.documento_id}')" title="Clique para ver detalhes">
+                                    ${content.substring(0, 47)}... 
+                                    <i class="fas fa-expand-alt expand-icon"></i>
+                                   </span>`;
+                    }
+                    
+                    td.innerHTML = content;
+                    tr.appendChild(td);
+                });
+                
+                // Coluna de ações
+                const actionTd = document.createElement('td');
+                actionTd.innerHTML = `
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button class="btn btn-outline-primary" onclick="showDetails('${row.documento_id}')" title="Ver Detalhes">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-success" onclick="downloadDocument('${row.documento_id}')" title="Download">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                `;
+                tr.appendChild(actionTd);
+                
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateStats() {
+            const data = VIEW_CONFIG.allData;
+            
+            document.getElementById('totalDocuments').textContent = data.length;
+            
+            const completeCount = data.filter(item => item.status_processamento_completo === 'Completo').length;
+            document.getElementById('processedComplete').textContent = completeCount;
+            
+            const nlpCount = data.filter(item => item.idioma_detectado && item.idioma_detectado !== '-').length;
+            document.getElementById('withNLP').textContent = nlpCount;
+            
+            const avgQuality = data.length > 0 ? 
+                data.reduce((sum, item) => sum + (parseFloat(item.pontuacao_geral) || 0), 0) / data.length : 0;
+            document.getElementById('avgQuality').textContent = `${avgQuality.toFixed(1)}%`;
+        }
+
+        function showDetails(documentId) {
+            const document = VIEW_CONFIG.allData.find(doc => doc.documento_id === documentId);
+            if (!document) return;
+            
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = generateDetailContent(document);
+            
+            const modal = new bootstrap.Modal(document.getElementById('detailModal'));
+            modal.show();
+        }
+
+        function generateDetailContent(doc) {
+            return `
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="detail-section">
+                            <h6><i class="fas fa-file-alt"></i> Informações do Documento</h6>
+                            <p><strong>ID:</strong> ${doc.documento_id}</p>
+                            <p><strong>Nome:</strong> ${doc.nome_arquivo}</p>
+                            <p><strong>Tipo:</strong> ${doc.tipo_documento}</p>
+                            <p><strong>Tamanho:</strong> ${doc.tamanho_arquivo}</p>
+                            <p><strong>Data Upload:</strong> ${new Date(doc.data_upload).toLocaleString('pt-BR')}</p>
+                            <p><strong>Status:</strong> ${doc.status_documento}</p>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h6><i class="fas fa-users"></i> Dados da Reunião</h6>
+                            <p><strong>Título:</strong> ${doc.titulo_reuniao || 'Não informado'}</p>
+                            <p><strong>Data:</strong> ${doc.data_reuniao ? new Date(doc.data_reuniao).toLocaleDateString('pt-BR') : 'Não informado'}</p>
+                            <p><strong>Participantes:</strong> ${doc.numero_participantes || 'Não informado'}</p>
+                            <p><strong>Local:</strong> ${doc.local_reuniao || 'Não informado'}</p>
+                            <p><strong>Organização:</strong> ${doc.organizacao_responsavel || 'Não informado'}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="detail-section">
+                            <h6><i class="fas fa-chart-line"></i> Métricas de Qualidade</h6>
+                            <p><strong>Pontuação Geral:</strong> ${doc.pontuacao_geral || 'N/A'}%</p>
+                            <p><strong>Legibilidade:</strong> ${doc.pontuacao_legibilidade || 'N/A'}%</p>
+                            <p><strong>Estrutura:</strong> ${doc.pontuacao_estrutura || 'N/A'}%</p>
+                            <p><strong>Nível de Confiança:</strong> ${doc.nivel_confianca || 'N/A'}%</p>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h6><i class="fas fa-brain"></i> Análise NLP</h6>
+                            <p><strong>Idioma:</strong> ${doc.idioma_detectado || 'Não detectado'}</p>
+                            <p><strong>Sentimento:</strong> ${doc.sentimento_geral || 'Não analisado'}</p>
+                            <p><strong>Score Sentimento:</strong> ${doc.pontuacao_sentimento || 'N/A'}</p>
+                            <p><strong>Índice Legibilidade:</strong> ${doc.indice_legibilidade || 'N/A'}%</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <h6><i class="fas fa-key"></i> Palavras-Chave</h6>
+                    <p>${doc.palavras_chave || 'Nenhuma palavra-chave identificada'}</p>
+                </div>
+                
+                <div class="detail-section">
+                    <h6><i class="fas fa-file-text"></i> Resumo Automático</h6>
+                    <p>${doc.resumo_automatico || 'Resumo não disponível'}</p>
+                </div>
+            `;
+        }
+
+        function setupEventListeners() {
+            // Filtros
+            document.getElementById('statusFilter').addEventListener('change', applyFilters);
+            document.getElementById('typeFilter').addEventListener('change', applyFilters);
+            document.getElementById('searchInput').addEventListener('input', debounce(applyFilters, 300));
+            document.getElementById('pageSize').addEventListener('change', function() {
+                VIEW_CONFIG.pageSize = parseInt(this.value);
+                VIEW_CONFIG.currentPage = 1;
+                renderTable();
+                renderPagination();
+                updateRecordInfo();
+            });
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(VIEW_CONFIG.totalRecords / VIEW_CONFIG.pageSize);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            // Botão anterior
+            const prevLi = document.createElement('li');
+            prevLi.className = `page-item ${VIEW_CONFIG.currentPage === 1 ? 'disabled' : ''}`;
+            prevLi.innerHTML = `<a class="page-link" href="#" onclick="changePage(${VIEW_CONFIG.currentPage - 1})">Anterior</a>`;
+            pagination.appendChild(prevLi);
+            
+            // Páginas
+            const startPage = Math.max(1, VIEW_CONFIG.currentPage - 2);
+            const endPage = Math.min(totalPages, VIEW_CONFIG.currentPage + 2);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const li = document.createElement('li');
+                li.className = `page-item ${i === VIEW_CONFIG.currentPage ? 'active' : ''}`;
+                li.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
+                pagination.appendChild(li);
+            }
+            
+            // Botão próximo
+            const nextLi = document.createElement('li');
+            nextLi.className = `page-item ${VIEW_CONFIG.currentPage === totalPages ? 'disabled' : ''}`;
+            nextLi.innerHTML = `<a class="page-link" href="#" onclick="changePage(${VIEW_CONFIG.currentPage + 1})">Próximo</a>`;
+            pagination.appendChild(nextLi);
+        }
+
+        function changePage(page) {
+            if (page < 1 || page > Math.ceil(VIEW_CONFIG.totalRecords / VIEW_CONFIG.pageSize)) return;
+            VIEW_CONFIG.currentPage = page;
+            renderTable();
+            renderPagination();
+            updateRecordInfo();
+        }
+
+        function updateRecordInfo() {
+            const start = (VIEW_CONFIG.currentPage - 1) * VIEW_CONFIG.pageSize + 1;
+            const end = Math.min(start + VIEW_CONFIG.pageSize - 1, VIEW_CONFIG.totalRecords);
+            document.getElementById('recordInfo').textContent = 
+                `Mostrando ${start}-${end} de ${VIEW_CONFIG.totalRecords} registros`;
+        }
+
+        function sortTable(columnKey) {
+            // Implementar ordenação
+            console.log('Ordenar por:', columnKey);
+        }
+
+        function refreshData() {
+            loadData();
+        }
+
+        function exportData() {
+            // Implementar exportação
+            alert('Funcionalidade de exportação será implementada');
+        }
+
+        function downloadDocument(documentId) {
+            console.log('Download documento:', documentId);
+            alert('Download será implementado na integração completa');
+        }
+
+        function printDetails() {
+            window.print();
+        }
+
+        // ========== FUNÇÕES DE CONFIGURAÇÃO DO BANCO ==========
+        function showDatabaseConfig() {
+            loadDatabaseInfo();
+            const modal = new bootstrap.Modal(document.getElementById('databaseConfigModal'));
+            modal.show();
+        }
+
+        function loadDatabaseInfo() {
+            try {
+                const status = databaseManager.getStatus();
+                const config = DATABASE_CONFIG.CONNECTION;
+                
+                // Atualizar informações de conexão
+                document.getElementById('dbHost').textContent = config.host;
+                document.getElementById('dbPort').textContent = config.port;
+                document.getElementById('dbName').textContent = config.database;
+                document.getElementById('dbSchema').textContent = DATABASE_CONFIG.SCHEMA;
+                
+                // Status de configuração
+                const statusElement = document.getElementById('dbStatus');
+                if (status.configured) {
+                    statusElement.className = 'badge bg-success';
+                    statusElement.textContent = 'Configurado';
+                } else {
+                    statusElement.className = 'badge bg-danger';
+                    statusElement.textContent = 'Não Configurado';
+                }
+                
+                // Estrutura do banco
+                document.getElementById('dbTables').textContent = status.tables + ' tabelas';
+                document.getElementById('dbViews').textContent = status.views + ' views';
+                document.getElementById('dbCache').textContent = status.cacheSize + ' itens';
+                document.getElementById('dbLastQuery').textContent = new Date().toLocaleString('pt-BR');
+                
+            } catch (error) {
+                console.error('Erro ao carregar info do banco:', error);
+            }
+        }
+
+        async function testDatabaseConnection() {
+            try {
+                const statusElement = document.getElementById('dbStatus');
+                statusElement.className = 'badge bg-warning';
+                statusElement.textContent = 'Testando...';
+                
+                // Simular teste de conexão via API
+                const result = await databaseManager.testViewAccess();
+                
+                if (result.success) {
+                    statusElement.className = 'badge bg-success';
+                    statusElement.textContent = 'Conectado ✓';
+                    
+                    // Tentar carregar dados reais
+                    try {
+                        const response = await sigataAPI.getCompleteDocumentsView();
+                        if (response.success) {
+                            VIEW_CONFIG.allData = response.data;
+                            applyFilters();
+                            updateStats();
+                            alert('✅ Conexão testada com sucesso! Dados reais carregados.');
+                        } else {
+                            alert('⚠️ Conexão OK, mas erro ao carregar dados: ' + response.error);
+                        }
+                    } catch (apiError) {
+                        console.log('API não disponível, usando dados mock');
+                        alert('⚠️ Conexão configurada, mas API backend não está disponível. Usando dados de demonstração.');
+                    }
+                } else {
+                    statusElement.className = 'badge bg-danger';
+                    statusElement.textContent = 'Erro na Conexão';
+                    alert('❌ Erro na conexão: ' + result.error);
+                }
+                
+            } catch (error) {
+                console.error('Erro ao testar conexão:', error);
+                document.getElementById('dbStatus').className = 'badge bg-danger';
+                document.getElementById('dbStatus').textContent = 'Erro';
+                alert('❌ Erro ao testar conexão: ' + error.message);
+            }
+        }
+
+        function clearDatabaseCache() {
+            try {
+                databaseManager.clearCache();
+                document.getElementById('dbCache').textContent = '0 itens';
+                alert('🧹 Cache do banco de dados limpo com sucesso!');
+            } catch (error) {
+                console.error('Erro ao limpar cache:', error);
+                alert('❌ Erro ao limpar cache: ' + error.message);
+            }
+        }
+
+        function refreshDatabaseInfo() {
+            loadDatabaseInfo();
+            alert('🔄 Informações do banco atualizadas!');
+        }
+
+        // ========== FUNÇÕES EXISTENTES MANTIDAS ==========
+
+        function showLoading(show) {
+            // Implementar indicador de carregamento
+            const tbody = document.getElementById('tableBody');
+            if (show) {
+                tbody.innerHTML = '<tr><td colspan="100%" class="text-center"><i class="fas fa-spinner fa-spin"></i> Carregando...</td></tr>';
+            }
+        }
+
+        // Verificar parâmetros da URL para destacar linha específica
+        const urlParams = new URLSearchParams(window.location.search);
+        const highlightDocId = urlParams.get('highlight');
+        if (highlightDocId) {
+            // Aguardar carregamento e destacar a linha
+            setTimeout(() => {
+                const row = document.getElementById(`row_${highlightDocId}`);
+                if (row) {
+                    row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

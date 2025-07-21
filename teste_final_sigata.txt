@@ -1,0 +1,1 @@
+SIGATA NLP TESTE FINAL: upload e processamento real, logs em tempo real.

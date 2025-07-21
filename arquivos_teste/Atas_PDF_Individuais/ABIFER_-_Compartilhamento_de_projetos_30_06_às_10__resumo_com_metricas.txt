@@ -1,0 +1,80 @@
+
+RESUMO DE ATA DE REUNIÃO PLI
+Data de Processamento: 08/07/2025
+Total de Tópicos: 7
+
+============================================================
+
+
+MÉTRICAS DE VERACIDADE E ADERÊNCIA
+
+Score Geral de Veracidade: 0.75 (Média)
+Similaridade Média: 0.98
+Cobertura de Conteúdo: 0.05
+
+Distribuição por Nível:
+- Alta Veracidade: 0 (0.0%)
+- Média Veracidade: 7 (100.0%)
+- Baixa Veracidade: 0 (0.0%)
+
+Qualidade por Categoria:
+- Discussoes: Score 0.75 (0/4 alta veracidade - 0.0%)
+- Informacoes: Score 0.76 (0/2 alta veracidade - 0.0%)
+- Decisoes: Score 0.73 (0/1 alta veracidade - 0.0%)
+
+============================================================
+
+
+DISCUSSOES
+----------
+
+1. • Aprofundamento das propostas levantadas pelo consórcio, Silvio
+   Prioridade: Baixa | Página: 1 | Veracidade: Média (0.75)
+   Resumo: • Aprofundamento das propostas levantadas pelo consórcio, Silvio explicou caráter.
+   Detalhes: • Aprofundamento das propostas levantadas pelo consórcio, Silvio explicou caráter...
+   Similaridade: 0.99
+
+2. • Foi apresentada pelo consórcio a proposta de
+   Prioridade: Baixa | Página: 1 | Veracidade: Média (0.73)
+   Resumo: • Foi apresentada pelo consórcio a proposta de incentivo ao processamento de.
+   Detalhes: • Foi apresentada pelo consórcio a proposta de incentivo ao processamento de...
+   Similaridade: 0.95
+
+3. • A produção do setor ferroviário também participou
+   Prioridade: Baixa | Página: 2 | Veracidade: Média (0.77)
+   Resumo: • A produção do setor ferroviário também participou do debate sobre a regulação de.
+   Detalhes: • A produção do setor ferroviário também participou do debate sobre a regulação de...
+   Similaridade: 0.97
+
+4. • Encaminhamentos: troca de informações e propostas entre
+   Prioridade: Baixa | Página: 1 | Veracidade: Média (0.74)
+   Resumo: • Encaminhamentos: troca de informações e propostas entre associação, secretaria e.
+   Detalhes: • Encaminhamentos: troca de informações e propostas entre associação, secretaria e...
+   Similaridade: 1.00
+
+
+INFORMACOES
+-----------
+
+1. Estado de São Paulo, a secretaria informou que
+   Prioridade: Baixa | Página: 1 | Veracidade: Média (0.76)
+   Resumo: Estado de São Paulo, a secretaria informou que CPTM está desenvolvendo e.
+   Detalhes: Estado de São Paulo, a secretaria informou que CPTM está desenvolvendo e...
+   Similaridade: 0.99
+
+2. paulistas, sendo comunicado o agendamento de reunião para
+   Prioridade: Baixa | Página: 2 | Veracidade: Média (0.75)
+   Resumo: paulistas, sendo comunicado o agendamento de reunião para tal na secretaria;.
+   Detalhes: paulistas, sendo comunicado o agendamento de reunião para tal na secretaria;...
+   Similaridade: 0.97
+
+
+DECISOES
+--------
+
+1. está aprovado seguindo normas americanas
+   Prioridade: Baixa | Página: 2 | Veracidade: Média (0.73)
+   Resumo: está aprovado seguindo normas americanas;.
+   Detalhes: está aprovado seguindo normas americanas;...
+   Similaridade: 0.99
+

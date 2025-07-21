@@ -1,0 +1,9 @@
+Collecting mammoth
+  Downloading mammoth-1.9.1-py2.py3-none-any.whl.metadata (24 kB)
+Collecting cobble<0.2,>=0.1.3 (from mammoth)
+  Downloading cobble-0.1.4-py3-none-any.whl.metadata (2.7 kB)
+Downloading mammoth-1.9.1-py2.py3-none-any.whl (52 kB)
+Downloading cobble-0.1.4-py3-none-any.whl (4.0 kB)
+Installing collected packages: cobble, mammoth
+
+Successfully installed cobble-0.1.4 mammoth-1.9.1

@@ -1,0 +1,50 @@
+ATA DE REUNIÃO - TESTE SIGATA
+Data: 19 de julho de 2025
+Local: Brasília, DF
+
+PARTICIPANTES:
+- João Silva (Coordenador)
+- Maria Santos (Analista)
+- Carlos Oliveira (Desenvolvedor)
+- Ana Costa (Gestora de Projetos)
+
+ASSUNTOS TRATADOS:
+
+1. IMPLEMENTAÇÃO DO SISTEMA SIGATA
+   - Apresentação da arquitetura NLP
+   - Discussão sobre integração com PostgreSQL
+   - Validação dos modelos de processamento
+
+2. TECNOLOGIAS APROVADAS
+   - Backend: Node.js + TypeScript
+   - NLP: Python + BERTopic + KeyBERT + spaCy
+   - Database: PostgreSQL AWS RDS
+   - Frontend: React + TailwindCSS
+
+3. CRONOGRAMA
+   - Fase 1: Configuração ambiente (CONCLUÍDA)
+   - Fase 2: Implementação NLP (EM ANDAMENTO)
+   - Fase 3: Testes e validação (PLANEJADA)
+
+DECISÕES TOMADAS:
+✓ Aprovar uso do modelo pt_core_news_lg do spaCy
+✓ Implementar processamento em background
+✓ Configurar upload de arquivos PDF/DOCX/TXT
+✓ Ativar análise automática de participantes
+
+PRÓXIMOS PASSOS:
+1. Testar upload real com NLP ativo
+2. Validar extração de entidades
+3. Configurar dashboard de resultados
+4. Preparar demonstração para stakeholders
+
+OBSERVAÇÕES:
+- Sistema funcionando em ambiente de desenvolvimento
+- Conexão com AWS RDS estabelecida
+- Ambiente Python configurado com sucesso
+- Pronto para processamento real de documentos
+
+Encerramento: 15:30h
+Próxima reunião: 26 de julho de 2025
+
+Responsável pela ata: Sistema SIGATA (Teste Automatizado)

@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["ES2020"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "noImplicitReturns": false,
+    "removeComments": true
+  },
+  "include": [
+    "src/index.ts",
+    "src/services/nlpStorageService.ts", 
+    "src/services/reportGenerator.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/routes/usuarios.ts",
+    "src/services/userService.ts"
+  ]
+}

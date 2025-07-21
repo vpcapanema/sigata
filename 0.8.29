@@ -1,0 +1,6 @@
+Requirement already satisfied: hdbscan in d:\semil\pli\sigata\venv\lib\site-packages (0.8.40)
+Requirement already satisfied: numpy<3,>=1.20 in d:\semil\pli\sigata\venv\lib\site-packages (from hdbscan) (2.1.2)
+Requirement already satisfied: scipy>=1.0 in d:\semil\pli\sigata\venv\lib\site-packages (from hdbscan) (1.16.0)
+Requirement already satisfied: scikit-learn>=0.20 in d:\semil\pli\sigata\venv\lib\site-packages (from hdbscan) (1.7.1)
+Requirement already satisfied: joblib>=1.0 in d:\semil\pli\sigata\venv\lib\site-packages (from hdbscan) (1.5.1)
+Requirement already satisfied: threadpoolctl>=3.1.0 in d:\semil\pli\sigata\venv\lib\site-packages (from scikit-learn>=0.20->hdbscan) (3.6.0)

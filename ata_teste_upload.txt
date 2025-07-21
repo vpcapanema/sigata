@@ -1,0 +1,29 @@
+ATA DE REUNIÃO - TESTE UPLOAD SIGATA
+Data: 20 de julho de 2025
+Local: Brasília, DF
+
+PARTICIPANTES:
+- João Silva (Coordenador)
+- Maria Santos (Analista)
+- Carlos Oliveira (Desenvolvedor)  
+- Ana Costa (Gestora de Projetos)
+
+DECISÕES TOMADAS:
+1. Foi decidido implementar o sistema NLP avançado
+2. Aprovado o uso das tecnologias BERTopic e KeyBERT
+3. Definido que o prazo será de 30 dias
+
+AÇÕES DEFINIDAS:
+- João Silva ficou responsável pela coordenação geral
+- Maria Santos deve finalizar a análise de requisitos
+- Carlos Oliveira irá implementar o backend
+- Ana Costa deverá acompanhar o cronograma
+
+A reunião foi encerrada às 16:30h com todos os objetivos alcançados.
+
+ENCAMINHAMENTOS:
+- Elaborar plano de trabalho detalhado
+- Definir cronograma de entregas
+- Agendar próxima reunião de acompanhamento
+
+Assinado: João Silva - Coordenador Geral

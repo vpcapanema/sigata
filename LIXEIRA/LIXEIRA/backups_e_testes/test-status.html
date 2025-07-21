@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Login Status - SIGATA</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f0f8f0; }
+        .status { padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; }
+        button { padding: 10px 20px; margin: 5px; border: none; border-radius: 5px; cursor: pointer; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Status do Login SIGATA</h1>
+    
+    <div id="status-container"></div>
+    
+    <div>
+        <button class="btn-primary" onclick="testLogin()">Testar Login</button>
+        <button class="btn-secondary" onclick="checkStatus()">Verificar Status</button>
+        <button class="btn-secondary" onclick="goToDashboard()">Ir para Dashboard</button>
+        <button class="btn-danger" onclick="clearData()">Limpar Dados</button>
+    </div>
+    
+    <div id="log-container" style="margin-top: 20px;"></div>
+
+    <script>
+        function showStatus(message, type = 'info') {
+            const container = document.getElementById('status-container');
+            container.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+        
+        function log(message) {
+            const container = document.getElementById('log-container');
+            const time = new Date().toLocaleTimeString();
+            container.innerHTML += `<div>[${time}] ${message}</div>`;
+        }
+        
+        function checkStatus() {
+            const token = localStorage.getItem('authToken');
+            const userData = localStorage.getItem('userData');
+            
+            if (token && userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    showStatus(`✅ Logado como: ${user.name || user.email || 'Usuário'}<br>Token: ${token.substring(0, 20)}...`, 'success');
+                    log('Status: Usuário autenticado');
+                } catch (e) {
+                    showStatus('❌ Dados corrompidos no localStorage', 'error');
+                    log('Erro: Dados corrompidos');
+                }
+            } else {
+                showStatus('❌ Não logado - Token ou dados de usuário ausentes', 'error');
+                log('Status: Não autenticado');
+            }
+        }
+        
+        async function testLogin() {
+            showStatus('🔄 Testando login...', 'info');
+            log('Iniciando teste de login...');
+            
+            try {
+                const response = await fetch('http://localhost:3001/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        email: 'teste@teste.com', 
+                        password: '123456' 
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    localStorage.setItem('authToken', data.data.token);
+                    localStorage.setItem('userData', JSON.stringify(data.data.user));
+                    
+                    showStatus('✅ Login realizado com sucesso!', 'success');
+                    log('Login bem-sucedido - dados salvos');
+                    
+                    // Verificar imediatamente
+                    setTimeout(checkStatus, 100);
+                } else {
+                    showStatus(`❌ Falha no login: ${data.message}`, 'error');
+                    log(`Login falhou: ${data.message}`);
+                }
+            } catch (error) {
+                showStatus(`❌ Erro de conexão: ${error.message}`, 'error');
+                log(`Erro: ${error.message}`);
+            }
+        }
+        
+        function goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+        
+        function clearData() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userData');
+            showStatus('🗑️ Dados limpos', 'info');
+            log('Dados do localStorage limpos');
+        }
+        
+        // Verificar status inicial
+        window.onload = function() {
+            log('Página carregada');
+            checkStatus();
+        };
+    </script>
+</body>
+</html>

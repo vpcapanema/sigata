@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGATA - Template Base</title>
+    
+    <!-- Bootstrap 5.1.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- PLI Styles Embedded -->
+    <style>
+        /* ========================================
+           SISTEMA DE APLICAÇÃO - IDENTIDADE VISUAL PLI
+        ======================================== */
+        :root {
+            /* CORES PLI EXTRAÍDAS */
+            --pli-azul-escuro: #0f203e;        /* Azul institucional principal */
+            --pli-azul-medio: #244b72;         /* Azul médio */
+            --pli-verde-principal: #5cb65c;    /* Verde principal */
+            --pli-verde-claro: #bfe5b2;        /* Verde claro */
+            --pli-preto: #171e31;             /* Preto institucional */
+            
+            /* GRADIENTES PLI */
+            --pli-gradient-main: linear-gradient(135deg, 
+                #bfe5b2 0%,      /* Verde claro */
+                #5cb65c 25%,     /* Verde principal */
+                #244b72 50%,     /* Azul médio */
+                #0f203e 75%,     /* Azul escuro */
+                #171e31 100%     /* Preto */
+            );
+            
+            --pli-gradient-secondary: linear-gradient(135deg,
+                #5cb65c 0%,      /* Verde principal */
+                #bfe5b2 33%,     /* Verde claro */
+                #afb4c7 66%,     /* Azul claro */
+                #244b72 100%     /* Azul médio */
+            );
+
+            /* CORES SEMÂNTICAS */
+            --pli-success: #5cb65c;
+            --pli-warning: #f39c12;
+            --pli-error: #e74c3c;
+            --pli-info: #244b72;
+        }
+
+        /* ========================================
+           TIPOGRAFIA PLI
+        ======================================== */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        /* ========================================
+           NAVEGAÇÃO PLI
+        ======================================== */
+        .pli-navbar {
+            background: var(--pli-gradient-main);
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .pli-navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .pli-navbar-brand:hover {
+            color: var(--pli-verde-claro) !important;
+        }
+
+        .pli-navbar .navbar-nav .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .pli-navbar .navbar-nav .nav-link:hover {
+            color: var(--pli-verde-claro) !important;
+            transform: translateY(-2px);
+        }
+
+        .pli-navbar .navbar-nav .nav-link.active {
+            color: var(--pli-verde-claro) !important;
+            font-weight: 600;
+        }
+
+        /* ========================================
+           BOTÕES PLI
+        ======================================== */
+        .pli-button-primary {
+            background: var(--pli-verde-principal);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .pli-button-primary:hover {
+            background: var(--pli-azul-medio);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .pli-button-secondary {
+            background: transparent;
+            border: 2px solid var(--pli-azul-medio);
+            color: var(--pli-azul-medio);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .pli-button-secondary:hover {
+            background: var(--pli-azul-medio);
+            color: white;
+        }
+
+        /* ========================================
+           HERO SECTION
+        ======================================== */
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 0;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            color: white;
+            transition: transform 0.3s ease;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card:hover { 
+            transform: translateY(-5px); 
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* ========================================
+           CARDS DE FUNCIONALIDADES
+        ======================================== */
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* ========================================
+           RODAPÉ PLI
+        ======================================== */
+        .pli-footer {
+            background: var(--pli-gradient-main);
+            color: white;
+            padding: 2rem 0;
+            margin-top: auto;
+        }
+
+        .pli-footer div {
+            margin: 0.3rem 0;
+            font-size: 0.9rem;
+        }
+
+        .pli-footer div:first-child {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .pli-footer div:nth-child(2) {
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .pli-footer div:last-child {
+            opacity: 0.8;
+            font-size: 0.8rem;
+        }
+
+        /* ========================================
+           RESPONSIVIDADE
+        ======================================== */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 0;
+                min-height: 400px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    
+    <!-- ========================================
+         NAVEGAÇÃO PLI
+    ======================================== -->
+    <nav class="navbar navbar-expand-lg pli-navbar">
+        <div class="container">
+            <a class="navbar-brand pli-navbar-brand" href="#home">
+                <i class="fas fa-file-alt"></i> SIGATA
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">
+                            <i class="fas fa-home"></i> Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#login">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#dashboard">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#upload">
+                            <i class="fas fa-upload"></i> Upload
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#documents">
+                            <i class="fas fa-folder"></i> Documentos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#reports">
+                            <i class="fas fa-chart-line"></i> Relatórios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#analytics">
+                            <i class="fas fa-chart-bar"></i> Analytics
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========================================
+         SEÇÃO HERO - PÁGINA INICIAL
+    ======================================== -->
+    <div class="hero-section" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold text-white mb-4">
+                        SIGATA - Sistema Integrado de Gestão de Atas
+                    </h1>
+                    <p class="lead text-white-50 mb-4">
+                        Automatize o processamento e análise de atas de reuniões. 
+                        Extraia informações relevantes e gere relatórios estruturados com tecnologia de ponta.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="#upload" class="btn btn-primary btn-lg pli-button-primary">
+                            <i class="fas fa-upload"></i> Fazer Upload
+                        </a>
+                        <a href="#documents" class="btn btn-outline-light btn-lg pli-button-secondary">
+                            <i class="fas fa-folder"></i> Ver Documentos
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-number">245</div>
+                            <div class="stat-label">Documentos Processados</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-number">1.247</div>
+                            <div class="stat-label">Participantes Identificados</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <div class="stat-number">89</div>
+                            <div class="stat-label">Decisões Extraídas</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-number">156</div>
+                            <div class="stat-label">Relatórios Gerados</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
+         SEÇÃO PRINCIPAL - FUNCIONALIDADES
+    ======================================== -->
+    <main class="flex-grow-1">
+        <div class="container py-5">
+            <h2 class="section-title">Principais Funcionalidades</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-upload"></i>
+                        </div>
+                        <h4>Upload Inteligente</h4>
+                        <p>Faça upload de documentos PDF e DOCX com processamento automático e extração de metadados.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4>Análise com IA</h4>
+                        <p>Processamento avançado usando GPT para extrair informações estruturadas das atas.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h4>Relatórios Dinâmicos</h4>
+                        <p>Gere relatórios personalizados com gráficos e métricas de desempenho em tempo real.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h4>Busca Avançada</h4>
+                        <p>Localize informações específicas rapidamente com filtros inteligentes e busca semântica.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Gestão de Participantes</h4>
+                        <p>Identifique e gerencie automaticamente participantes e suas contribuições nas reuniões.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Segurança Total</h4>
+                        <p>Controle de acesso robusto com autenticação JWT e criptografia de dados sensíveis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ========================================
+         RODAPÉ PLI
+    ======================================== -->
+    <footer class="pli-footer">
+        <div class="container text-center">
+            <div>SIGATA &copy; 2025 - Sistema Integrado de Gestão de Atas</div>
+            <div>Desenvolvido e implementado por VPC-GEOSER</div>
+            <div>18/07/2025</div>
+        </div>
+    </footer>
+
+    <!-- ========================================
+         SCRIPTS
+    ======================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Navegação suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Atualização de estatísticas em tempo real (simulação)
+        function updateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const currentValue = parseInt(stat.textContent);
+                const increment = Math.floor(Math.random() * 3) + 1;
+                stat.textContent = currentValue + increment;
+            });
+        }
+
+        // Atualizar estatísticas a cada 10 segundos
+        setInterval(updateStats, 10000);
+
+        // Animação nos cards quando entram na viewport
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Aplicar animação aos cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

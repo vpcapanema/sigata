@@ -1,0 +1,22 @@
+SIGATA - Sistema Integrado de Gestão de Atas
+
+REUNIÃO EXECUTIVA
+Data: 17 de julho de 2025
+Participantes: João Silva, Maria Santos, Pedro Costa
+
+PAUTA:
+1. Aprovação do orçamento Q3 2025
+2. Contratação de desenvolvedores
+3. Implementação do sistema SIGATA
+
+DECISÕES:
+- Aprovado orçamento de R$ 500.000 para Q3
+- Autorizada contratação de 3 desenvolvedores sênior
+- SIGATA será implementado até agosto/2025
+
+AÇÕES:
+- João Silva: Elaborar cronograma detalhado até 20/07
+- Maria Santos: Iniciar processo seletivo até 22/07
+- Pedro Costa: Configurar ambiente de produção
+
+A reunião foi muito produtiva e todos os objetivos foram alcançados.

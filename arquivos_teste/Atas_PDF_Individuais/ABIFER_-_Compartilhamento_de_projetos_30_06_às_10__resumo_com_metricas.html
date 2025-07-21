@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo de Ata PLI com Métricas</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .header { background: #f4f4f4; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .metricas { background: #e8f8f5; padding: 15px; margin: 20px 0; border-radius: 5px; border-left: 4px solid #28a745; }
+        .metrica-item { display: inline-block; margin: 10px; padding: 10px; background: white; border-radius: 3px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .topico { border-left: 4px solid #007acc; padding: 15px; margin: 15px 0; border-radius: 5px; }
+        .categoria { background: #e8f4f8; padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .prioridade-alta { border-left-color: #ff4444; }
+        .prioridade-media { border-left-color: #ffaa00; }
+        .prioridade-baixa { border-left-color: #44ff44; }
+        .veracidade-alta { background: #d4edda; }
+        .veracidade-media { background: #fff3cd; }
+        .veracidade-baixa { background: #f8d7da; }
+        .detalhes { background: #f9f9f9; padding: 10px; margin: 10px 0; border-radius: 3px; border: 1px solid #eee; }
+        .metricas-tabela { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        .metricas-tabela th, .metricas-tabela td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        .metricas-tabela th { background-color: #f2f2f2; font-weight: bold; }
+        .score-badge { padding: 2px 8px; border-radius: 12px; font-size: 0.9em; color: white; }
+        .score-alta { background-color: #28a745; }
+        .score-media { background-color: #ffc107; color: #333; }
+        .score-baixa { background-color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📋 Resumo de Ata de Reunião PLI</h1>
+        <p><strong>Data de Processamento:</strong> 08/07/2025</p>
+        <p><strong>Total de Tópicos:</strong> 7</p>
+    </div>
+
+    <div class="metricas">
+        <h2>📊 Métricas de Veracidade e Aderência</h2>
+        
+        <h3>🎯 Resumo Geral de Qualidade</h3>
+        <table class="metricas-tabela">
+            <tr>
+                <th>Métrica</th>
+                <th>Valor</th>
+                <th>Classificação</th>
+                <th>Indicador</th>
+            </tr>
+            <tr>
+                <td><strong>Score Geral de Veracidade</strong></td>
+                <td>0.75</td>
+                <td>Média</td>
+                <td>⚠️</td>
+            </tr>
+            <tr>
+                <td><strong>Similaridade Média</strong></td>
+                <td>0.98</td>
+                <td>Alta</td>
+                <td>✅</td>
+            </tr>
+            <tr>
+                <td><strong>Cobertura de Conteúdo</strong></td>
+                <td>0.05</td>
+                <td>Baixa</td>
+                <td>❌</td>
+            </tr>
+        </table>
+        
+        <h3>📈 Distribuição por Nível de Veracidade</h3>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div class="metrica-item veracidade-alta">
+                🟢 <strong>Alta Veracidade:</strong> 0 tópicos<br>
+                <small>(0.0% do total)</small>
+            </div>
+            <div class="metrica-item veracidade-media">
+                🟡 <strong>Média Veracidade:</strong> 7 tópicos<br>
+                <small>(100.0% do total)</small>
+            </div>
+            <div class="metrica-item veracidade-baixa">
+                🔴 <strong>Baixa Veracidade:</strong> 0 tópicos<br>
+                <small>(0.0% do total)</small>
+            </div>
+        </div>
+        
+        <h3>📂 Qualidade por Categoria</h3>
+        <table class="metricas-tabela">
+            <tr>
+                <th>Categoria</th>
+                <th>Score Médio</th>
+                <th>Total de Tópicos</th>
+                <th>Alta Veracidade</th>
+                <th>Percentual de Qualidade</th>
+            </tr>
+            <tr>
+                <td>💬 <strong>Discussoes</strong></td>
+                <td>⚠️ 0.75</td>
+                <td>4</td>
+                <td>0</td>
+                <td>0.0%</td>
+            </tr>
+            <tr>
+                <td>ℹ️ <strong>Informacoes</strong></td>
+                <td>⚠️ 0.76</td>
+                <td>2</td>
+                <td>0</td>
+                <td>0.0%</td>
+            </tr>
+            <tr>
+                <td>✅ <strong>Decisoes</strong></td>
+                <td>⚠️ 0.73</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0.0%</td>
+            </tr>
+        </table>
+    </div>
+    <div class="categoria">
+        <h2>💬 Discussoes</h2>
+
+        <div class="topico prioridade-baixa veracidade-média">
+            <h3>• Aprofundamento das propostas levantadas pelo consórcio, Silvio</h3>
+            <p>
+                <strong>🔵 Prioridade:</strong> Baixa | 
+                <strong>📄 Página:</strong> 1 |
+                <strong>🟡 Veracidade:</strong> 
+                <span class="score-badge score-média">
+                    Média (0.75)
+                </span>
+            </p>
+            <p><strong>📝 Resumo:</strong> • Aprofundamento das propostas levantadas pelo consórcio, Silvio explicou caráter.</p>
+            <div class="detalhes">
+                <strong>Detalhes Completos:</strong><br>
+                • Aprofundamento das propostas levantadas pelo consórcio, Silvio explicou caráter
+                <br><br>
+                <strong>🔍 Métricas de Qualidade:</strong><br>
+                <small style="color: #666;">
+                • Similaridade com Original: <strong>0.99</strong><br>
+                • Score de Veracidade: <strong>0.75</strong><br>
+                • Classificação: <strong>Média</strong>
+                </small>
+            </div>
+        </div>
+
+        <div class="topico prioridade-baixa veracidade-média">
+            <h3>• Foi apresentada pelo consórcio a proposta de</h3>
+            <p>
+                <strong>🔵 Prioridade:</strong> Baixa | 
+                <strong>📄 Página:</strong> 1 |
+                <strong>🟡 Veracidade:</strong> 
+                <span class="score-badge score-média">
+                    Média (0.73)
+                </span>
+            </p>
+            <p><strong>📝 Resumo:</strong> • Foi apresentada pelo consórcio a proposta de incentivo ao processamento de.</p>
+            <div class="detalhes">
+                <strong>Detalhes Completos:</strong><br>
+                • Foi apresentada pelo consórcio a proposta de incentivo ao processamento de
+                <br><br>
+                <strong>🔍 Métricas de Qualidade:</strong><br>
+                <small style="color: #666;">
+                • Similaridade com Original: <strong>0.95</strong><br>
+                • Score de Veracidade: <strong>0.73</strong><br>
+                • Classificação: <strong>Média</strong>
+                </small>
+            </div>
+        </div>
+
+        <div class="topico prioridade-baixa veracidade-média">
+            <h3>• A produção do setor ferroviário também participou</h3>
+            <p>
+                <strong>🔵 Prioridade:</strong> Baixa | 
+                <strong>📄 Página:</strong> 2 |
+                <strong>🟡 Veracidade:</strong> 
+                <span class="score-badge score-média">
+                    Média (0.77)
+                </span>
+            </p>
+            <p><strong>📝 Resumo:</strong> • A produção do setor ferroviário também participou do debate sobre a regulação de.</p>
+            <div class="detalhes">
+                <strong>Detalhes Completos:</strong><br>
+                • A produção do setor ferroviário também participou do debate sobre a regulação de
+                <br><br>
+                <strong>🔍 Métricas de Qualidade:</strong><br>
+                <small style="color: #666;">
+                • Similaridade com Original: <strong>0.97</strong><br>
+                • Score de Veracidade: <strong>0.77</strong><br>
+                • Classificação: <strong>Média</strong>
+                </small>
+            </div>
+        </div>
+
+        <div class="topico prioridade-baixa veracidade-média">
+            <h3>• Encaminhamentos: troca de informações e propostas entre</h3>
+            <p>
+                <strong>🔵 Prioridade:</strong> Baixa | 
+                <strong>📄 Página:</strong> 1 |
+                <strong>🟡 Veracidade:</strong> 
+                <span class="score-badge score-média">
+                    Média (0.74)
+                </span>
+            </p>
+            <p><strong>📝 Resumo:</strong> • Encaminhamentos: troca de informações e propostas entre associação, secretaria e.</p>
+            <div class="detalhes">
+                <strong>Detalhes Completos:</strong><br>
+                • Encaminhamentos: troca de informações e propostas entre associação, secretaria e
+                <br><br>
+                <strong>🔍 Métricas de Qualidade:</strong><br>
+                <small style="color: #666;">
+                • Similaridade com Original: <strong>1.00</strong><br>
+                • Score de Veracidade: <strong>0.74</strong><br>
+                • Classificação: <strong>Média</strong>
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="categoria">
+        <h2>ℹ️ Informacoes</h2>
+
+        <div class="topico prioridade-baixa veracidade-média">
+            <h3>Estado de São Paulo, a secretaria informou que</h3>
+            <p>
+                <strong>🔵 Prioridade:</strong> Baixa | 
+                <strong>📄 Página:</strong> 1 |
+                <strong>🟡 Veracidade:</strong> 
+                <span class="score-badge score-média">
+                    Média (0.76)
+                </span>
+            </p>
+            <p><strong>📝 Resumo:</strong> Estado de São Paulo, a secretaria informou que CPTM está desenvolvendo e.</p>
+            <div class="detalhes">
+                <strong>Detalhes Completos:</strong><br>
+                Estado de São Paulo, a secretaria informou que CPTM está desenvolvendo e
+                <br><br>
+                <strong>🔍 Métricas de Qualidade:</strong><br>
+                <small style="color: #666;">
+                • Similaridade com Original: <strong>0.99</strong><br>
+                • Score de Veracidade: <strong>0.76</strong><br>
+                • Classificação: <strong>Média</strong>
+                </small>
+            </div>
+        </div>
+
+        <div class="topico prioridade-baixa veracidade-média">
+            <h3>paulistas, sendo comunicado o agendamento de reunião para</h3>
+            <p>
+                <strong>🔵 Prioridade:</strong> Baixa | 
+                <strong>📄 Página:</strong> 2 |
+                <strong>🟡 Veracidade:</strong> 
+                <span class="score-badge score-média">
+                    Média (0.75)
+                </span>
+            </p>
+            <p><strong>📝 Resumo:</strong> paulistas, sendo comunicado o agendamento de reunião para tal na secretaria;.</p>
+            <div class="detalhes">
+                <strong>Detalhes Completos:</strong><br>
+                paulistas, sendo comunicado o agendamento de reunião para tal na secretaria;
+                <br><br>
+                <strong>🔍 Métricas de Qualidade:</strong><br>
+                <small style="color: #666;">
+                • Similaridade com Original: <strong>0.97</strong><br>
+                • Score de Veracidade: <strong>0.75</strong><br>
+                • Classificação: <strong>Média</strong>
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="categoria">
+        <h2>✅ Decisoes</h2>
+
+        <div class="topico prioridade-baixa veracidade-média">
+            <h3>está aprovado seguindo normas americanas</h3>
+            <p>
+                <strong>🔵 Prioridade:</strong> Baixa | 
+                <strong>📄 Página:</strong> 2 |
+                <strong>🟡 Veracidade:</strong> 
+                <span class="score-badge score-média">
+                    Média (0.73)
+                </span>
+            </p>
+            <p><strong>📝 Resumo:</strong> está aprovado seguindo normas americanas;.</p>
+            <div class="detalhes">
+                <strong>Detalhes Completos:</strong><br>
+                está aprovado seguindo normas americanas;
+                <br><br>
+                <strong>🔍 Métricas de Qualidade:</strong><br>
+                <small style="color: #666;">
+                • Similaridade com Original: <strong>0.99</strong><br>
+                • Score de Veracidade: <strong>0.73</strong><br>
+                • Classificação: <strong>Média</strong>
+                </small>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
